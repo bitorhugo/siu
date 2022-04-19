@@ -9,5 +9,6 @@ Meanwhile, the compiled output files will be generated in the `bin` folder by de
 
 ## Dependencies
 
+
 algs4 library from Kevin Wayne and Bob Sedgewick: https://algs4.cs.princeton.edu/code/
 in-class built java-classes (LP2)
