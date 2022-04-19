@@ -4,7 +4,7 @@ import java.util.Objects;
 import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
-public class Way extends Edge{
+public class Way extends Edge {
 
   private final Integer wayId = this.hashCode(); // autoboxing
   private String name; // TODO: ask teacher if way name should be a tag

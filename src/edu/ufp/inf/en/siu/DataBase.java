@@ -11,8 +11,6 @@ public class DataBase {
   private RedBlackBST<Integer, Poi> poiST = new RedBlackBST<>();
   private RedBlackBST<String, User> userST = new RedBlackBST<>();
   private SeparateChainingHashST<Tag, Object> tagsST = new SeparateChainingHashST<>();
-  private SeparateChainingHashST<Tag, String> tagsNodesST = new SeparateChainingHashST<>();
-  private SeparateChainingHashST<Tag, String> tagsWaysST = new SeparateChainingHashST<>();
 
   public RedBlackBST<Integer, Node> getNodesST() {
     return nodesST;
@@ -38,17 +36,11 @@ public class DataBase {
   public void setUserST(RedBlackBST<String, User> userST) {
     this.userST = userST;
   } 
-  public SeparateChainingHashST<Tag, String> getTagsNodesST() {
-    return tagsNodesST;
+  public SeparateChainingHashST<Tag, Object> getTagsST() {
+    return tagsST;
   }
-  public void setTagsNodesST(SeparateChainingHashST<Tag, String> tagsNodesST) {
-    this.tagsNodesST = tagsNodesST;
-  }
-  public SeparateChainingHashST<Tag, String> getTagsWaysST() {
-    return tagsWaysST;
-  }
-  public void setTagsWaysST(SeparateChainingHashST<Tag, String> tagsWaysST) {
-    this.tagsWaysST = tagsWaysST;
+  public void setTagsST(SeparateChainingHashST<Tag, Object> tagsST) {
+    this.tagsST = tagsST;
   }
   
   /**
@@ -231,7 +223,6 @@ public class DataBase {
         Node n = this.nodesST.get(i);
         if (n.containsTag(t)) {
           this.tagsST.put(t, n);
-          //this.tagsNodesST.put(t, n.getNodeId().toString());
         }
       }
       // iterate over ways
@@ -239,7 +230,6 @@ public class DataBase {
         Way w = this.waysST.get(i);
         if (w.containsTag(t)) {
           this.tagsST.put(t, w);
-          //this.tagsWaysST.put(t, w.getWayId().toString());
         }
       }
     }

@@ -1,5 +1,7 @@
 package edu.ufp.inf.en.siu;
 
+import java.util.Objects;
+
 import edu.ufp.inf.en.lp2._1_intro.date.Date;
 
 public class Admin extends User {
@@ -25,6 +27,11 @@ public class Admin extends User {
   @Override
   public String toString() {
       return "Admin(" + super.toString() + ")";
+  }
+  
+  @Override
+  public int hashCode() {
+      return Objects.hash(super.hashCode());
   }
 
 }

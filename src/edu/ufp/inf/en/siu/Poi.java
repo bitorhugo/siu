@@ -5,6 +5,7 @@ public class Poi {
 
   private String name;
   private Integer poiId;
+  
   public String getName() {
     return name;
   }

@@ -62,4 +62,5 @@ public abstract class User extends Person {
   public String toString() {
       return super.toString() + ", email=" + this.email + ", password=" + this.password;
   }
+
 }
