@@ -88,7 +88,39 @@ public class Node {
     }
   }
 
-public boolean containsTag(Tag t) {
+  public void addTag(Tag t, String value) {
+    if (t == null) throw new IllegalArgumentException("argument 't' to addTag() is null");
+    if (value == null) throw new IllegalArgumentException("argument 'value' to addTag() is null");
+    this.tags.put(t, value);
+  }
+
+  public Tag removeTag(Tag t) {
+    if (t == null) throw new IllegalArgumentException("argument to removeTag() is null");
+    if (this.tags.contains(t)) {
+      this.tags.delete(t);
+      return t;
+    }
+    else {
+      System.out.println("tag is not present in node");
+      return null;
+    }
+  }
+
+  public void editTag(Tag o, Tag n, String nValue) {
+    if (o == null) throw new IllegalArgumentException("argument 'o' to editTag() is null");
+    if (n == null) throw new IllegalArgumentException("argument 'n' to editTag() is null");
+    if (removeTag(o) != null) addTag(n, nValue);
+  }
+
+  public void listTags() {
+    if (!this.tags.isEmpty()) {
+      for (Tag tag : this.tags.keys()) {
+        System.out.println("Tag: " + tag);
+      }
+    }
+  }
+
+  public boolean containsTag(Tag t) {
     return this.tags.contains(t);
 }
 

@@ -11,7 +11,6 @@ public class DataBase {
   private RedBlackBST<Integer, Poi> poiST = new RedBlackBST<>();
   private RedBlackBST<String, User> userST = new RedBlackBST<>();
   private SeparateChainingHashST<Tag, String> tagsST = new SeparateChainingHashST<>();
-  // TODO: Ask teacher if a hash table for nodesTags and waysTags is needed
 
   public RedBlackBST<Integer, Node> getNodesST() {
     return nodesST;
@@ -234,7 +233,6 @@ public class DataBase {
         }
       }
     }
-    
   }
 
 }
