@@ -10,6 +10,7 @@ public class DataBase {
   private RedBlackBST<Integer, Way> waysST = new RedBlackBST<>();
   private RedBlackBST<Integer, Poi> poiST = new RedBlackBST<>();
   private RedBlackBST<String, User> userST = new RedBlackBST<>();
+  private SeparateChainingHashST<Tag, Object> tagsST = new SeparateChainingHashST<>();
   private SeparateChainingHashST<Tag, String> tagsNodesST = new SeparateChainingHashST<>();
   private SeparateChainingHashST<Tag, String> tagsWaysST = new SeparateChainingHashST<>();
 
@@ -229,14 +230,16 @@ public class DataBase {
       for (Integer i : this.nodesST.keys()) {
         Node n = this.nodesST.get(i);
         if (n.containsTag(t)) {
-          this.tagsNodesST.put(t, n.getNodeId().toString());
+          this.tagsST.put(t, n);
+          //this.tagsNodesST.put(t, n.getNodeId().toString());
         }
       }
       // iterate over ways
       for (Integer i : this.waysST.keys()) {
         Way w = this.waysST.get(i);
         if (w.containsTag(t)) {
-          this.tagsWaysST.put(t, w.getWayId().toString());
+          this.tagsST.put(t, w);
+          //this.tagsWaysST.put(t, w.getWayId().toString());
         }
       }
     }
