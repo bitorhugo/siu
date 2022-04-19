@@ -1,6 +1,8 @@
+
 import edu.ufp.inf.en.lp2._1_intro.date.Date;
 import edu.ufp.inf.en.siu.Admin;
 import edu.ufp.inf.en.siu.DataBase;
+
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -13,5 +15,6 @@ public class App {
         a.removeUser(b);
         
         db.listUsers();
+
     }
 }

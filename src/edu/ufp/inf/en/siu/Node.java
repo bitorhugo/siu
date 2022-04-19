@@ -1,6 +1,7 @@
 package edu.ufp.inf.en.siu;
 
 
+import java.util.Objects;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 import edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
@@ -146,6 +147,11 @@ public class Node {
    */
   public boolean containsTag(Tag t) {
     return this.tags.contains(t);
-}
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.coordinates, this.poiST.hashCode(), this.tags.hashCode());
+  }
 
 }
