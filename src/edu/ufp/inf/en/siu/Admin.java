@@ -21,7 +21,7 @@ public class Admin extends User {
   }
     
   public void addPoi (Poi p) {
-    this.getVisitedPoi().put((int)System.currentTimeMillis(), p);
+    this.getVisitedPoi().put(System.currentTimeMillis(), p);
   }
 
   @Override
