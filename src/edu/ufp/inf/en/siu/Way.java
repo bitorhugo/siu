@@ -1,15 +1,22 @@
 package edu.ufp.inf.en.siu;
 
 import java.util.Objects;
-import edu.princeton.cs.algs4.Edge;
+
+import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
-public class Way extends Edge {
+
+public class Way extends DirectedEdge {
 
   private final Integer wayId = this.hashCode(); // autoboxing
   private String name; // TODO: ask teacher if way name should be a tag
   private SeparateChainingHashST<Tag, String> tags;
   
+  // add time-weights here aswell
+  // car, walk, bus, ...
+  // overwrite weight method from edgeweightedigraph
+  
+  // w is distance-weights
   public Way(int o, int t, double w) {
     super(o, t, w);
   }

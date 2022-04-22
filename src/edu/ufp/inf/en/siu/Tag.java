@@ -13,14 +13,14 @@ public enum Tag {
     BUS(),
     MAXSPEED();
 
-    private String value;
+    private Boolean value;
 
     /**
-     * sets all tags values as 'default'
+     * sets all tags values as false
      */
     Tag () {
         for (Tag tag : Tag.values()) {
-            tag.value = "default";
+            tag.value = false;
         }
     }
 
@@ -28,15 +28,15 @@ public enum Tag {
      * sets a value for tag
      * @param value value of tag
      */
-    Tag (String value) {
+    Tag (Boolean value) {
         this.value = value;
     }
 
-    public String getValue() {
+    public Boolean getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Boolean value) {
         this.value = value;
     }
 
