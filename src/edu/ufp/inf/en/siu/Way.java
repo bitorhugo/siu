@@ -8,9 +8,8 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 public class Way extends DirectedEdge {
 
-  private final Integer wayId = this.hashCode(); // autoboxing
-  private String name; // TODO: ask teacher if way name should be a tag
-  private SeparateChainingHashST<Tag, String> tags;
+  private final Integer wayId; // autoboxing
+  private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
   
   // add time-weights here aswell
   // car, walk, bus, ...
@@ -19,22 +18,16 @@ public class Way extends DirectedEdge {
   // w is distance-weights
   public Way(int o, int t, double w) {
     super(o, t, w);
+    this.wayId = this.hashCode();
   }
 
-  public Way(String name, SeparateChainingHashST<Tag, String> tags, int o, int t, double w) {
+  public Way(SeparateChainingHashST<Tag, String> tags, int o, int t, double w) {
     this(o, t, w);
-    this.name = name;
     this.tags = tags;
   }
 
   public Integer getWayId() {
     return wayId;
-  }
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
   }
   public SeparateChainingHashST<Tag, String> getTags() {
     return tags;
@@ -43,13 +36,17 @@ public class Way extends DirectedEdge {
     this.tags = tags;
   }
 
+  public void addTag (Tag t, String value) {
+    this.tags.put(t, value);
+  }
+
   public boolean containsTag(Tag t) {
     return this.tags.contains(t);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.name, this.tags, super.hashCode());
+    return Objects.hash(this.tags, super.hashCode());
 }
   
   

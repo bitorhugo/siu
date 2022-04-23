@@ -8,13 +8,18 @@ import edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
 
 public class Node {
 
-  private Integer nodeId = this.hashCode(); // autoboxing
+  private Integer nodeId; 
   private Point coordinates;
-  private RedBlackBST<Integer, Poi> poiST;
-  private SeparateChainingHashST<Tag, String> tags;
+  private RedBlackBST<Integer, Poi> poiST = new RedBlackBST<>();
+  private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
+
+  public Node () {
+    
+  }
 
   public Node (Integer nodeId, Point coordinates) {
-    this.nodeId = nodeId;
+    this();
+    this.nodeId = this.hashCode(); // autoboxing
     this.coordinates = coordinates;
   }
 

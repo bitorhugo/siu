@@ -216,7 +216,8 @@ public class DataBase {
    * value -> all nodes and ways where tag 't' is present
    * @param t tag
    */
-  public void addTag (Tag t) {
+  private void addTag (Tag t) { // TODO: redo this function.. do addTagtoNode() and addTagtoWay()
+    if (t == null) throw new IllegalArgumentException("argument to addTag() is null");
     if (!this.nodesST.isEmpty()) {
       // iterate over nodes
       for (Integer i : this.nodesST.keys()) {
@@ -235,4 +236,50 @@ public class DataBase {
     }
   }
 
+  public void addNodeTag (Node n, Tag t, String value) {
+    if (t == null) throw new IllegalArgumentException("argument to addNodeTag() is null");
+    if (this.nodesST.contains(n.getNodeId())) {
+      this.nodesST.get(n.getNodeId()).addTag(t, value);
+      addTag(t);
+    }
+    else {
+      System.out.println("Node is not present in database");
+    }
+  }
+
+  public void addWayTag (Way w, Tag t, String value) {
+    if (this.waysST.contains(w.getWayId())) {
+      this.waysST.get(w.getWayId()).addTag(t, value);
+      addTag(t);
+    }
+    else {
+      System.out.println("Way is not present in database");
+    }
+  }
+  public Tag removeTag (Tag t) {
+    if (t == null) throw new IllegalArgumentException("argument to removeTag() is null");
+    if (this.tagsST.contains(t)) {
+      this.tagsST.delete(t);
+      return t;
+    }
+    else {
+      System.out.println("tag not present in database");
+      return null;
+    }
+  }
+
+  public void listTags() {
+    if (!this.tagsST.isEmpty()) {
+      for (Tag t : this.tagsST.keys()) {
+        System.out.println("Tag: " + t);
+      }
+    }
+  }
+
+  public void listTagValues (Tag t) {
+    if (t == null) throw new IllegalArgumentException("argument to lisTagValues() is null");
+    if (this.tagsST.contains(t)) {
+      
+    }
+  }
 }

@@ -2,27 +2,18 @@ package edu.ufp.inf.en.siu;
 
 
 public enum Tag {
-    BUILDING(),
-    ROAD(),
-    LANES(),
-    ACCESS(),
-    SURFACE(),
-    ADDRESS(),
-    BIKELANE(),
-    ONEWAY(),
-    BUS(),
-    MAXSPEED();
+    BUILDING(false),
+    ROAD(false),
+    LANES(false),
+    ACCESS(false),
+    SURFACE(false),
+    ADDRESS(false),
+    BIKELANE(false),
+    ONEWAY(false),
+    BUS(false),
+    MAXSPEED(false);
 
     private Boolean value;
-
-    /**
-     * sets all tags values as false
-     */
-    Tag () {
-        for (Tag tag : Tag.values()) {
-            tag.value = false;
-        }
-    }
 
     /**
      * sets a value for tag

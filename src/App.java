@@ -1,7 +1,11 @@
 
+import edu.princeton.cs.algs4.StdRandom;
 import edu.ufp.inf.en.lp2._1_intro.date.Date;
+import edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
 import edu.ufp.inf.en.siu.Admin;
 import edu.ufp.inf.en.siu.DataBase;
+import edu.ufp.inf.en.siu.Node;
+import edu.ufp.inf.en.siu.Tag;
 
 
 public class App {
@@ -13,8 +17,8 @@ public class App {
         db.addUser(a);
         db.addUser(b);
         a.removeUser(b);
-        
-        db.listUsers();
 
+        db.listUsers();
+        Tag t = Tag.ACCESS;
     }
 }
