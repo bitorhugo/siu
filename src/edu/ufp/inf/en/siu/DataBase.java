@@ -211,12 +211,12 @@ public class DataBase {
 
   /**
    * adds a tag to database
-   * A key-value pair ST is used (SepareteChainingST)
+   * A key-value pair ST is used (SepareteChainingST<Tag, Object>)
    * key -> tag 't'
    * value -> all nodes and ways where tag 't' is present
    * @param t tag
    */
-  private void addTag (Tag t) { // TODO: redo this function.. do addTagtoNode() and addTagtoWay()
+  private void addTag (Tag t) { 
     if (t == null) throw new IllegalArgumentException("argument to addTag() is null");
     if (!this.nodesST.isEmpty()) {
       // iterate over nodes
@@ -236,6 +236,12 @@ public class DataBase {
     }
   }
 
+  /**
+   * adds a tag to specified node
+   * @param n node
+   * @param t tag
+   * @param value value of tag
+   */
   public void addNodeTag (Node n, Tag t, String value) {
     if (t == null) throw new IllegalArgumentException("argument to addNodeTag() is null");
     if (this.nodesST.contains(n.getNodeId())) {
@@ -247,6 +253,12 @@ public class DataBase {
     }
   }
 
+  /**
+   * adds a tag to to specified way
+   * @param w way
+   * @param t tag
+   * @param value value of tag
+   */
   public void addWayTag (Way w, Tag t, String value) {
     if (this.waysST.contains(w.getWayId())) {
       this.waysST.get(w.getWayId()).addTag(t, value);
@@ -256,6 +268,12 @@ public class DataBase {
       System.out.println("Way is not present in database");
     }
   }
+
+  /**
+   * removes a tag from the database
+   * @param t tag to remove
+   * @return
+   */
   public Tag removeTag (Tag t) {
     if (t == null) throw new IllegalArgumentException("argument to removeTag() is null");
     if (this.tagsST.contains(t)) {
@@ -268,6 +286,9 @@ public class DataBase {
     }
   }
 
+  /**
+   * lists all tags used in database
+   */
   public void listTags() {
     if (!this.tagsST.isEmpty()) {
       for (Tag t : this.tagsST.keys()) {
@@ -276,6 +297,10 @@ public class DataBase {
     }
   }
 
+  /**
+   * lists all nodes and way that specified tag is used
+   * @param t tag to look for
+   */
   public void listTagValues (Tag t) {
     if (t == null) throw new IllegalArgumentException("argument to lisTagValues() is null");
     if (this.tagsST.contains(t)) {
