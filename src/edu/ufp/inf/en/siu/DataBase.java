@@ -7,10 +7,10 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 public class DataBase {
   
+  private RedBlackBST<String, User> userST = new RedBlackBST<>();
   private RedBlackBST<Integer, Node> nodesST = new RedBlackBST<>();
   private RedBlackBST<Integer, Way> waysST = new RedBlackBST<>();
   private RedBlackBST<Integer, Poi> poiST = new RedBlackBST<>();
-  private RedBlackBST<String, User> userST = new RedBlackBST<>();
   private SeparateChainingHashST<Tag, ArrayList<Object>> tagsST = new SeparateChainingHashST<>();
 
   public RedBlackBST<Integer, Node> getNodesST() {
@@ -202,7 +202,7 @@ public class DataBase {
   /**
    * lists all ways from database
    */
-  public void listWay() {
+  public void listWays() {
     if (!this.waysST.isEmpty()) {
       for (Integer i : this.waysST.keys()) {
         System.out.println("Way: " + i);
@@ -383,9 +383,56 @@ public class DataBase {
     }
   }
 
+  /**
+   * adds a poi to database
+   * @param p poi
+   */
   public void addPoi (Poi p) {
     if (p == null) throw new IllegalArgumentException("argument to addPoi() is null");
     this.nodesST.put(p.getNodeId(), p);
     this.poiST.put(p.getNodeId(), p);
   }
+
+  /**
+   * removes a poi from database
+   * @param p poi to remove
+   * @return poi removed if found || null if not found
+   */
+  public Poi removePoi (Poi p) {
+    if (p == null) throw new IllegalArgumentException("argument to addPoi() is null");
+    if (this.nodesST.contains(p.getNodeId()) && this.poiST.contains(p.getNodeId())) {
+      this.nodesST.delete(p.getNodeId());
+      this.poiST.delete(p.getNodeId());
+      return p;
+    }
+    else {
+      System.out.println("poi not present in database");
+      return null;
+    }
+  }
+
+  /**
+   * edits a poi from database
+   * @param o old poi
+   * @param n new poi
+   */
+  public void editPoi (Poi o, Poi n) {
+    if (o == null) throw new IllegalArgumentException("argument 'o' to addPoi() is null");
+    if (n == null) throw new IllegalArgumentException("argument 'n' to addPoi() is null");
+    if (removePoi(o) != null) addPoi(n);
+  }
+
+  /**
+   * lists all poi from database
+   */
+  public void listPoi () {
+    if (!this.poiST.isEmpty()) {
+      for (Integer integer : this.poiST.keys()) {
+        System.out.println("Poi: " + integer);
+      }
+    }
+  }
+
+
+
 }
