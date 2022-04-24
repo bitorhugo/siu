@@ -12,6 +12,7 @@ public class Arquive {
     private static final String path_nodes = "data/nodes_out.txt";
     private static final String path_ways = "data/ways_out.txt";
     private static final String path_poi = "data/poi_out.txt";
+    private static final String path_tags = "data/tags_out.txt";
 
     public static void removedUser (User u) {
         Out out = new Out(path_users);
@@ -32,6 +33,23 @@ public class Arquive {
     public static void removedWay(Way w) {
         Out out = new Out(path_ways);
         out.print(w);
+    }
+
+    public static void removedTag(Tag t) {
+        Out out = new Out(path_tags);
+        out.print(t);
+    }
+
+    public static void removedTag(Node n, Tag t) {
+        Out out = new Out(path_tags);
+        out.print(t);
+    }
+
+    public static void removedTag(Way w, Tag t) {
+        Out out = new Out(path_tags);
+        out.print(w);
+        out.print(t);
+        out.println();
     }
 
 }

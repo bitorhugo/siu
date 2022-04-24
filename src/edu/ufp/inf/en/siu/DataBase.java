@@ -1,5 +1,6 @@
 package edu.ufp.inf.en.siu;
 
+import java.util.ArrayList;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
@@ -10,7 +11,7 @@ public class DataBase {
   private RedBlackBST<Integer, Way> waysST = new RedBlackBST<>();
   private RedBlackBST<Integer, Poi> poiST = new RedBlackBST<>();
   private RedBlackBST<String, User> userST = new RedBlackBST<>();
-  private SeparateChainingHashST<Tag, Object> tagsST = new SeparateChainingHashST<>();
+  private SeparateChainingHashST<Tag, ArrayList<Object>> tagsST = new SeparateChainingHashST<>();
 
   public RedBlackBST<Integer, Node> getNodesST() {
     return nodesST;
@@ -36,10 +37,10 @@ public class DataBase {
   public void setUserST(RedBlackBST<String, User> userST) {
     this.userST = userST;
   } 
-  public SeparateChainingHashST<Tag, Object> getTagsST() {
+  public SeparateChainingHashST<Tag, ArrayList<Object>> getTagsST() {
     return tagsST;
   }
-  public void setTagsST(SeparateChainingHashST<Tag, Object> tagsST) {
+  public void setTagsST(SeparateChainingHashST<Tag, ArrayList<Object>> tagsST) {
     this.tagsST = tagsST;
   }
   
@@ -211,29 +212,35 @@ public class DataBase {
 
   /**
    * adds a tag to database
-   * A key-value pair ST is used (SepareteChainingST<Tag, Object>)
+   * A key-value pair ST is used (SepareteChainingST<Tag, ArrayList<Object>>)
    * key -> tag 't'
    * value -> all nodes and ways where tag 't' is present
    * @param t tag
    */
   private void addTag (Tag t) { 
     if (t == null) throw new IllegalArgumentException("argument to addTag() is null");
+    // create arraylist to insert as a value
+    ArrayList<Object> al = new ArrayList<>();
+
     if (!this.nodesST.isEmpty()) {
       // iterate over nodes
       for (Integer i : this.nodesST.keys()) {
         Node n = this.nodesST.get(i);
         if (n.containsTag(t)) {
-          this.tagsST.put(t, n);
+          al.add(n);
         }
       }
+    }
+    if (!this.waysST.isEmpty()) {
       // iterate over ways
       for (Integer i : this.waysST.keys()) {
         Way w = this.waysST.get(i);
         if (w.containsTag(t)) {
-          this.tagsST.put(t, w);
+          al.add(w);
         }
       }
     }
+    this.tagsST.put(t, al);
   }
 
   /**
@@ -270,20 +277,56 @@ public class DataBase {
   }
 
   /**
-   * removes a tag from the database
+   * removes an object instance containing the specified tag
    * @param t tag to remove
-   * @return
+   * @return object containing the specified tag
    */
-  public Tag removeTag (Tag t) {
+  private void removeTagsObject (Object o, Tag t) {
     if (t == null) throw new IllegalArgumentException("argument to removeTag() is null");
     if (this.tagsST.contains(t)) {
-      this.tagsST.delete(t);
-      return t;
+      // remove instance of object from arraylist
+      tagsST.get(t).remove(o);
+      if (tagsST.get(t).isEmpty()) {
+        // remove tag from tagsST
+        this.tagsST.delete(t);
+        Arquive.removedTag(t);
+      }
     }
     else {
       System.out.println("tag not present in database");
-      return null;
     }
+  }
+
+  /**
+   * removes specified tag from node
+   * @param n node
+   * @param t tag
+   * @return tag removed if found || null if not found
+   */
+  public Tag removeNodeTag (Node n, Tag t) {
+    if (this.nodesST.contains(n.getNodeId())){
+      this.nodesST.get(n.getNodeId()).removeTag(t);
+      removeTagsObject(n, t);
+      Arquive.removedTag(n, t);
+      return t;
+    }
+    return null;
+  }
+
+  /**
+   * removes specified tag from way
+   * @param w way
+   * @param t tag
+   * @return tag removed if found || null if not found
+   */
+  public Tag removeWayTag (Way w, Tag t) {
+    if (this.nodesST.contains(w.getWayId())){
+      this.nodesST.get(w.getWayId()).removeTag(t);
+      removeTagsObject(w, t);
+      Arquive.removedTag(w, t);
+      return t;
+    }
+    return null;
   }
 
   /**
@@ -298,13 +341,47 @@ public class DataBase {
   }
 
   /**
-   * lists all nodes and way that specified tag is used
+   * lists all nodes and ways that specified tag is used
    * @param t tag to look for
    */
   public void listTagValues (Tag t) {
     if (t == null) throw new IllegalArgumentException("argument to lisTagValues() is null");
     if (this.tagsST.contains(t)) {
-      
+      for (Object object : this.tagsST.get(t)) {
+        System.out.println(object);
+      }
     }
   }
+
+  /**
+   * lists all nodes that specified tag is used
+   * @param t tag to look for
+   */
+  public void listTagValuesForNodes (Tag t) {
+    if (t == null) throw new IllegalArgumentException("argument to lisTagValues() is null");
+    if (this.tagsST.contains(t)) {
+      for (Object object : this.tagsST.get(t)) {
+        if (object instanceof Node) {
+          System.out.println(object);
+        }
+      }
+    }
+  }
+
+  /**
+   * lists all ways that specified tag is used
+   * @param t tag to look for
+   */
+  public void listTagValuesForWays (Tag t) {
+    if (t == null) throw new IllegalArgumentException("argument to lisTagValues() is null");
+    if (this.tagsST.contains(t)) {
+      for (Object object : this.tagsST.get(t)) {
+        if (object instanceof Way) {
+          System.out.println(object);
+        }
+      }
+    }
+  }
+
+  
 }

@@ -13,3 +13,16 @@ algs4 library from Kevin Wayne and Bob Sedgewick: https://algs4.cs.princeton.edu
 
 
 in-class built java-classes (LP2)
+
+
+## Requisites:
+
+# R1: 
+# R2: DONE
+# R3: DONE
+# R4: DONE
+# R5: 
+# R6: 
+# R7: 
+# R8: DONE
+
