@@ -10,6 +10,12 @@ public class Basic extends User {
     super(name, address, idNumber, birth);
   }
 
+  public Basic(String name, String address, String idNumber, Date birth, String email, String password) {
+    super(name, address, idNumber, birth);
+    this.setEmail(email);
+    this.setPassword(password);
+  }
+
   @Override
   public String toString() {
     return "Basic(" + super.toString() + ")";

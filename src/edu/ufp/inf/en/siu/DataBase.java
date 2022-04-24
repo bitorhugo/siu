@@ -383,5 +383,9 @@ public class DataBase {
     }
   }
 
-  
+  public void addPoi (Poi p) {
+    if (p == null) throw new IllegalArgumentException("argument to addPoi() is null");
+    this.nodesST.put(p.getNodeId(), p);
+    this.poiST.put(p.getNodeId(), p);
+  }
 }

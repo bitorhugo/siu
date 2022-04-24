@@ -20,10 +20,42 @@ public class Admin extends User {
     return this.getDb().removeUser(u);
   }
     
-  public void addPoi (Poi p) {
-    this.getVisitedPoi().put(System.currentTimeMillis(), p);
+  public void addVisitedPoi (Poi p) {
+    if (p == null) throw new IllegalArgumentException("argument to deleteVisitedPoi() is null");
+    // first add user to poi visitor list
+    p.getVisitorST().put(System.currentTimeMillis(), this);
+    // then add poi to users visited poi list
+    this.getVisitedPoi().put(p.getNodeId(), p);
+    // in case the database does'nt have the poi, add it
+    this.getDb().addPoi(p);
   }
 
+  public Poi deleteVisitedPoi (Poi p) {
+    if (p == null) throw new IllegalArgumentException("argument to deleteVisitedPoi() is null");
+    if (this.getVisitedPoi().contains(p.getNodeId())) {
+      this.getVisitedPoi().delete(p.getNodeId());
+      return p;
+    }
+    else {
+      System.out.println("user hasn't been to poi p before");
+      return null;
+    }
+  }
+
+  public void editVisitedPoi (Poi o, Poi n) {
+    if (o == null) throw new IllegalArgumentException("argument 'o' to editVisitedPoi() is null");
+    if (n == null) throw new IllegalArgumentException("argument 'n' to editVisitedPoi() is null");
+    if (deleteVisitedPoi(o) != null) addVisitedPoi(n);
+  }
+
+  public void listVisitedPoi () {
+    if (!this.getVisitedPoi().isEmpty()) {
+      for (Integer integer : this.getVisitedPoi().keys()) {
+        System.out.println("Visited Poi: " + integer);
+      }
+    }
+  }
+  
   @Override
   public String toString() {
       return "Admin(" + super.toString() + ")";
