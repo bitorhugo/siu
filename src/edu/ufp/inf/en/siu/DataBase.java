@@ -1,6 +1,7 @@
 package edu.ufp.inf.en.siu;
 
 import java.util.ArrayList;
+
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
@@ -197,6 +198,16 @@ public class DataBase {
     if (o == null) throw new IllegalArgumentException("argument 'o' to editWay() is null");
     if (n == null) throw new IllegalArgumentException("argument 'n' to editWay() is null");
     if (removeWay(o) != null) addWay(n);
+  }
+
+  /**
+   * searches for a specified way in database
+   * @param w way to search for
+   * @return way if found || null if not found
+   */
+  public Way searchWay (Way w) {
+    if (w == null) throw new IllegalArgumentException("argument to searchWay() is null");
+    return this.waysST.get(w.getWayId());
   }
 
   /**
@@ -423,6 +434,15 @@ public class DataBase {
   }
 
   /**
+   * searches for a poi in database
+   * @param p poi to search for
+   * @return poi if found || null if not found
+   */
+  public Poi searchPoi (Poi p) {
+    if (p == null) throw new IllegalArgumentException("argumento to searchPoi() is null");
+    return this.poiST.get(p.getNodeId());
+  }
+  /**
    * lists all poi from database
    */
   public void listPoi () {
@@ -433,6 +453,51 @@ public class DataBase {
     }
   }
 
+  /**
+   * searches for pois visited by user between a certain time
+   * @param u user
+   * @param start initial timestamp
+   * @param end last timestamp
+   * @return arraylist containing all pois between start and end || null if not visited any poi
+   */
+  public ArrayList<Poi> getUserPoisVisited (User u, Long start, Long end) {
+    ArrayList<Poi> pois = new ArrayList<>();
+    if (!this.poiST.isEmpty()) {
+      for (Integer i : this.poiST.keys()) {
+        Poi p = this.poiST.get(i);
+        for (Long l : p.getVisitorST().keys(start, end)) {
+          if (p.getVisitorST().get(l).getIdNumber() == u.getIdNumber()) {
+            pois.add(p);
+          }
+        }
+      }
+      return pois;
+    }
+    return null;
+  }
 
-
+  /**
+   * searches for pois not visited by user between a certain time
+   * @param u user
+   * @param start initial timestamp
+   * @param end last timestamp
+   * @return arraylist containing all pois between start and end || null if not visited any poi
+   */
+  public ArrayList<Poi> getUserPoisNotVisited (User u, Long start, Long end) {
+    ArrayList<Poi> pois = new ArrayList<>();
+    if (!this.poiST.isEmpty()) {
+      for (Integer i : this.poiST.keys()) {
+        Poi p = this.poiST.get(i);
+        for (Long l : p.getVisitorST().keys(start, end)) {
+          if (p.getVisitorST().get(l).getIdNumber() == u.getIdNumber()) {
+            break;
+          }
+          pois.add(p);
+        }
+      }
+      return pois;
+    }
+    return null;
+  }
+  
 }

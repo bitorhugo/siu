@@ -22,24 +22,25 @@ public class Admin extends User {
     
   public void addVisitedPoi (Poi p) {
     if (p == null) throw new IllegalArgumentException("argument to deleteVisitedPoi() is null");
+    Long timestamp = System.currentTimeMillis();
     // first add user to poi visitor list
-    p.getVisitorST().put(System.currentTimeMillis(), this);
+    p.getVisitorST().put(timestamp, this);
     // then add poi to users visited poi list
-    this.getVisitedPoi().put(p.getNodeId(), p);
-    // in case the database does'nt have the poi, add it
+    this.getVisitedPoi().put(timestamp, p);
+    // in case the database doesn't have the poi, add it
     this.getDb().addPoi(p);
   }
 
   public Poi deleteVisitedPoi (Poi p) {
     if (p == null) throw new IllegalArgumentException("argument to deleteVisitedPoi() is null");
-    if (this.getVisitedPoi().contains(p.getNodeId())) {
-      this.getVisitedPoi().delete(p.getNodeId());
-      return p;
+    for (Long l : this.getVisitedPoi().keys()) {
+      if (p.getNodeId() == this.getVisitedPoi().get(l).getNodeId()) {
+        this.getVisitedPoi().delete(l);
+        return p;
+      }
     }
-    else {
-      System.out.println("user hasn't been to poi p before");
-      return null;
-    }
+    System.out.println("user hasn't been to poi p before");
+    return null;
   }
 
   public void editVisitedPoi (Poi o, Poi n) {
@@ -50,8 +51,8 @@ public class Admin extends User {
 
   public void listVisitedPoi () {
     if (!this.getVisitedPoi().isEmpty()) {
-      for (Integer integer : this.getVisitedPoi().keys()) {
-        System.out.println("Visited Poi: " + integer);
+      for (Long l : this.getVisitedPoi().keys()) {
+        System.out.println("Visited Poi: " + l);
       }
     }
   }

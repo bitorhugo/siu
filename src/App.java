@@ -31,7 +31,8 @@ public class App {
 
         a.listVisitedPoi();
         a.getDb().listNodes();
-    
+
+        
 
     }
 }

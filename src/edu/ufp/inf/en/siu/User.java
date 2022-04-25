@@ -9,7 +9,7 @@ public abstract class User extends Person {
   private String email;
   private String password;
   private DataBase db;
-  private RedBlackBST<Integer, Poi> visitedPoi = new RedBlackBST<>();
+  private RedBlackBST<Long, Poi> visitedPoi = new RedBlackBST<>();
 
   public User(String name, String address, String idNumber, Date birth) {
     super(name, address, idNumber, birth);
@@ -39,11 +39,11 @@ public abstract class User extends Person {
     this.db = db;
   }
 
-  public RedBlackBST<Integer, Poi> getVisitedPoi() {
+  public RedBlackBST<Long, Poi> getVisitedPoi() {
     return this.visitedPoi;
   }
 
-  public void setVisitedPoi(RedBlackBST<Integer, Poi> visitedPoi) {
+  public void setVisitedPoi(RedBlackBST<Long, Poi> visitedPoi) {
     this.visitedPoi = visitedPoi;
   }
 
