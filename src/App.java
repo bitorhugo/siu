@@ -1,4 +1,7 @@
 
+import java.util.ArrayList;
+
+import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.ufp.inf.en.lp2._1_intro.date.Date;
 import edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
@@ -10,7 +13,7 @@ import edu.ufp.inf.en.siu.Poi;
 
 
 public class App {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {    
 
         DataBase db = new DataBase();
         Admin a = new Admin("Hugo", "porto", "1234", new Date(21, 8, 1998), "wsfn", "ieuwrfn");

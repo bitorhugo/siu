@@ -442,6 +442,7 @@ public class DataBase {
     if (p == null) throw new IllegalArgumentException("argumento to searchPoi() is null");
     return this.poiST.get(p.getNodeId());
   }
+  
   /**
    * lists all poi from database
    */
@@ -499,5 +500,54 @@ public class DataBase {
     }
     return null;
   }
+
+  /**
+   * searches for all users thats visited specified poi between a certain time
+   * @param p poi
+   * @param start initial timestamp
+   * @param end last timestamp
+   * @return arraylist containing all users that visited poi between start and end || null if not any
+   */
+  public ArrayList<User> getUsersThatVisitedPoi (Poi p, Long start, Long end) {
+    if (p == null) throw new IllegalArgumentException("argument 'p' to getUsersThatVisitedPoi() is null");
+    if (start == null) throw new IllegalArgumentException("argument 'start' to getUsersThatVisitedPoi() is null");
+    if (end == null) throw new IllegalArgumentException("argument 'end' to getUsersThatVisitedPoi() is null");
+    ArrayList<User> users = new ArrayList<>();
+    Poi poi = this.poiST.get(p.getNodeId());
+    if (poi != null) {
+      for (Long l : poi.getVisitorST().keys(start, end)) {
+        users.add(poi.getVisitorST().get(l));
+      }
+      return users;
+    }
+    return null;
+  }
   
+  /**
+   * searches for pois that weren't visited by any users between a certain time
+   * @param start initial timestamp
+   * @param end last timestamp
+   * @return arraylist containing all poi that weren't visited between specified time || null if all were visited
+   */
+  public ArrayList<Poi> getPoiNotVisited (Long start, Long end) {
+    if (start == null) throw new IllegalArgumentException("argument 'start' to getUsersThatVisitedPoi() is null");
+    if (end == null) throw new IllegalArgumentException("argument 'end' to getUsersThatVisitedPoi() is null");
+    ArrayList<Poi> pois = new ArrayList<>();
+    for (Integer i : this.poiST.keys()) {
+      Poi p = this.poiST.get(i);
+      int count = 0;
+      for (Long l : p.getVisitorST().keys(start, end)) {
+        count ++;
+      }
+      if (count == 0) {
+        pois.add(p);
+      }
+    }
+    return pois.isEmpty() ? null : pois;
+  }
+
+
+
+
+
 }
