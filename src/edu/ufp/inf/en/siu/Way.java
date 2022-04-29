@@ -8,7 +8,7 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 public class Way extends DirectedEdge {
 
-  private final Integer wayId; // autoboxing
+  private final Long wayId;
   private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
   
   // add time-weights here aswell
@@ -16,17 +16,17 @@ public class Way extends DirectedEdge {
   // overwrite weight method from edgeweightedigraph
   
   // w is distance-weights
-  public Way(int o, int t, double w) {
+  public Way(Long wayId, int o, int t, double w) {
     super(o, t, w);
-    this.wayId = this.hashCode();
+    this.wayId = wayId;
   }
 
-  public Way(SeparateChainingHashST<Tag, String> tags, int o, int t, double w) {
-    this(o, t, w);
+  public Way(Long wayId, SeparateChainingHashST<Tag, String> tags, int o, int t, double w) {
+    this(wayId, o, t, w);
     this.tags = tags;
   }
 
-  public Integer getWayId() {
+  public Long getWayId() {
     return wayId;
   }
   public SeparateChainingHashST<Tag, String> getTags() {

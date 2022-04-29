@@ -1,6 +1,5 @@
 package edu.ufp.inf.en.lp2._1_intro.geometric_figures;
 
-
 public class Point {
     private float x;
     private float y;
@@ -12,22 +11,6 @@ public class Point {
 
     public float distX (Point p) {
         return p.x - this.x;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
     }
 
     public float distY (Point p) {
