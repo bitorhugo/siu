@@ -36,7 +36,7 @@ public class Poi extends Node{
       return u;
     }
     else {
-      System.out.println("Visitor not present in visitoST");
+      System.out.println("Visitor not present in visitorST");
       return null;
     }
   }

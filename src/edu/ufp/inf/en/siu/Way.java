@@ -11,6 +11,7 @@ public class Way extends DirectedEdge {
 
   private final Integer wayId;
   private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
+  private SeparateChainingHashST<String, Double> weights = new SeparateChainingHashST<>();
   
   // add time-weights here aswell
   // car, walk, bus, ...

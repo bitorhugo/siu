@@ -227,6 +227,7 @@ public class DataBase {
    */
   public void listWays() {
     if (!this.waysST.isEmpty()) {
+      System.out.println("Way count: " + this.waysST.size());
       for (var i : this.waysST.keys()) {
         System.out.println("Way: " + i);
       }
@@ -467,7 +468,7 @@ public class DataBase {
   }
 
   /**
-   * searches for pois visited by user between a certain time
+   * searches for point of interest visited by user between a certain period
    * @param u user
    * @param start initial timestamp
    * @param end last timestamp
@@ -490,7 +491,7 @@ public class DataBase {
   }
 
   /**
-   * searches for pois not visited by user between a certain time
+   * searches for point of interest not visited by user between a certain period
    * @param u user
    * @param start initial timestamp
    * @param end last timestamp
@@ -558,8 +559,16 @@ public class DataBase {
     return pois.isEmpty() ? null : pois;
   }
 
-
-
-
+  public void now() {
+    Long currentTimestamp = System.currentTimeMillis();
+    if (!this.poiST.isEmpty()) {
+      for (var v : this.poiST.keys()) {
+        Poi p = this.poiST.get(v);
+        ArrayList<User>users = new ArrayList<>();
+        
+        System.out.println("id=" + p.getNodeId() + ",coordinates=" + p.getCoordinates());
+      }
+    }
+  }
 
 }

@@ -16,8 +16,7 @@ public class Arquive {
 
     public static void User (User u) {
         Out out = new Out(path_users);
-        out.print(u.getClass().getSimpleName() + ";" + u.getName() + ";" + u.getAddress() + ";"
-                + u.getIdNumber() + ";" + u.getBirth() + ";" + u.getEmail() + ";" + u.getPassword());
+        out.print(u);
     }
 
     public static void Node (Node n) {

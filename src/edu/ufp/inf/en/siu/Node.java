@@ -1,6 +1,5 @@
 package edu.ufp.inf.en.siu;
 
-
 import java.util.Objects;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 import edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
@@ -10,6 +9,7 @@ public class Node {
   private Integer nodeId; 
   private Point coordinates;
   private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
+  private Integer indexMap;
 
   public Node () {
     
@@ -38,6 +38,12 @@ public class Node {
   }
   public void setTags(SeparateChainingHashST<Tag, String> tags) {
     this.tags = tags;
+  }
+  public Integer getIndexMap() {
+    return indexMap;
+  }
+  public void setIndexMap(Integer indexMap) {
+    this.indexMap = indexMap;
   }
 
   /**

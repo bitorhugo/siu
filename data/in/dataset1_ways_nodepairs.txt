@@ -1,21 +1,21 @@
 20
 13797641,128564067,128564068,132.7767121878866,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
-13797641,128564068,128564070,181.72650973602413,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
-13797641,128564070,128564071,125.68440614763163,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
-13797641,128564071,128564072,133.4843639722696,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
-13797641,128564072,128564067,46.767084775369575,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
+13797642,128564068,128564070,181.72650973602413,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
+13797643,128564070,128564071,125.68440614763163,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
+13797644,128564071,128564072,133.4843639722696,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
+13797645,128564072,128564067,46.767084775369575,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
 13797704,128566335,809157831,9.251210818343319,alt_name,Praça Nove de Abril ; Praça de 9 de Abril ; Praça 9 de Abril; Arca de Água,highway,secondary,lanes,2,loc_name,Arca d'Água,name,Praça de Nove de Abril,oneway,no,surface,asphalt
-13797704,809157831,248671061,50.33072089604081,alt_name,Praça Nove de Abril ; Praça de 9 de Abril ; Praça 9 de Abril; Arca de Água,highway,secondary,lanes,2,loc_name,Arca d'Água,name,Praça de Nove de Abril,oneway,no,surface,asphalt
-13797704,248671061,128560437,24.63943538904638,alt_name,Praça Nove de Abril ; Praça de 9 de Abril ; Praça 9 de Abril; Arca de Água,highway,secondary,lanes,2,loc_name,Arca d'Água,name,Praça de Nove de Abril,oneway,no,surface,asphalt
+13797705,809157831,248671061,50.33072089604081,alt_name,Praça Nove de Abril ; Praça de 9 de Abril ; Praça 9 de Abril; Arca de Água,highway,secondary,lanes,2,loc_name,Arca d'Água,name,Praça de Nove de Abril,oneway,no,surface,asphalt
+13797706,248671061,128560437,24.63943538904638,alt_name,Praça Nove de Abril ; Praça de 9 de Abril ; Praça 9 de Abril; Arca de Água,highway,secondary,lanes,2,loc_name,Arca d'Água,name,Praça de Nove de Abril,oneway,no,surface,asphalt
 13798697,128560429,473111709,15.990829469909123,highway,secondary,name,Rua do Amial,oneway,no,surface,asphalt
-13798697,473111709,799027639,31.06118885602068,highway,secondary,name,Rua do Amial,oneway,no,surface,asphalt
-13798697,799027639,809160091,90.27652211959968,highway,secondary,name,Rua do Amial,oneway,no,surface,asphalt
-13798697,809160091,248671062,8.178757959319219,highway,secondary,name,Rua do Amial,oneway,no,surface,asphalt
+13798698,473111709,799027639,31.06118885602068,highway,secondary,name,Rua do Amial,oneway,no,surface,asphalt
+13798699,799027639,809160091,90.27652211959968,highway,secondary,name,Rua do Amial,oneway,no,surface,asphalt
+13798700,809160091,248671062,8.178757959319219,highway,secondary,name,Rua do Amial,oneway,no,surface,asphalt
 26248565,287458449,411834913,74.92517801779353,highway,residential,name,Rua de Delfim Maia,oneway,yes
-26248565,411834913,961309053,3.833178699807655,highway,residential,name,Rua de Delfim Maia,oneway,yes
-26248565,961309053,416007714,12.622951898353808,highway,residential,name,Rua de Delfim Maia,oneway,yes
-26248567,287458447,260528768,31.357024048453003,highway,residential,lit,yes,name,Rua de Leonardo Coimbra,oneway,yes,surface,asphalt
-26248567,260528768,961309054,91.29118825162311,highway,residential,lit,yes,name,Rua de Leonardo Coimbra,oneway,yes,surface,asphalt
-26248567,961309054,287458449,7.794782332352756,highway,residential,lit,yes,name,Rua de Leonardo Coimbra,oneway,yes,surface,asphalt
+26248566,411834913,961309053,3.833178699807655,highway,residential,name,Rua de Delfim Maia,oneway,yes
+26248567,961309053,416007714,12.622951898353808,highway,residential,name,Rua de Delfim Maia,oneway,yes
+26248568,287458447,260528768,31.357024048453003,highway,residential,lit,yes,name,Rua de Leonardo Coimbra,oneway,yes,surface,asphalt
+26248569,260528768,961309054,91.29118825162311,highway,residential,lit,yes,name,Rua de Leonardo Coimbra,oneway,yes,surface,asphalt
+26248570,961309054,287458449,7.794782332352756,highway,residential,lit,yes,name,Rua de Leonardo Coimbra,oneway,yes,surface,asphalt
 30912875,128560437,809160092,15.107587493269733,alt_name,Praça Nove de Abril ; Praça de 9 de Abril ; Praça 9 de Abril; Arca de Água,highway,residential,lit,yes,loc_name,Arca d'Água,name,Praça de Nove de Abril,oneway,yes,sidewalk,right,surface,sett
-30912875,809160092,343646688,116.39069777443167,alt_name,Praça Nove de Abril ; Praça de 9 de Abril ; Praça 9 de Abril; Arca de Água,highway,residential,lit,yes,loc_name,Arca d'Água,name,Praça de Nove de Abril,oneway,yes,sidewalk,right,surface,sett
+30912876,809160092,343646688,116.39069777443167,alt_name,Praça Nove de Abril ; Praça de 9 de Abril ; Praça 9 de Abril; Arca de Água,highway,residential,lit,yes,loc_name,Arca d'Água,name,Praça de Nove de Abril,oneway,yes,sidewalk,right,surface,sett

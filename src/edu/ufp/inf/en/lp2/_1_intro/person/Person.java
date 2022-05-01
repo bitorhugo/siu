@@ -62,7 +62,7 @@ public class Person {
 
   @Override
   public String toString() {
-      return "name=" + this.name + ", " + "address=" + this.address + ", id=" + this.idNumber + ", birth=" + this.birth;
+      return this.name + "," + this.address + "," + this.idNumber + "," + this.birth;
   }
 
   public static void main(String[] args) {
