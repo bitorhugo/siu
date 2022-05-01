@@ -16,7 +16,7 @@ public class Upload {
      * @param db database
      * @author Vitor Hugo
      */
-    public static void uploadNodes(DataBase db) {
+    public static void Nodes(DataBase db) {
         /**
          * File Structure:
          *  - number of nodes
@@ -31,12 +31,15 @@ public class Upload {
         while (in.hasNextLine()) {
             String []lines = in.readLine().split(",");
             if (lines[0].length() > 0) {
-                Node n = new Node(Long.parseLong(lines[0]), new Point(Float.parseFloat(lines[1]), Float.parseFloat(lines[2])));
+                Node n = new Node(Integer.parseInt(lines[0]), new Point(Float.parseFloat(lines[1]), Float.parseFloat(lines[2])));
                 // check to see if line contains key-value pairs
                 if (lines.length > 2) {
                     SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
                     // iterate over remaining key value pairs of line
                     for (int i = 3; i < lines.length - 1; i+=2) {
+                        if (lines[i].contains(":")) {
+                            lines[i] = lines[i].replace(':', '_');
+                        }
                         tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
                     }
                     n.setTags(tags);
@@ -51,7 +54,7 @@ public class Upload {
      * @param db database
      * @author Vitor Hugo
      */
-    public static void uploadWays(DataBase db) {
+    public static void Ways(DataBase db) {
         /**
          * File Structure:
          *  - number of ways
@@ -66,7 +69,7 @@ public class Upload {
         while (in.hasNextLine()) {
             String []lines = in.readLine().split(",");
             if (lines[0].length() > 0) {
-                Way w = new Way(Long.parseLong(lines[0]), Long.parseLong(lines[1]), Long.parseLong(lines[2]), Double.parseDouble(lines[3]));
+                Way w = new Way(Integer.parseInt(lines[0]), Integer.parseInt(lines[1]), Integer.parseInt(lines[2]), Double.parseDouble(lines[3]));
                 // check to see if line contains key-value pairs
                 if (lines.length > 3) {
                     SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();

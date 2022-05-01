@@ -9,7 +9,7 @@ public class Poi extends Node{
   // maps timestamp to user
   private RedBlackBST<Long, User> visitorST = new RedBlackBST<>();
   
-  public Poi(Long nodeId, Point coordinates) {
+  public Poi(Integer nodeId, Point coordinates) {
     super(nodeId, coordinates);
   }
   public Poi (Node n) {

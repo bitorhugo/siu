@@ -9,43 +9,53 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 public class DataBase {
   
   private RedBlackBST<String, User> userST = new RedBlackBST<>();
-  private RedBlackBST<Long, Node> nodesST = new RedBlackBST<>();
-  private RedBlackBST<Long, Way> waysST = new RedBlackBST<>();
-  private RedBlackBST<Long, Poi> poiST = new RedBlackBST<>();
+  private RedBlackBST<Integer, Node> nodesST = new RedBlackBST<>();
+  private RedBlackBST<Integer, Way> waysST = new RedBlackBST<>();
+  private RedBlackBST<Integer, Poi> poiST = new RedBlackBST<>();
   private SeparateChainingHashST<Tag, ArrayList<Object>> tagsST = new SeparateChainingHashST<>();
 
 
-  public RedBlackBST<Long, Node> getNodesST() {
-    return nodesST;
-  }
-  public void setNodesST(RedBlackBST<Long, Node> nodesST) {
-    this.nodesST = nodesST;
-  }
-  public RedBlackBST<Long, Way> getWaysST() {
-    return waysST;
-  }
-  public void setWaysST(RedBlackBST<Long, Way> waysST) {
-    this.waysST = waysST;
-  }
-  public RedBlackBST<Long, Poi> getPoiST() {
-    return poiST;
-  }
-  public void setPoiST(RedBlackBST<Long, Poi> poiST) {
-    this.poiST = poiST;
-  }
+ 
   public RedBlackBST<String, User> getUserST() {
     return userST;
   }
+
   public void setUserST(RedBlackBST<String, User> userST) {
     this.userST = userST;
-  } 
+  }
+
+  public RedBlackBST<Integer, Node> getNodesST() {
+    return nodesST;
+  }
+
+  public void setNodesST(RedBlackBST<Integer, Node> nodesST) {
+    this.nodesST = nodesST;
+  }
+
+  public RedBlackBST<Integer, Way> getWaysST() {
+    return waysST;
+  }
+
+  public void setWaysST(RedBlackBST<Integer, Way> waysST) {
+    this.waysST = waysST;
+  }
+
+  public RedBlackBST<Integer, Poi> getPoiST() {
+    return poiST;
+  }
+
+  public void setPoiST(RedBlackBST<Integer, Poi> poiST) {
+    this.poiST = poiST;
+  }
+
   public SeparateChainingHashST<Tag, ArrayList<Object>> getTagsST() {
     return tagsST;
   }
+
   public void setTagsST(SeparateChainingHashST<Tag, ArrayList<Object>> tagsST) {
     this.tagsST = tagsST;
   }
-  
+
   /**
    * Adds user to DataBase
    * @param u user to add
@@ -68,7 +78,7 @@ public class DataBase {
       return null;
     }
     this.userST.delete(u.getIdNumber());
-    Arquive.removedUser(u);
+    Arquive.User(u);
     return u;
   }
 
@@ -122,7 +132,7 @@ public class DataBase {
     if (n == null) throw new IllegalArgumentException("argument to removeNode() is null");
     if (this.nodesST.contains(n.getNodeId())) {
       this.nodesST.delete(n.getNodeId());
-      Arquive.removedNode(n);
+      Arquive.Node(n);
       return n;
     }
     else {
@@ -147,7 +157,7 @@ public class DataBase {
    * @param id id of node to search for
    * @return node to search for || null if not found
    */
-  public Node searchNode(Long id) {
+  public Node searchNode(Integer id) {
     if (id == null) throw new IllegalArgumentException("argument for searchNode() is null");
     return this.nodesST.get(id);
   }
@@ -158,7 +168,7 @@ public class DataBase {
   public void listNodes() {
     if (!this.nodesST.isEmpty()) {
       System.out.println("nodeCount = " + this.nodesST.size());
-      for (Long i : this.nodesST.keys()) {
+      for (var i : this.nodesST.keys()) {
         System.out.println("Node: " + i);
       }
     }
@@ -182,7 +192,7 @@ public class DataBase {
     if (w == null) throw new IllegalArgumentException("argument to removeWay() is null");
     if (this.waysST.contains(w.getWayId())) {
       this.waysST.delete(w.getWayId());
-      Arquive.removedWay(w);
+      Arquive.Way(w);
       return w;
     }
     else {
@@ -217,7 +227,7 @@ public class DataBase {
    */
   public void listWays() {
     if (!this.waysST.isEmpty()) {
-      for (Long i : this.waysST.keys()) {
+      for (var i : this.waysST.keys()) {
         System.out.println("Way: " + i);
       }
     }
@@ -237,7 +247,7 @@ public class DataBase {
 
     if (!this.nodesST.isEmpty()) {
       // iterate over nodes
-      for (Long i : this.nodesST.keys()) {
+      for (var i : this.nodesST.keys()) {
         Node n = this.nodesST.get(i);
         if (n.containsTag(t)) {
           al.add(n);
@@ -246,7 +256,7 @@ public class DataBase {
     }
     if (!this.waysST.isEmpty()) {
       // iterate over ways
-      for (Long i : this.waysST.keys()) {
+      for (var i : this.waysST.keys()) {
         Way w = this.waysST.get(i);
         if (w.containsTag(t)) {
           al.add(w);
@@ -302,7 +312,7 @@ public class DataBase {
       if (tagsST.get(t).isEmpty()) {
         // remove tag from tagsST
         this.tagsST.delete(t);
-        Arquive.removedTag(t);
+        Arquive.Tag(t);
       }
     }
     else {
@@ -320,7 +330,7 @@ public class DataBase {
     if (this.nodesST.contains(n.getNodeId())){
       this.nodesST.get(n.getNodeId()).removeTag(t);
       removeTagsObject(n, t);
-      Arquive.removedTag(n, t);
+      Arquive.Tag(n, t);
       return t;
     }
     return null;
@@ -336,7 +346,7 @@ public class DataBase {
     if (this.nodesST.contains(w.getWayId())){
       this.nodesST.get(w.getWayId()).removeTag(t);
       removeTagsObject(w, t);
-      Arquive.removedTag(w, t);
+      Arquive.Tag(w, t);
       return t;
     }
     return null;
@@ -450,7 +460,7 @@ public class DataBase {
    */
   public void listPoi () {
     if (!this.poiST.isEmpty()) {
-      for (Long integer : this.poiST.keys()) {
+      for (var integer : this.poiST.keys()) {
         System.out.println("Poi: " + integer);
       }
     }
@@ -466,7 +476,7 @@ public class DataBase {
   public ArrayList<Poi> getUserPoisVisited (User u, Long start, Long end) {
     ArrayList<Poi> pois = new ArrayList<>();
     if (!this.poiST.isEmpty()) {
-      for (Long i : this.poiST.keys()) {
+      for (var i : this.poiST.keys()) {
         Poi p = this.poiST.get(i);
         for (Long l : p.getVisitorST().keys(start, end)) {
           if (p.getVisitorST().get(l).getIdNumber() == u.getIdNumber()) {
@@ -489,7 +499,7 @@ public class DataBase {
   public ArrayList<Poi> getUserPoisNotVisited (User u, Long start, Long end) {
     ArrayList<Poi> pois = new ArrayList<>();
     if (!this.poiST.isEmpty()) {
-      for (Long i : this.poiST.keys()) {
+      for (var i : this.poiST.keys()) {
         Poi p = this.poiST.get(i);
         for (Long l : p.getVisitorST().keys(start, end)) {
           if (p.getVisitorST().get(l).getIdNumber() == u.getIdNumber()) {
@@ -535,7 +545,7 @@ public class DataBase {
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUsersThatVisitedPoi() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUsersThatVisitedPoi() is null");
     ArrayList<Poi> pois = new ArrayList<>();
-    for (Long i : this.poiST.keys()) {
+    for (var i : this.poiST.keys()) {
       Poi p = this.poiST.get(i);
       int count = 0;
       for (var l : p.getVisitorST().keys(start, end)) {

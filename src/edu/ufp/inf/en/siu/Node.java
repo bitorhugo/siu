@@ -7,7 +7,7 @@ import edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
 
 public class Node {
 
-  private Long nodeId; 
+  private Integer nodeId; 
   private Point coordinates;
   private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
 
@@ -15,16 +15,16 @@ public class Node {
     
   }
 
-  public Node (Long nodeId, Point coordinates) {
+  public Node (Integer nodeId, Point coordinates) {
     this();
     this.nodeId = nodeId;
     this.coordinates = coordinates;
   }
 
-  public Long getNodeId() {
+  public Integer getNodeId() {
     return nodeId;
   }
-  public void setNodeId(Long nodeId) {
+  public void setNodeId(Integer nodeId) {
     this.nodeId = nodeId;
   }
   public Point getCoordinates() {

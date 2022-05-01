@@ -4,6 +4,7 @@ package edu.ufp.inf.en.siu;
 public enum Tag {
     BUILDING("default"),
     CROSSING("default"),
+    CROSSING_ISLAND("default"),
     HIGHWAY("default"),
     ROAD("default"),
     LANES("default"),
@@ -16,6 +17,7 @@ public enum Tag {
     NAME("default"),
     ADDR_CITY("default"),
     ADDR_POSTCODE("default"),
+    PUBLIC_TRANSPORT("default"),
     MAXSPEED("default");
 
     private String []value;

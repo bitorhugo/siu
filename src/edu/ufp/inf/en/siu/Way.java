@@ -2,13 +2,14 @@ package edu.ufp.inf.en.siu;
 
 import java.util.Objects;
 
+import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
-import edu.ufp.inf.en.modified_algs4.DirectedEdge;
+
 
 
 public class Way extends DirectedEdge {
 
-  private final Long wayId;
+  private final Integer wayId;
   private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
   
   // add time-weights here aswell
@@ -16,17 +17,17 @@ public class Way extends DirectedEdge {
   // overwrite weight method from edgeweightedigraph
   
   // w is distance-weights
-  public Way(Long wayId, long o, long t, double w) {
+  public Way(Integer wayId, int o, int t, double w) {
     super(o, t, w);
     this.wayId = wayId;
   }
 
-  public Way(Long wayId, SeparateChainingHashST<Tag, String> tags, int o, int t, double w) {
+  public Way(Integer wayId, SeparateChainingHashST<Tag, String> tags, int o, int t, double w) {
     this(wayId, o, t, w);
     this.tags = tags;
   }
 
-  public Long getWayId() {
+  public Integer getWayId() {
     return wayId;
   }
   public SeparateChainingHashST<Tag, String> getTags() {

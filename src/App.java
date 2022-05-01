@@ -18,10 +18,9 @@ public class App {
     
         DataBase db = new DataBase();
 
-        Upload.uploadWays(db);
-        Upload.uploadNodes(db);
-
-        //db.listNodes();
+        
+        Upload.Nodes(db);
+        db.listNodes();
         
 
     }
