@@ -2,8 +2,8 @@ package edu.ufp.inf.en.siu;
 
 import java.util.Objects;
 
-import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
+import edu.ufp.inf.en.modified_algs4.DirectedEdge;
 
 
 public class Way extends DirectedEdge {
@@ -16,7 +16,7 @@ public class Way extends DirectedEdge {
   // overwrite weight method from edgeweightedigraph
   
   // w is distance-weights
-  public Way(Long wayId, int o, int t, double w) {
+  public Way(Long wayId, long o, long t, double w) {
     super(o, t, w);
     this.wayId = wayId;
   }
