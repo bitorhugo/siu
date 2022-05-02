@@ -1,6 +1,5 @@
 package edu.ufp.inf.en.siu;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import edu.princeton.cs.algs4.DirectedEdge;
@@ -13,23 +12,27 @@ public class Way extends DirectedEdge {
   /**
    * average speed at which each means of transport travel (measured in meters/minute)
    */
-  private enum TransportSpeed {
-    WALKINGSPEED(80),
-    CYCLINGSPEED(308.33),
-    CITYSPEED(833.333),
-    HIGHWAYSPEED(1833.33), 
-    BUSSPEED(750);
+  private enum Transport {
+    WALKING(80),
+    CYCLING(308.33),
+    CITYVEHICLE(833.333),
+    HIGHWAYVEHICLE(1833.33), 
+    BUS(750);
 
-    final double value;
-    private TransportSpeed (double value){
-      this.value = value;
+    final double speed;
+    private Transport (double speed){
+      this.speed = speed;
     }    
   }
 
   private final Integer wayId;
+  
   private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
-  // key: transportSpeed, value: timeWeight (minutes)
-  private SeparateChainingHashST<TransportSpeed, Double> timeWeights = new SeparateChainingHashST<>();
+  
+  // key: transport, value: timeWeight (minutes)
+  private SeparateChainingHashST<Transport, Double> timeWeights = new SeparateChainingHashST<>();
+  
+  private double chosenWeight;
   
   // add time-weights here aswell
   // car, walk, bus, ...
@@ -39,8 +42,9 @@ public class Way extends DirectedEdge {
   public Way(Integer wayId, int o, int t, double w) {
     super(o, t, w);
     this.wayId = wayId;
-    for (var v : TransportSpeed.values()) {
-      double timeWeight = (this.weight() / v.value);
+    this.chosenWeight = w;
+    for (var v : Transport.values()) {
+      double timeWeight = (this.weight() / v.speed);
       timeWeights.put(v, timeWeight);
     }
   }
@@ -53,12 +57,15 @@ public class Way extends DirectedEdge {
   public Integer getWayId() {
     return wayId;
   }
+  
   public SeparateChainingHashST<Tag, String> getTags() {
     return tags;
   } 
+  
   public void setTags(SeparateChainingHashST<Tag, String> tags) {
     this.tags = tags;
   }
+  
 
   public void addTag (Tag t, String value) {
     this.tags.put(t, value);
@@ -66,6 +73,11 @@ public class Way extends DirectedEdge {
 
   public boolean containsTag(Tag t) {
     return this.tags.contains(t);
+  }
+
+  @Override
+  public double weight() {
+    return this.chosenWeight;
   }
 
   @Override
