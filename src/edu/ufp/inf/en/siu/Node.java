@@ -1,19 +1,21 @@
 package edu.ufp.inf.en.siu;
 
 import java.util.Objects;
+
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 import edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
 
 public class Node {
 
   private Integer nodeId; 
+  
   private Point coordinates;
+  
   private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
+  
   private Integer indexMap;
 
-  public Node () {
-    
-  }
+  public Node () {}
 
   public Node (Integer nodeId, Point coordinates) {
     this();
@@ -89,12 +91,18 @@ public class Node {
   /**
    * lists all tags in node
    */
-  public void listTags() {
+  public StringBuilder listTags() {
+    StringBuilder str = new StringBuilder();
     if (!this.tags.isEmpty()) {
-      for (Tag tag : this.tags.keys()) {
-        System.out.println("Tag: " + tag);
+      for (var v : this.tags.keys()) {
+        str.append(v);
+        str.append(",");
+        str.append(this.tags.get(v));
+        str.append(",");
       }
+      System.out.println(str);
     }
+    return str;
   }
 
   /**

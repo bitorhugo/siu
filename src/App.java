@@ -18,12 +18,15 @@ public class App {
     
         DataBase db = new DataBase();
 
+        //TODO: change Date and Long type for Calendar
+
         Admin b = new Admin("Vitor", "Porto", "38132", new Date(21, 8, 1998), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(b);
         db.removeUser(b);
         
         Upload.Nodes(db);
         Upload.Ways(db);
+        db.removeWay(db.getWaysST().get(13797641));
         db.listWays();
         
         Map map = new Map(db);

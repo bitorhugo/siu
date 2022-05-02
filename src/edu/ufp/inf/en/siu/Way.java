@@ -5,8 +5,6 @@ import java.util.Objects;
 import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
-
-
 public class Way extends DirectedEdge {
 
   /**
@@ -34,11 +32,6 @@ public class Way extends DirectedEdge {
   
   private double chosenWeight;
   
-  // add time-weights here aswell
-  // car, walk, bus, ...
-  // overwrite weight method from edgeweightedigraph
-  
-  // w is distance-weights
   public Way(Integer wayId, int o, int t, double w) {
     super(o, t, w);
     this.wayId = wayId;
@@ -57,18 +50,41 @@ public class Way extends DirectedEdge {
   public Integer getWayId() {
     return wayId;
   }
-  
   public SeparateChainingHashST<Tag, String> getTags() {
     return tags;
   } 
-  
   public void setTags(SeparateChainingHashST<Tag, String> tags) {
     this.tags = tags;
   }
-  
 
   public void addTag (Tag t, String value) {
     this.tags.put(t, value);
+  }
+
+  public Tag removeTag (Tag t) {
+    if (t == null) throw new IllegalArgumentException("argument to removeTag() is null");
+    if (this.tags.contains(t)) {
+      this.tags.delete(t);
+      return t;
+    }
+    else {
+      System.out.println("tag is not present in way");
+      return null;
+    }
+  }
+
+  public StringBuilder listTags() {
+    StringBuilder str = new StringBuilder();
+    if (this.tags.isEmpty()) {
+      for (var v : this.tags.keys()) {
+        str.append(v);
+        str.append(",");
+        str.append(this.tags.get(v));
+        str.append(",");
+      }
+      System.out.println(str);
+    }
+    return str;
   }
 
   public boolean containsTag(Tag t) {
@@ -85,5 +101,9 @@ public class Way extends DirectedEdge {
     return Objects.hash(this.tags, super.hashCode());
 }
   
-  
+  @Override
+  public String toString() {
+      return this.wayId + "," + this.from() + "," + this.to() + "," + super.weight() + "," + this.listTags();
+  }
+
 }

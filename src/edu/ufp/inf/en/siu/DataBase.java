@@ -9,12 +9,14 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 public class DataBase {
   
   private RedBlackBST<String, User> userST = new RedBlackBST<>();
+  
   private RedBlackBST<Integer, Node> nodesST = new RedBlackBST<>();
+  
   private RedBlackBST<Integer, Way> waysST = new RedBlackBST<>();
+  
   private RedBlackBST<Integer, Poi> poiST = new RedBlackBST<>();
+  
   private SeparateChainingHashST<Tag, ArrayList<Object>> tagsST = new SeparateChainingHashST<>();
-
-
  
   public RedBlackBST<String, User> getUserST() {
     return userST;
@@ -542,6 +544,7 @@ public class DataBase {
    * @param end last timestamp
    * @return arraylist containing all poi that weren't visited between specified time || null if all were visited
    */
+  @SuppressWarnings("unused")
   public ArrayList<Poi> getPoiNotVisited (Long start, Long end) {
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUsersThatVisitedPoi() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUsersThatVisitedPoi() is null");

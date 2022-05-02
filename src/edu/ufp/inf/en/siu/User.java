@@ -1,6 +1,7 @@
 package edu.ufp.inf.en.siu;
 
 import edu.princeton.cs.algs4.RedBlackBST;
+
 import edu.ufp.inf.en.lp2._1_intro.date.Date;
 import edu.ufp.inf.en.lp2._1_intro.person.Person;
 

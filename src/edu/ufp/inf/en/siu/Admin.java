@@ -20,8 +20,6 @@ public class Admin extends User {
     return this.getDb().removeUser(u);
   }
     
-  
-  
   @Override
   public String toString() {
       return "Admin," + super.toString();

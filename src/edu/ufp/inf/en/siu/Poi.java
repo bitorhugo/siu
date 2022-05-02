@@ -1,17 +1,20 @@
 package edu.ufp.inf.en.siu;
 
 import edu.princeton.cs.algs4.RedBlackBST;
+
 import edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
 
 // extends node
 public class Poi extends Node{
 
   // maps timestamp to user
+  // TODO: arraylist of User in visitorST maybe..
   private RedBlackBST<Long, User> visitorST = new RedBlackBST<>();
   
   public Poi(Integer nodeId, Point coordinates) {
     super(nodeId, coordinates);
   }
+  
   public Poi (Node n) {
     super(n.getNodeId(), n.getCoordinates());
   }
