@@ -1,1 +1,0 @@
-13797641,128564067,128564068,132.7767121878866,NAME,Jardim de Arca d'Água,OPENING_HOURS,24/7,DOG,yes,CONTACT_WEBSITE,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,ALT_NAME,Arca d'Água,ADDR_STREET,Praça Nove de Abril,ADDR_POSTCODE,4249-004,LEISURE,park,ADDR_CITY,Porto,
