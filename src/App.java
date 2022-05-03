@@ -1,24 +1,35 @@
+
 import edu.princeton.cs.algs4.RedBlackBST;
-import edu.princeton.cs.algs4.StdRandom;
+
+import main.edu.ufp.inf.en.lp2.*;
 import main.edu.ufp.inf.en.lp2._1_intro.date.Date;
-import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
-import main.edu.ufp.inf.en.siu.Admin;
-import main.edu.ufp.inf.en.siu.Basic;
-import main.edu.ufp.inf.en.siu.DataBase;
-import main.edu.ufp.inf.en.siu.Map;
-import main.edu.ufp.inf.en.siu.Node;
-import main.edu.ufp.inf.en.siu.Poi;
-import main.edu.ufp.inf.en.siu.Tag;
-import main.edu.ufp.inf.en.siu.Upload;
+import main.edu.ufp.inf.en.siu.*;
 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
-public class App {
+@SuppressWarnings("unused")
+public class App extends Application{
+
+    @Override
+    public void start(Stage stage) {
+        String javaVersion = System.getProperty("java.version");
+        String javafxVersion = System.getProperty("javafx.version");
+        Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+        Scene scene = new Scene(new StackPane(l), 640, 480);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
     public static void main(String[] args) throws Exception {    
+
+        //launch();
         
         DataBase db = new DataBase();
-
-        //TODO: change Date and Long type for Calendar
-
+        
         Admin b = new Admin("Vitor", "Porto", "38132", new Date(21, 8, 1998), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(b);
         db.removeUser(b);
@@ -31,4 +42,5 @@ public class App {
         Map map = new Map(db);
         System.out.println(map.getGraph());
     }
+
 }
