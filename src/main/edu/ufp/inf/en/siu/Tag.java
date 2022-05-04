@@ -30,7 +30,7 @@ public enum Tag {
     MAXSPEED("default");
 
     private String []value;
-    private String volume;
+    
     /**
      * sets a value for tag
      * @param value value of tag

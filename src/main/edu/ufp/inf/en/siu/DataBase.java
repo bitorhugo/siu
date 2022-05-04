@@ -559,16 +559,6 @@ public class DataBase {
     return pois;
   }
 
-  public void now() {
-    Long currentTimestamp = System.currentTimeMillis();
-    if (!this.poiST.isEmpty()) {
-      for (var v : this.poiST.keys()) {
-        Poi p = this.poiST.get(v);
-        ArrayList<User>users = new ArrayList<>();
-        
-        System.out.println("id=" + p.getNodeId() + ",coordinates=" + p.getCoordinates());
-      }
-    }
-  }
+  
 
 }

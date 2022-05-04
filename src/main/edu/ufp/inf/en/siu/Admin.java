@@ -1,12 +1,11 @@
 package main.edu.ufp.inf.en.siu;
 
+import java.time.LocalDate;
 import java.util.Objects;
-
-import main.edu.ufp.inf.en.lp2._1_intro.date.Date;
 
 public class Admin extends User {
 
-  public Admin(String name, String address, String idNumber, Date birth, String email, String password) {
+  public Admin(String name, String address, String idNumber, LocalDate birth, String email, String password) {
     super(name, address, idNumber, birth);
     this.setEmail(email);
     this.setPassword(password);

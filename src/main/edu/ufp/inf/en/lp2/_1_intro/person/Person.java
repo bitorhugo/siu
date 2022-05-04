@@ -1,17 +1,15 @@
 package main.edu.ufp.inf.en.lp2._1_intro.person;
 import java.time.LocalDate;
 
-import main.edu.ufp.inf.en.lp2._1_intro.date.Date;
-
 
 public class Person {
 
   private String idNumber;
   private String name;
   private String address;
-  private Date birth;
+  private LocalDate birth;
 
-  public Person (String name, String address, String idNumber, Date birth) {
+  public Person (String name, String address, String idNumber, LocalDate birth) {
     this.name = name;
     this.address = address;
     this.idNumber = idNumber;
@@ -42,22 +40,16 @@ public class Person {
     this.address = address;
   }
 
-  public Date getBirth() {
+  public LocalDate getBirth() {
     return birth;
   }
 
-  public void setBirth(Date birth) {
+  public void setBirth(LocalDate birth) {
     this.birth = birth;
   }
 
-  public int age() {
-    // get current date
-    LocalDate currentDate = LocalDate.now();
-    return this.birth.differenceYears(new Date(currentDate.getDayOfMonth(), currentDate.getMonthValue(), currentDate.getYear()));
-  }
-
   public boolean olderThan(Person p) {
-    return this.birth.beforeDate(p.birth) ? true : false;
+    return this.birth.isBefore(p.birth) ? true : false;
   }
 
   @Override
@@ -66,10 +58,9 @@ public class Person {
   }
 
   public static void main(String[] args) {
-    Person p = new Person("Hugo", "Porto", "38132", new Date(21, 8, 1998));
-    Person q = new Person("Pedro", "Lisboa", "38133", new Date(8, 12, 1998));
+    Person p = new Person("Hugo", "Porto", "38132", LocalDate.of(2001, 12, 9));
+    Person q = new Person("Pedro", "Lisboa", "38133", LocalDate.of(1998, 8, 21));
     // unit testing
-    System.out.println(p.getName() + " age: " + p.age());
     System.out.println(p.getName() + " older than " + q.getName() + ": " + p.olderThan(q));
   }
 }

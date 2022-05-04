@@ -1,7 +1,6 @@
 
 import java.io.IOException;
-
-import edu.princeton.cs.algs4.RedBlackBST;
+import java.time.LocalDate;
 
 import main.edu.ufp.inf.en.lp2.*;
 import main.edu.ufp.inf.en.lp2._1_intro.date.Date;
@@ -11,11 +10,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-@SuppressWarnings("unused")
+
 public class App extends Application{
 
     @Override
@@ -31,14 +28,13 @@ public class App extends Application{
     
     public static void main(String[] args) throws Exception {    
 
-        //launch();
+        launch();
         
         DataBase db = new DataBase();
         
-        Admin b = new Admin("Vitor", "Porto", "38132", new Date(21, 8, 1998), "vhugosantos144@gmail.com", "hugo1998");
+        Admin b = new Admin("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(b);
-        db.removeUser(b);
-        
+        Arquive.User(db.removeUser(b));
         Upload.Nodes(db);
         Upload.Ways(db);
         db.removeWay(db.getWaysST().get(13797641));

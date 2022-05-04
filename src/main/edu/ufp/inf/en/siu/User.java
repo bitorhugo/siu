@@ -1,9 +1,9 @@
 package main.edu.ufp.inf.en.siu;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import edu.princeton.cs.algs4.RedBlackBST;
-import main.edu.ufp.inf.en.lp2._1_intro.date.Date;
 import main.edu.ufp.inf.en.lp2._1_intro.person.Person;
 
 public abstract class User extends Person {
@@ -13,7 +13,7 @@ public abstract class User extends Person {
   private DataBase db;
   private RedBlackBST<TimePeriod, Poi> visitedPoi = new RedBlackBST<>();
 
-  public User(String name, String address, String idNumber, Date birth) {
+  public User(String name, String address, String idNumber, LocalDate birth) {
     super(name, address, idNumber, birth);
   }
 
