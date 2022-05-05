@@ -2,8 +2,6 @@
 import java.io.IOException;
 import java.time.LocalDate;
 
-import main.edu.ufp.inf.en.lp2.*;
-import main.edu.ufp.inf.en.lp2._1_intro.date.Date;
 import main.edu.ufp.inf.en.siu.*;
 
 import javafx.application.Application;

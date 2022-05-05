@@ -40,4 +40,13 @@ public class Poi extends Node{
     
   }
 
+  public boolean containsVisitor (User u) {
+    if (u == null) throw new IllegalArgumentException("argument to containsUser() is null");
+    for (var v : this.visitorST.keys()) {
+      ArrayList<User> users = this.visitorST.get(v);
+      if (users.contains(u)) return true;
+    }
+    return false;
+  }
+  
 }

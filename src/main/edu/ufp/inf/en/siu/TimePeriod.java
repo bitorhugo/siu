@@ -1,36 +1,35 @@
 package main.edu.ufp.inf.en.siu;
 
+import java.time.LocalDateTime;
+
 public class TimePeriod implements Comparable<TimePeriod>{
-    private final long start;
-    private final long end;
+    private final LocalDateTime start;
+    private final LocalDateTime end;
 
-    public TimePeriod (Long start, long end) {
-        if (start > end) throw new IllegalArgumentException("start has to be smaller or equal than end");
-        this.start = start;
-        this.end = end;
-    }
+    public TimePeriod(LocalDateTime start, LocalDateTime end) {
+		this.start = start;
+		this.end = end;
+	}
+    
+	public LocalDateTime getStart() {
+		return start;
+	}
 
-    public long getStart() {
-        return start;
-    }
-    public long getEnd() {
-        return end;
-    }
+	public LocalDateTime getEnd() {
+		return end;
+	}
+    
 
-    public long getTimePeriod () {
-        return this.end - this.start;
-    }
-
-    @Override
+	@Override
     public String toString() {
         return this.start + "," + this.end;
     }
 
-    @Override
-    public int compareTo(TimePeriod o) {
-        if (this.getTimePeriod() < o.getTimePeriod()) return -1;
-        if (this.getTimePeriod() > o.getTimePeriod()) return 1;
-        else return 0;
-    }
+	@Override
+	public int compareTo(TimePeriod o) {
+		if (this.end.isBefore(o.end)) return -1;
+        if (this.end.isAfter(o.end)) return 1;
+        return 0;
+	}
 
 }

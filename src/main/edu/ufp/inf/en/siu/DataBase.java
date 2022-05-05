@@ -1,5 +1,6 @@
 package main.edu.ufp.inf.en.siu;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import edu.princeton.cs.algs4.RedBlackBST;
@@ -134,7 +135,6 @@ public class DataBase {
     if (n == null) throw new IllegalArgumentException("argument to removeNode() is null");
     if (this.nodesST.contains(n.getNodeId())) {
       this.nodesST.delete(n.getNodeId());
-      Arquive.Node(n);
       return n;
     }
     else {
@@ -476,17 +476,20 @@ public class DataBase {
    * @param end last timestamp
    * @return arraylist containing all pois between start and end || null if not visited any poi
    */
-  public ArrayList<Poi> getUserPoisVisited (User u, long start, long end) {
-    ArrayList<Poi> pois = new ArrayList<>();
+  public ArrayList<Poi> getUserPoisVisited (User u, TimePeriod tp) {
+    LocalDateTime start = tp.getStart();
+    LocalDateTime end = tp.getEnd();
+    ArrayList<Poi> poisToReturn = new ArrayList<>();
     if (this.userST.contains(u.getIdNumber())) {
-      User user = this.userST.get(u.getIdNumber());
-      TimePeriod lo = user.getVisitedPoi().floor(new TimePeriod(start, end));
-      TimePeriod hi = user.getVisitedPoi().ceiling(new TimePeriod(start, end));
-      for (var v : user.getVisitedPoi().keys(lo, hi)) {
-        pois.add(user.getVisitedPoi().get(v));
+      for (var v : u.getVisitedPoi().keys()) {
+        LocalDateTime s = v.getStart();
+        LocalDateTime e = v.getEnd();
+        if ((s.isAfter(start) || s.isEqual(start)) && (e.isBefore(end) || e.isEqual(end))) {
+          poisToReturn.add(u.getVisitedPoi().get(v));
+        }
       }
     }
-    return pois;
+    return poisToReturn;
   }
 
   /**
@@ -496,20 +499,23 @@ public class DataBase {
    * @param end last timestamp
    * @return arraylist containing all pois between start and end || null if not visited any poi
    */
-  public ArrayList<Poi> getUserPoisNotVisited (User u, Long start, Long end) {
-    ArrayList<Poi> pois = new ArrayList<>();
+  public ArrayList<Poi> getUserPoisNotVisited (User u, TimePeriod tp) {
+    LocalDateTime start = tp.getStart();
+    LocalDateTime end = tp.getEnd();
+    ArrayList<Poi> poisToReturn = new ArrayList<>();
     if (this.userST.contains(u.getIdNumber())) {
-      User user = this.userST.get(u.getIdNumber());
-      TimePeriod lo = user.getVisitedPoi().floor(new TimePeriod(start, end));
-      TimePeriod hi = user.getVisitedPoi().ceiling(new TimePeriod(start, end));
-      for (var v : user.getVisitedPoi().keys(user.getVisitedPoi().min(), lo)) {
-        pois.add(user.getVisitedPoi().get(v));
-      }
-      for (var v : user.getVisitedPoi().keys(hi, user.getVisitedPoi().max())) {
-        pois.add(user.getVisitedPoi().get(v));
+      for (var v1 : this.poiST.keys()) {
+        Poi p = this.poiST.get(v1);
+        if (!p.containsVisitor(u)) {
+          poisToReturn.add(p);
+        }
+        else {
+          
+        }
       }
     }
-    return pois;
+    return poisToReturn;
+    
   }
 
   /**
@@ -523,18 +529,7 @@ public class DataBase {
     if (p == null) throw new IllegalArgumentException("argument 'p' to getUsersThatVisitedPoi() is null");
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUsersThatVisitedPoi() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUsersThatVisitedPoi() is null");
-    ArrayList<User> users = new ArrayList<>();
-    if (this.poiST.contains(p.getNodeId())) {
-      Poi poi = this.poiST.get(p.getNodeId());
-      TimePeriod lo = poi.getVisitorST().floor(new TimePeriod(start, end));
-      TimePeriod hi = poi.getVisitorST().ceiling(new TimePeriod(start, end));
-      for (var v : poi.getVisitorST().keys(lo, hi)) {
-        for (User u : poi.getVisitorST().get(v)) {
-          users.add(u);
-        }
-      }
-    }
-    return users;
+    return null;
   }
   
   /**
@@ -545,18 +540,7 @@ public class DataBase {
    */
   @SuppressWarnings("unused")
   public ArrayList<Poi> getPoiNotVisited (Long start, Long end) {
-    if (start == null) throw new IllegalArgumentException("argument 'start' to getUsersThatVisitedPoi() is null");
-    if (end == null) throw new IllegalArgumentException("argument 'end' to getUsersThatVisitedPoi() is null");
-    ArrayList<Poi> pois = new ArrayList<>();
-    for (var v : this.poiST.keys()) {
-      Poi p = this.poiST.get(v);
-      TimePeriod lo = p.getVisitorST().floor(new TimePeriod(start, end));
-      TimePeriod hi = p.getVisitorST().ceiling(new TimePeriod(start, end));
-
-
-
-    }
-    return pois;
+    return null;
   }
 
   

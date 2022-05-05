@@ -115,6 +115,15 @@ public class Node {
   }
 
   @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (this.getClass() != obj.getClass()) return false;
+    Node n = (Node) obj;
+    return Objects.equals(this.getNodeId(), n.getNodeId());
+  }
+
+  @Override
   public int hashCode() {
     return Objects.hash(this.coordinates, this.tags.hashCode());
   }
