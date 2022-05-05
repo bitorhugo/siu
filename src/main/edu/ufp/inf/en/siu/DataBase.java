@@ -81,7 +81,7 @@ public class DataBase {
       return null;
     }
     this.userST.delete(u.getIdNumber());
-    //Arquive.User(u);
+    Arquive.User(u);
     return u;
   }
 
@@ -135,6 +135,7 @@ public class DataBase {
     if (n == null) throw new IllegalArgumentException("argument to removeNode() is null");
     if (this.nodesST.contains(n.getNodeId())) {
       this.nodesST.delete(n.getNodeId());
+      Arquive.Node(n);
       return n;
     }
     else {
@@ -429,6 +430,7 @@ public class DataBase {
     if (this.nodesST.contains(p.getNodeId()) && this.poiST.contains(p.getNodeId())) {
       this.nodesST.delete(p.getNodeId());
       this.poiST.delete(p.getNodeId());
+      Arquive.Poi(p);
       return p;
     }
     else {
@@ -477,19 +479,22 @@ public class DataBase {
    * @return arraylist containing all pois between start and end || null if not visited any poi
    */
   public ArrayList<Poi> getUserPoisVisited (User u, TimePeriod tp) {
-    LocalDateTime start = tp.getStart();
-    LocalDateTime end = tp.getEnd();
-    ArrayList<Poi> poisToReturn = new ArrayList<>();
+    if (u == null) throw new IllegalArgumentException("argument 'u' to getUserPoisVisited() is null");
+    if (tp == null) throw new IllegalArgumentException("argument 'tp' to getUserPoisVisited() is null");
     if (this.userST.contains(u.getIdNumber())) {
-      for (var v : u.getVisitedPoi().keys()) {
-        LocalDateTime s = v.getStart();
-        LocalDateTime e = v.getEnd();
-        if ((s.isAfter(start) || s.isEqual(start)) && (e.isBefore(end) || e.isEqual(end))) {
-          poisToReturn.add(u.getVisitedPoi().get(v));
+      ArrayList<Poi> pois = new ArrayList<>();
+      for (var poi : u.getVisitedPoi().keys()) {
+        ArrayList<TimePeriod> times = u.getVisitedPoi().get(poi);
+        for (var timePeriod : times) {
+          if ((timePeriod.getStart().isAfter(tp.getStart()) || timePeriod.getStart().isEqual(tp.getStart()))
+              && (timePeriod.getEnd().isBefore(tp.getEnd()) || timePeriod.getEnd().isEqual(tp.getEnd()))) {
+            pois.add(this.poiST.get(poi));
+          }
         }
       }
+      return pois;
     }
-    return poisToReturn;
+    else return null;
   }
 
   /**
@@ -500,22 +505,7 @@ public class DataBase {
    * @return arraylist containing all pois between start and end || null if not visited any poi
    */
   public ArrayList<Poi> getUserPoisNotVisited (User u, TimePeriod tp) {
-    LocalDateTime start = tp.getStart();
-    LocalDateTime end = tp.getEnd();
-    ArrayList<Poi> poisToReturn = new ArrayList<>();
-    if (this.userST.contains(u.getIdNumber())) {
-      for (var v1 : this.poiST.keys()) {
-        Poi p = this.poiST.get(v1);
-        if (!p.containsVisitor(u)) {
-          poisToReturn.add(p);
-        }
-        else {
-          
-        }
-      }
-    }
-    return poisToReturn;
-    
+    return null;    
   }
 
   /**
@@ -538,7 +528,6 @@ public class DataBase {
    * @param end last timestamp
    * @return arraylist containing all poi that weren't visited between specified time || null if all were visited
    */
-  @SuppressWarnings("unused")
   public ArrayList<Poi> getPoiNotVisited (Long start, Long end) {
     return null;
   }

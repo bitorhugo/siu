@@ -1,6 +1,7 @@
 package main.edu.ufp.inf.en.siu;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import edu.princeton.cs.algs4.RedBlackBST;
@@ -11,7 +12,7 @@ public abstract class User extends Person {
   private String email;
   private String password;
   private DataBase db;
-  private RedBlackBST<TimePeriod, Poi> visitedPoi = new RedBlackBST<>();
+  private RedBlackBST<Integer, ArrayList<TimePeriod>> visitedPoi = new RedBlackBST<>();
 
   public User(String name, String address, String idNumber, LocalDate birth) {
     super(name, address, idNumber, birth);
@@ -41,11 +42,11 @@ public abstract class User extends Person {
     this.db = db;
   }
 
-  public RedBlackBST<TimePeriod, Poi> getVisitedPoi() {
+  public RedBlackBST<Integer, ArrayList<TimePeriod>> getVisitedPoi() {
     return this.visitedPoi;
   }
 
-  public void setVisitedPoi(RedBlackBST<TimePeriod, Poi> visitedPoi) {
+  public void setVisitedPoi(RedBlackBST<Integer, ArrayList<TimePeriod>> visitedPoi) {
     this.visitedPoi = visitedPoi;
   }
 
@@ -54,9 +55,19 @@ public abstract class User extends Person {
     if (tp == null) throw new IllegalArgumentException("argument 'tp' to addVisitedPoi() is null");
     // check weather poi is in database
     if (this.db.getPoiST().contains(p.getNodeId())) {
-      // add it to visitedPoi of user
-      this.visitedPoi.put(tp, p);
-      // go to poi and add user to list of visitors
+      // check to see if user has visited PoI before
+      ArrayList<TimePeriod> timePeriods = this.visitedPoi.get(p.getNodeId());
+      // if null users has not visited PoI before
+      if (timePeriods == null) {
+        timePeriods = new ArrayList<>();
+        timePeriods.add(tp);
+        this.visitedPoi.put(p.getNodeId(), timePeriods);
+      }
+      else {
+        timePeriods.add(tp);
+        this.visitedPoi.put(p.getNodeId(), timePeriods);
+      }
+      // update list of visitors in PoI
       this.db.getPoiST().get(p.getNodeId()).addVisitor(this, tp);
     }
   }

@@ -8,11 +8,11 @@ import edu.princeton.cs.algs4.Out;
  */
 public class Arquive {
     
-    private static final String path_users = "data/out/users_out.txt";
-    private static final String path_nodes = "data/out/nodes_out.txt";
-    private static final String path_ways = "data/out/ways_out.txt";
-    private static final String path_poi = "data/out/poi_out.txt";
-    private static final String path_tags = "data/out/tags_out.txt";
+    private static final String path_users = "/Users/VitorHugo/dev/java/projects/siu/data/out/users_out.txt";
+    private static final String path_nodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/nodes_out.txt";
+    private static final String path_ways = "/Users/VitorHugo/dev/java/projects/siu/data/out/ways_out.txt";
+    private static final String path_poi = "/Users/VitorHugo/dev/java/projects/siu/data/out/poi_out.txt";
+    private static final String path_tags = "/Users/VitorHugo/dev/java/projects/siu/data/out/tags_out.txt";
 
     public static void User (User u) {
         Out out = new Out(path_users);

@@ -9,7 +9,7 @@ import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
 public class Poi extends Node{
 
   // maps timeperiod to user
-  private RedBlackBST<TimePeriod, ArrayList<User>> visitorST = new RedBlackBST<>();
+  private RedBlackBST<String, ArrayList<TimePeriod>> visitorST = new RedBlackBST<>();
   
   public Poi(Integer nodeId, Point coordinates) {
     super(nodeId, coordinates);
@@ -18,35 +18,42 @@ public class Poi extends Node{
   public Poi (Node n) {
     super(n.getNodeId(), n.getCoordinates());
   }
-
-  public RedBlackBST<TimePeriod, ArrayList<User>> getVisitorST() {
+  
+  public RedBlackBST<String, ArrayList<TimePeriod>> getVisitorST() {
     return visitorST;
   }
-  public void setVisitorST(RedBlackBST<TimePeriod, ArrayList<User>> visitorST) {
+
+  public void setVisitorST(RedBlackBST<String, ArrayList<TimePeriod>> visitorST) {
     this.visitorST = visitorST;
-  }  
+  }
 
   public void addVisitor (User u, TimePeriod tp) {
     if (u == null) throw new IllegalArgumentException("argument to addVisitor() is null");
     // we need to check weather timeperiod already exists in visitors
-    if (this.visitorST.contains(tp)) {
-      this.visitorST.get(tp).add(u);
+    ArrayList<TimePeriod> timePeriods;
+    if (this.containsVisitor(u)) {
+      timePeriods = this.visitorST.get(u.getIdNumber());
+      timePeriods.add(tp);
+      this.visitorST.put(u.getIdNumber(), timePeriods);
     }
     else {
-      ArrayList<User> users = new ArrayList<>();
-      users.add(u);
-      this.visitorST.put(tp, users);
+      timePeriods = new ArrayList<>();
+      timePeriods.add(tp);
+      this.visitorST.put(u.getIdNumber(), timePeriods);
     }
-    
+  }
+
+  public void listVisitors() {
+    if (!this.visitorST.isEmpty()) {
+      for (var v : this.visitorST.keys()) {
+        System.out.println("User: " + v);
+      }
+    }
   }
 
   public boolean containsVisitor (User u) {
     if (u == null) throw new IllegalArgumentException("argument to containsUser() is null");
-    for (var v : this.visitorST.keys()) {
-      ArrayList<User> users = this.visitorST.get(v);
-      if (users.contains(u)) return true;
-    }
-    return false;
+    return this.visitorST.contains(u.getIdNumber()) ? true : false;
   }
   
 }
