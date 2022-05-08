@@ -10,6 +10,7 @@ public class Poi extends Node{
 
   // maps timeperiod to user
   private RedBlackBST<String, ArrayList<TimePeriod>> visitorST = new RedBlackBST<>();
+  private Long averageTimeSpent; // measured in seconds
   
   public Poi(Integer nodeId, Point coordinates) {
     super(nodeId, coordinates);
@@ -22,9 +23,14 @@ public class Poi extends Node{
   public RedBlackBST<String, ArrayList<TimePeriod>> getVisitorST() {
     return visitorST;
   }
-
   public void setVisitorST(RedBlackBST<String, ArrayList<TimePeriod>> visitorST) {
     this.visitorST = visitorST;
+  }
+  public Long getAverageTimeSpent() {
+    return averageTimeSpent;
+  }
+  public void setAverageTimeSpent(Long averageTimeSpent) {
+    this.averageTimeSpent = averageTimeSpent;
   }
 
   public void addVisitor (User u, TimePeriod tp) {
@@ -56,4 +62,8 @@ public class Poi extends Node{
     return this.visitorST.contains(u.getIdNumber()) ? true : false;
   }
   
+  @Override
+  public String toString() {
+      return super.toString() + "," + this.averageTimeSpent;
+  }
 }

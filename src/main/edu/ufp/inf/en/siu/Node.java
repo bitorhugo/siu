@@ -128,4 +128,8 @@ public class Node {
     return Objects.hash(this.coordinates, this.tags.hashCode());
   }
 
+  @Override
+  public String toString() {
+      return this.nodeId + "," + this.coordinates;
+  }
 }

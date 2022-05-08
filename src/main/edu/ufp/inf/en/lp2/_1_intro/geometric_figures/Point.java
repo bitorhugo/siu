@@ -34,6 +34,11 @@ public class Point {
         this.y += y;
     }
 
+    @Override
+    public String toString() {
+        return this.x + "," + this.y;
+    }
+    
     public static void main(String[] args) {
         Point p = new Point (-7, -4);
         System.out.println(p.dist(new Point(17, 6.5f)));

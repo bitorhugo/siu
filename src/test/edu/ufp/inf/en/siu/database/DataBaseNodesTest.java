@@ -14,6 +14,7 @@ public class DataBaseNodesTest {
         Node n = new Node(1234, new Point(123, 321));
 
         db.addNode(n);
+        System.out.println(n);
         assertTrue(!db.getNodesST().isEmpty());
         assertTrue(db.getNodesST().size() == 1);
     }
