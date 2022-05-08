@@ -1,6 +1,6 @@
 ## Folder Structure
 
-The workspace contains two folders by default, where:
+The workspace contains four folders where:
 
 - `src/main`: the folder to maintain source code
 - `src/test`: the folder to maintain code tests
