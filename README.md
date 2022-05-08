@@ -5,6 +5,7 @@ The workspace contains two folders by default, where:
 - `src/main`: the folder to maintain source code
 - `src/test`: the folder to maintain code tests
 - `lib`: the folder to maintain dependencies
+- `UML`: the folder to maintain Unified Modeling Language diagrams
 
 Meanwhile, the compiled output files will be generated in the `bin` folder by default.
 
