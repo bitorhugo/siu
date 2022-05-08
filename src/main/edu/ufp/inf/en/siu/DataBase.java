@@ -63,6 +63,7 @@ public class DataBase {
   /**
    * Adds user to DataBase
    * @param u user to add
+   * @author Vitor Hugo
    */
   public void addUser(User u) {
     this.userST.put(u.getIdNumber(), u);
@@ -74,6 +75,7 @@ public class DataBase {
    * removes a user from DataBase and arquives it
    * @param u user to remove
    * @return removed user
+   * @author Vitor Hugo
    */
   public User removeUser(User u) {
     if (u == null) throw new IllegalArgumentException("argument to removeUser() is null");
@@ -90,6 +92,7 @@ public class DataBase {
    * edits a user from Database
    * @param o old user to edit
    * @param n new user to replace the old one
+   * @author Vitor Hugo
    */
   public void editUser(User o, User n) {
     if (o == null) throw new IllegalArgumentException("argument 'o' to editUser() is null");
@@ -101,6 +104,7 @@ public class DataBase {
    * searches for a user from DataBase
    * @param u user to search
    * @return User if able to present || null is not
+   * @author Vitor Hugo
    */
   public User searchUser(String id) {
     if (id == null) throw new IllegalArgumentException("argument to searchUser() is null");
@@ -109,6 +113,7 @@ public class DataBase {
 
   /**
    * lists all users from DataBase
+   * @author Vitor Hugo
    */
   public void listUsers() {
     if (!this.userST.isEmpty()) {
@@ -121,6 +126,7 @@ public class DataBase {
   /**
    * adds a node to database
    * @param n node to add
+   * @author Vitor Hugo
    */
   public void addNode(Node n) {
     if (n == null) throw new IllegalArgumentException("argument to addNode() is null");
@@ -131,6 +137,7 @@ public class DataBase {
    * removes a node from database
    * @param n node to remove
    * @return removed node || null if not found
+   * @author Vitor Hugo
    */
   public Node removeNode(Node n) {
     if (n == null) throw new IllegalArgumentException("argument to removeNode() is null");
@@ -149,6 +156,7 @@ public class DataBase {
    * edits a node from database
    * @param o old node to remove
    * @param n new node to add
+   * @author Vitor Hugo
    */
   public void editNode(Node o, Node n) {
     if (o == null) throw new IllegalArgumentException("argument 'o' for editNode() is null");
@@ -160,6 +168,7 @@ public class DataBase {
    * searches for a node in database
    * @param id id of node to search for
    * @return node to search for || null if not found
+   * @author Vitor Hugo
    */
   public Node searchNode(Integer id) {
     if (id == null) throw new IllegalArgumentException("argument for searchNode() is null");
@@ -168,6 +177,7 @@ public class DataBase {
 
   /**
    * lists all nodes from database
+   * @author Vitor Hugo
    */
   public void listNodes() {
     if (!this.nodesST.isEmpty()) {
@@ -181,6 +191,7 @@ public class DataBase {
   /**
    * adds a way to database
    * @param w way to add
+   * @author Vitor Hugo
    */
   public void addWay(Way w) {
     if (w == null) throw new IllegalArgumentException("argument to addWay() is null");
@@ -191,6 +202,7 @@ public class DataBase {
    * removes a way from database
    * @param w way to remove
    * @return removed way || null if not found
+   * @author Vitor Hugo
    */
   public Way removeWay(Way w) {
     if (w == null) throw new IllegalArgumentException("argument to removeWay() is null");
@@ -209,6 +221,7 @@ public class DataBase {
    * edits a way from database
    * @param o old way
    * @param n new way
+   * @author Vitor Hugo
    */
   public void editWay(Way o, Way n) {
     if (o == null) throw new IllegalArgumentException("argument 'o' to editWay() is null");
@@ -220,6 +233,7 @@ public class DataBase {
    * searches for a specified way in database
    * @param w way to search for
    * @return way if found || null if not found
+   * @author Vitor Hugo
    */
   public Way searchWay (Way w) {
     if (w == null) throw new IllegalArgumentException("argument to searchWay() is null");
@@ -228,6 +242,7 @@ public class DataBase {
 
   /**
    * lists all ways from database
+   * @author Vitor Hugo
    */
   public void listWays() {
     if (!this.waysST.isEmpty()) {
@@ -244,6 +259,7 @@ public class DataBase {
    * key -> tag 't'
    * value -> all nodes and ways where tag 't' is present
    * @param t tag
+   * @author Vitor Hugo
    */
   private void addTag (Tag t) { 
     if (t == null) throw new IllegalArgumentException("argument to addTag() is null");
@@ -276,6 +292,7 @@ public class DataBase {
    * @param n node
    * @param t tag
    * @param value value of tag
+   * @author Vitor Hugo
    */
   public void addNodeTag (Node n, Tag t, String value) {
     if (t == null) throw new IllegalArgumentException("argument to addNodeTag() is null");
@@ -293,6 +310,7 @@ public class DataBase {
    * @param w way
    * @param t tag
    * @param value value of tag
+   * @author Vitor Hugo
    */
   public void addWayTag (Way w, Tag t, String value) {
     if (this.waysST.contains(w.getWayId())) {
@@ -308,6 +326,7 @@ public class DataBase {
    * removes an object instance containing the specified tag
    * @param t tag to remove
    * @return object containing the specified tag
+   * @author Vitor Hugo
    */
   private void removeTagsObject (Object o, Tag t) {
     if (t == null) throw new IllegalArgumentException("argument to removeTag() is null");
@@ -330,6 +349,7 @@ public class DataBase {
    * @param n node
    * @param t tag
    * @return tag removed if found || null if not found
+   * @author Vitor Hugo
    */
   public Tag removeNodeTag (Node n, Tag t) {
     if (this.nodesST.contains(n.getNodeId())){
@@ -346,6 +366,7 @@ public class DataBase {
    * @param w way
    * @param t tag
    * @return tag removed if found || null if not found
+   * @author Vitor Hugo
    */
   public Tag removeWayTag (Way w, Tag t) {
     if (this.nodesST.contains(w.getWayId())){
@@ -359,6 +380,7 @@ public class DataBase {
 
   /**
    * lists all tags used in database
+   * @author Vitor Hugo
    */
   public void listTags() {
     if (!this.tagsST.isEmpty()) {
@@ -371,6 +393,7 @@ public class DataBase {
   /**
    * lists all nodes and ways that specified tag is used
    * @param t tag to look for
+   * @author Vitor Hugo
    */
   public void listTagValues (Tag t) {
     if (t == null) throw new IllegalArgumentException("argument to lisTagValues() is null");
@@ -384,6 +407,7 @@ public class DataBase {
   /**
    * lists all nodes that specified tag is used
    * @param t tag to look for
+   * @author Vitor Hugo
    */
   public void listTagValuesForNodes (Tag t) {
     if (t == null) throw new IllegalArgumentException("argument to lisTagValues() is null");
@@ -399,6 +423,7 @@ public class DataBase {
   /**
    * lists all ways that specified tag is used
    * @param t tag to look for
+   * @author Vitor Hugo
    */
   public void listTagValuesForWays (Tag t) {
     if (t == null) throw new IllegalArgumentException("argument to lisTagValues() is null");
@@ -414,6 +439,7 @@ public class DataBase {
   /**
    * adds a poi to database
    * @param p poi
+   * @author Vitor Hugo
    */
   public void addPoi (Poi p) {
     if (p == null) throw new IllegalArgumentException("argument to addPoi() is null");
@@ -425,6 +451,7 @@ public class DataBase {
    * removes a poi from database
    * @param p poi to remove
    * @return poi removed if found || null if not found
+   * @author Vitor Hugo
    */
   public Poi removePoi (Poi p) {
     if (p == null) throw new IllegalArgumentException("argument to addPoi() is null");
@@ -444,6 +471,7 @@ public class DataBase {
    * edits a poi from database
    * @param o old poi
    * @param n new poi
+   * @author Vitor Hugo
    */
   public void editPoi (Poi o, Poi n) {
     if (o == null) throw new IllegalArgumentException("argument 'o' to addPoi() is null");
@@ -455,6 +483,7 @@ public class DataBase {
    * searches for a poi in database
    * @param p poi to search for
    * @return poi if found || null if not found
+   * @author Vitor Hugo
    */
   public Poi searchPoi (Poi p) {
     if (p == null) throw new IllegalArgumentException("argumento to searchPoi() is null");
@@ -463,6 +492,7 @@ public class DataBase {
   
   /**
    * lists all poi from database
+   * @author Vitor Hugo
    */
   public void listPoi () {
     if (!this.poiST.isEmpty()) {
@@ -478,6 +508,7 @@ public class DataBase {
    * @param start initial timestamp
    * @param end last timestamp
    * @return arraylist containing all pois between start and end || null if not visited any poi
+   * @author Vitor Hugo
    */
   public ArrayList<Poi> getUserPoisVisited (User u, TimePeriod tp) {
     if (u == null) throw new IllegalArgumentException("argument 'u' to getUserPoisVisited() is null");
@@ -504,6 +535,7 @@ public class DataBase {
    * @param start initial timestamp
    * @param end last timestamp
    * @return arraylist containing all pois between start and end || null if not visited any poi
+   * @author Vitor Hugo
    */
   public ArrayList<Poi> getUserPoisNotVisited (User u, TimePeriod tp) {
     if (u == null) throw new IllegalArgumentException("argument 'u' to getUserPoisNotVisited() is null");
@@ -543,6 +575,7 @@ public class DataBase {
    * @param start initial timestamp
    * @param end last timestamp
    * @return arraylist containing all users that visited poi between start and end || null if not any
+   * @author Vitor Hugo
    */
   public ArrayList<User> getUsersThatVisitedPoi (Poi p, TimePeriod tp) {
     if (p == null) throw new IllegalArgumentException("argument 'p' to getUsersThatVisitedPoi() is null");
@@ -578,6 +611,10 @@ public class DataBase {
     return null;
   }
 
+  /**
+   * takes a snapshot of the current state of the aplication
+   * @author Vitor Hugo
+   */
   public void now() {
     LocalDateTime currentTime = LocalDateTime.now();
     if (!this.poiST.isEmpty()) {
