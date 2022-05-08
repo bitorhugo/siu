@@ -2,7 +2,8 @@
 
 The workspace contains two folders by default, where:
 
-- `src`: the folder to maintain sources
+- `src/main`: the folder to maintain source code
+- `src/test`: the folder to maintain code tests
 - `lib`: the folder to maintain dependencies
 
 Meanwhile, the compiled output files will be generated in the `bin` folder by default.
@@ -15,14 +16,25 @@ algs4 library from Kevin Wayne and Bob Sedgewick: https://algs4.cs.princeton.edu
 in-class built java-classes (LP2)
 
 
+javaFx library: see https://openjfx.io/openjfx-docs/ from more info
+
+
 ## Requisites:
 
-# R1: 
+# R1: DONE
 # R2: DONE
 # R3: DONE
 # R4: DONE
-# R5: 
-# R6: 
-# R7: 
+# R5: 2/3 DONE
+# R6: DONE
+# R7: DONE FOR CURRENT CLASSES
 # R8: DONE
-
+# R9: DONE
+# R10: 
+# R11: 
+# R12: 
+# R13: DONE
+# R14: 
+# R15: 
+# R16: 
+# R17: 

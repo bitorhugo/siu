@@ -102,6 +102,15 @@ public class Way extends DirectedEdge {
 }
   
   @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (this.getClass() != obj.getClass()) return false;
+    Way w = (Way) obj;
+    return Objects.equals(this.wayId, w.getWayId());
+  }
+
+  @Override
   public String toString() {
       return this.wayId + "," + this.from() + "," + this.to() + "," + super.weight() + "," + this.listTags();
   }
