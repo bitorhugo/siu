@@ -16,7 +16,7 @@ algs4 library from Kevin Wayne and Bob Sedgewick: https://algs4.cs.princeton.edu
 in-class built java-classes (LP2)
 
 
-javaFx library: see https://openjfx.io/openjfx-docs/ from more info
+javaFx library: see https://openjfx.io/openjfx-docs/ for more info
 
 
 ## Requisites:
