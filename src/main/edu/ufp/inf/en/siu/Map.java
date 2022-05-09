@@ -49,6 +49,14 @@ public class Map {
         this.nodes = nodes;
     }
 
+    /**
+     * Calculates the shortest path between two nodes
+     * @param transportType the type of transportation used (e.g: bus, walking, cycling, cityVehicle, highwayVehicle)
+     * @param origin origin node
+     * @param destination destination node
+     * @return distance in meters or seconds depending on transportation used
+     * @author Vitor Hugo
+     */
     public double shortestPath (String transportType, Node origin, Node destination) {
         if (transportType == null) throw new IllegalArgumentException("argument to shortestPath() is null");
 
