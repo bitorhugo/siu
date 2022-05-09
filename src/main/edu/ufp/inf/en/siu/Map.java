@@ -1,5 +1,6 @@
 package main.edu.ufp.inf.en.siu;
 
+import edu.princeton.cs.algs4.DijkstraSP;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.RedBlackBST;
 
@@ -46,6 +47,23 @@ public class Map {
 
     public void setNodes(RedBlackBST<Integer, Node> nodes) {
         this.nodes = nodes;
+    }
+
+    public double shortestPath (String transportType, Node origin, Node destination) {
+        if (transportType == null) throw new IllegalArgumentException("argument to shortestPath() is null");
+
+        // set corresponding transportType weight as Way chosenWeight
+        
+        this.graph.edges().forEach(edge -> {
+                                    Way w = (Way)edge;
+                                    w.setChosenWeight(transportType);
+                                });
+
+        // use djikstras to calculate shortest path
+        DijkstraSP dsp = new DijkstraSP(this.graph, origin.getIndexMap());
+        
+        double dist = dsp.distTo(destination.getIndexMap());
+        return dist;
     }
 
 }

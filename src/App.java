@@ -26,7 +26,7 @@ public class App extends Application{
     
     public static void main(String[] args) throws Exception {    
 
-        launch();
+        //launch();
         
         DataBase db = new DataBase();
         
@@ -35,11 +35,12 @@ public class App extends Application{
         Arquive.User(db.removeUser(b));
         Upload.Nodes(db);
         Upload.Ways(db);
-        db.removeWay(db.getWaysST().get(13797641));
-        db.listWays();
+        db.listNodes();
+        
         
         Map map = new Map(db);
-        System.out.println(map.getGraph());
+        double dist = map.shortestPath("bus", db.searchNode(128560429), db.searchNode(961309053));
+        System.out.println(dist);
     }
 
 }

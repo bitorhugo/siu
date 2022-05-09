@@ -24,20 +24,20 @@ public class Way extends DirectedEdge {
   }
 
   private final Integer wayId;
-  
   private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
-  
-  // key: transport, value: timeWeight (minutes)
+  // key:transport value:timeWeight (minutes)
   private SeparateChainingHashST<Transport, Double> timeWeights = new SeparateChainingHashST<>();
-  
+  private Double distanceWeight;
   private double chosenWeight;
   
   public Way(Integer wayId, int o, int t, double w) {
+    // by default edge weight is the distanceWeight
     super(o, t, w);
     this.wayId = wayId;
+    this.distanceWeight = w;
     this.chosenWeight = w;
     for (var v : Transport.values()) {
-      double timeWeight = (this.weight() / v.speed);
+      double timeWeight = (w / v.speed);
       timeWeights.put(v, timeWeight);
     }
   }
@@ -50,12 +50,35 @@ public class Way extends DirectedEdge {
   public Integer getWayId() {
     return wayId;
   }
+  
   public SeparateChainingHashST<Tag, String> getTags() {
     return tags;
   } 
   public void setTags(SeparateChainingHashST<Tag, String> tags) {
     this.tags = tags;
   }
+  
+  public double getChosenWeight() {
+    return chosenWeight;
+  }
+  public void setChosenWeight(String transportType) {
+    this.chosenWeight = timeWeights.get(Transport.valueOf(transportType.toUpperCase()));
+  }
+  
+  public SeparateChainingHashST<Transport, Double> getTimeWeights() {
+    return timeWeights;
+  }
+  public void setTimeWeights(SeparateChainingHashST<Transport, Double> timeWeights) {
+    this.timeWeights = timeWeights;
+  }
+  
+  public Double getDistanceWeight() {
+    return distanceWeight;
+  }
+  public void setDistanceWeight(Double distanceWeight) {
+    this.distanceWeight = distanceWeight;
+  }
+
 
   public void addTag (Tag t, String value) {
     this.tags.put(t, value);
