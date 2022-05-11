@@ -133,9 +133,9 @@ public class Way extends DirectedEdge {
     return Objects.equals(this.wayId, w.getWayId());
   }
 
-  @Override
+  /*@Override
   public String toString() {
       return this.wayId + "," + this.from() + "," + this.to() + "," + super.weight() + "," + this.listTags();
-  }
+  }*/
 
 }

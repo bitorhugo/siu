@@ -16,6 +16,7 @@ public class DataBaseUsersTest {
         db.addUser(admin);
         assertTrue(!db.getUserST().isEmpty());
         assertTrue(db.getUserST().size() == 1);
+        assertTrue(db.searchUser(admin.getIdNumber()) instanceof Admin);
     }
 
     @Test

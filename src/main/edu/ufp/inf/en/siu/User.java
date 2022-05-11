@@ -1,7 +1,8 @@
 package main.edu.ufp.inf.en.siu;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Objects;
 
 import edu.princeton.cs.algs4.RedBlackBST;
@@ -12,7 +13,7 @@ public abstract class User extends Person {
   private String email;
   private String password;
   private DataBase db;
-  private RedBlackBST<Integer, ArrayList<TimePeriod>> visitedPoi = new RedBlackBST<>();
+  private RedBlackBST<Long, Poi> visitedPoi = new RedBlackBST<>();
 
   public User(String name, String address, String idNumber, LocalDate birth) {
     super(name, address, idNumber, birth);
@@ -21,54 +22,47 @@ public abstract class User extends Person {
   public String getEmail() {
     return email;
   }
-
   public void setEmail(String email) {
     this.email = email;
   }
-
   public String getPassword() {
     return password;
   }
-
   public void setPassword(String password) {
     this.password = password;
   }
-
   public DataBase getDb() {
     return db;
   }
-
   public void setDb(DataBase db) {
     this.db = db;
   }
-
-  public RedBlackBST<Integer, ArrayList<TimePeriod>> getVisitedPoi() {
-    return this.visitedPoi;
+  public RedBlackBST<Long, Poi> getVisitedPoi() {
+    return visitedPoi;
   }
-
-  public void setVisitedPoi(RedBlackBST<Integer, ArrayList<TimePeriod>> visitedPoi) {
+  public void setVisitedPoi(RedBlackBST<Long, Poi> visitedPoi) {
     this.visitedPoi = visitedPoi;
   }
-
-  public void addVisitedPoi (Poi p, TimePeriod tp) {
-    if (p == null) throw new IllegalArgumentException("argument 'p' to addVisitedPoi() is null");
-    if (tp == null) throw new IllegalArgumentException("argument 'tp' to addVisitedPoi() is null");
+  
+  public void addVisitedPoi (Poi poi, Long entrance) {
+    if (poi == null) throw new IllegalArgumentException("argument 'poi' to addVisitedPoi() is null");
+    if (entrance == null) throw new IllegalArgumentException("argument 'entrance' to addVisitedPoi() is null");
     // check weather poi is in database
-    if (this.db.getPoiST().contains(p.getNodeId())) {
-      // check to see if user has visited PoI before
-      ArrayList<TimePeriod> timePeriods = this.visitedPoi.get(p.getNodeId());
-      // if null users has not visited PoI before
-      if (timePeriods == null) {
-        timePeriods = new ArrayList<>();
-        timePeriods.add(tp);
-        this.visitedPoi.put(p.getNodeId(), timePeriods);
+    if (this.db.getPoiST().contains(poi.getNodeId())) {
+      Poi p = this.db.searchPoi(poi);
+      // update visitors of p
+      this.db.searchPoi(p).addVisitor(this, entrance);
+      // add poi to visitedPoi
+      this.visitedPoi.put(entrance, p);
+    }
+  }
+
+  public void history () {
+    if (!this.visitedPoi.isEmpty()) {
+      for (Long timestamp : this.visitedPoi.keys()) {
+        System.out.println("Poi " + this.visitedPoi.get(timestamp).getNodeId()
+                            + " Date visited: " + LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.UTC));
       }
-      else {
-        timePeriods.add(tp);
-        this.visitedPoi.put(p.getNodeId(), timePeriods);
-      }
-      // update list of visitors in PoI
-      this.db.getPoiST().get(p.getNodeId()).addVisitor(this, tp);
     }
   }
 

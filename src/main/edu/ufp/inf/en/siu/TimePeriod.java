@@ -19,7 +19,6 @@ public class TimePeriod implements Comparable<TimePeriod>{
 		return end;
 	}
     
-
 	@Override
     public String toString() {
         return this.start + "," + this.end;
@@ -27,8 +26,8 @@ public class TimePeriod implements Comparable<TimePeriod>{
 
 	@Override
 	public int compareTo(TimePeriod o) {
-		if (this.end.isBefore(o.end)) return -1;
-        if (this.end.isAfter(o.end)) return 1;
+		if (this.start.isBefore(o.getStart())) return -1;
+        if (this.start.isAfter(o.getStart())) return 1;
         return 0;
 	}
 

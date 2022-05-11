@@ -10,6 +10,8 @@ public class Poi extends Node{
 
   // maps timeperiod to user
   private RedBlackBST<String, ArrayList<TimePeriod>> visitorST = new RedBlackBST<>();
+  
+  private RedBlackBST<Long, ArrayList<User>> visitorsEntrance = new RedBlackBST<>();
   private Long averageTimeSpent; // measured in seconds
   
   public Poi(Integer nodeId, Point coordinates) {
@@ -33,6 +35,7 @@ public class Poi extends Node{
     this.averageTimeSpent = averageTimeSpent;
   }
 
+  /*
   public void addVisitor (User u, TimePeriod tp) {
     if (u == null) throw new IllegalArgumentException("argument to addVisitor() is null");
     // we need to check weather timeperiod already exists in visitors
@@ -46,6 +49,31 @@ public class Poi extends Node{
       timePeriods = new ArrayList<>();
       timePeriods.add(tp);
       this.visitorST.put(u.getIdNumber(), timePeriods);
+    }
+  }
+  */
+
+  public RedBlackBST<Long, ArrayList<User>> getVisitorsEntrance() {
+    return visitorsEntrance;
+  }
+
+  public void setVisitorsEntrance(RedBlackBST<Long, ArrayList<User>> visitorsEntrance) {
+    this.visitorsEntrance = visitorsEntrance;
+  }
+
+  public void addVisitor (User u, Long entrance) {
+    if (u == null) throw new IllegalArgumentException("argument 'u' to addVisitor() is null");
+    if (entrance == null) throw new IllegalArgumentException("argument 'entrance' to addVisitor() is null");
+    
+    ArrayList<User> visitors;
+    if (this.visitorsEntrance.contains(entrance)) {
+      visitors = this.visitorsEntrance.get(entrance);
+      visitors.add(u);
+    }
+    else {
+      visitors = new ArrayList<>();
+      visitors.add(u);
+      this.visitorsEntrance.put(entrance, visitors);
     }
   }
 

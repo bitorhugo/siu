@@ -2,6 +2,7 @@
 import java.io.IOException;
 import java.time.LocalDate;
 
+import edu.princeton.cs.algs4.Out;
 import main.edu.ufp.inf.en.siu.*;
 
 import javafx.application.Application;
@@ -25,9 +26,9 @@ public class App extends Application{
     }
     
     public static void main(String[] args) throws Exception {    
-
-        //launch();
         
+        //launch();
+
         DataBase db = new DataBase();
         
         Admin b = new Admin("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
@@ -36,11 +37,12 @@ public class App extends Application{
         Upload.Nodes(db);
         Upload.Ways(db);
         db.listNodes();
-        
+        db.listWays();
         
         Map map = new Map(db);
-        double dist = map.shortestPath("bus", db.searchNode(128560429), db.searchNode(961309053));
-        System.out.println(dist);
+        System.out.println(map.shortestPath(db.searchNode(128560437), db.searchNode(128564068)));
+        
+        
     }
 
 }

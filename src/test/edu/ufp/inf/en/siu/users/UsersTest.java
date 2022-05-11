@@ -3,12 +3,10 @@ package test.edu.ufp.inf.en.siu.users;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
+import java.time.Instant;
+
 import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.siu.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class UsersTest {
     
@@ -21,17 +19,32 @@ public class UsersTest {
         Poi p = new Poi(234, new Point(1234, 432));
         db.addPoi(p);
 
-        TimePeriod tp = new TimePeriod(LocalDateTime.now(),
-            LocalDateTime.of(LocalDate.now(), LocalTime.of(22, 55, 12)));
+        long timestamp = Instant.now().getEpochSecond();
 
-        a.addVisitedPoi(p, tp);
+        a.addVisitedPoi(p, timestamp);
         
         assertTrue(!a.getVisitedPoi().isEmpty());
         assertTrue(a.getVisitedPoi().size() == 1);
 
-        assertTrue(!p.getVisitorST().isEmpty());
-        assertTrue(p.getVisitorST().size() == 1);
-        assertTrue(p.containsVisitor(a));
+        assertTrue(!p.getVisitorsEntrance().isEmpty());
+        assertTrue(p.getVisitorsEntrance().size() == 1);
+    }
+
+    @Test
+    public void historyTest() {
+        DataBase db = new DataBase();
+        User a = new Admin("Vitor, ", "porto", "1234", null, null, null);
+        db.addUser(a);
+
+        Poi p = new Poi(234, new Point(1234, 432));
+        db.addPoi(p);
+
+        long timestamp = Instant.now().getEpochSecond();
+
+        a.addVisitedPoi(p, timestamp);
+
+        a.history();
+        
     }
 
 }

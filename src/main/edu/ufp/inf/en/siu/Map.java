@@ -1,5 +1,7 @@
 package main.edu.ufp.inf.en.siu;
 
+import java.util.ArrayList;
+
 import edu.princeton.cs.algs4.DijkstraSP;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.RedBlackBST;
@@ -7,10 +9,15 @@ import edu.princeton.cs.algs4.RedBlackBST;
 public class Map {
     
     private EdgeWeightedDigraph graph;
+    private ArrayList<EdgeWeightedDigraph> subGraphs = new ArrayList<>();
     private RedBlackBST<Integer, Node> nodes = new RedBlackBST<>();
 
     public Map(int numNodes) {
         this.graph = new EdgeWeightedDigraph(numNodes);
+    }
+
+    public Map(int V, int E) {
+        this.graph = new EdgeWeightedDigraph(V, E);
     }
 
     public Map(DataBase db) {
@@ -49,8 +56,29 @@ public class Map {
         this.nodes = nodes;
     }
 
+    public ArrayList<EdgeWeightedDigraph> getSubGraphs() {
+        return subGraphs;
+    }
+
+    public void setSubGraphs(ArrayList<EdgeWeightedDigraph> subGraphs) {
+        this.subGraphs = subGraphs;
+    }
+
+    // TODO: ask teacher about this..
+    public void createSubGraph (Tag... tags) {
+        this.graph.edges().forEach(edge -> {
+            Way w = (Way) edge;
+            EdgeWeightedDigraph subGraph = new EdgeWeightedDigraph(this.graph.V());
+            for (Tag tag : tags) {
+                if (w.containsTag(tag)) {
+                    subGraph.addEdge(w);
+                }
+            }
+        });
+    }
+
     /**
-     * Calculates the shortest path between two nodes
+     * Calculates the shortest path between two nodes using a transportation
      * @param transportType the type of transportation used (e.g: bus, walking, cycling, cityVehicle, highwayVehicle)
      * @param origin origin node
      * @param destination destination node
@@ -61,7 +89,6 @@ public class Map {
         if (transportType == null) throw new IllegalArgumentException("argument to shortestPath() is null");
 
         // set corresponding transportType weight as Way chosenWeight
-        
         this.graph.edges().forEach(edge -> {
                                     Way w = (Way)edge;
                                     w.setChosenWeight(transportType);
@@ -70,8 +97,28 @@ public class Map {
         // use djikstras to calculate shortest path
         DijkstraSP dsp = new DijkstraSP(this.graph, origin.getIndexMap());
         
-        double dist = dsp.distTo(destination.getIndexMap());
-        return dist;
+        // print to terminal path from origin to destination
+        //dsp.pathTo(destination.getIndexMap()).forEach(System.out::println);
+        return dsp.distTo(destination.getIndexMap());
     }
+
+    /**
+     * Calculates the shortest physical path between two nodes
+     * @param origin
+     * @param destination
+     * @return
+     */
+    public double shortestPath (Node origin, Node destination) {
+        
+        // use djikstras to calculate shortest path
+        DijkstraSP dsp = new DijkstraSP(this.graph, origin.getIndexMap());
+        
+        // print to terminal path from origin to destination
+        if (dsp.hasPathTo(destination.getIndexMap()))
+            dsp.pathTo(destination.getIndexMap()).forEach(System.out::println);
+    
+        return dsp.distTo(destination.getIndexMap());
+    }
+
 
 }

@@ -248,6 +248,7 @@ public class DataBase {
     if (!this.waysST.isEmpty()) {
       System.out.println("Way count: " + this.waysST.size());
       for (var i : this.waysST.keys()) {
+        Way w = this.waysST.get(i);
         System.out.println("Way: " + i);
       }
     }
@@ -510,23 +511,23 @@ public class DataBase {
    * @return arraylist containing all pois between start and end || null if not visited any poi
    * @author Vitor Hugo
    */
-  public ArrayList<Poi> getUserPoisVisited (User u, TimePeriod tp) {
-    if (u == null) throw new IllegalArgumentException("argument 'u' to getUserPoisVisited() is null");
-    if (tp == null) throw new IllegalArgumentException("argument 'tp' to getUserPoisVisited() is null");
-    if (this.userST.contains(u.getIdNumber())) {
+  public ArrayList<Poi> getUserPoisVisited (User user, Long start, Long end) {
+    if (user == null) throw new IllegalArgumentException("argument 'user' to getUserPoisVisited() is null");
+    if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
+    if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
+    
+    if (this.userST.contains(user.getIdNumber())) {
+      User u = this.userST.get(user.getIdNumber());
       ArrayList<Poi> pois = new ArrayList<>();
-      for (var poi : u.getVisitedPoi().keys()) {
-        ArrayList<TimePeriod> times = u.getVisitedPoi().get(poi);
-        for (var timePeriod : times) {
-          if ((timePeriod.getStart().isAfter(tp.getStart()) || timePeriod.getStart().isEqual(tp.getStart()))
-              && (timePeriod.getEnd().isBefore(tp.getEnd()) || timePeriod.getEnd().isEqual(tp.getEnd()))) {
-            pois.add(this.poiST.get(poi));
-          }
-        }
+      for (Long l : u.getVisitedPoi().keys(start, end)) {
+        pois.add(u.getVisitedPoi().get(l));
       }
       return pois;
     }
-    else return null;
+    else {
+      System.out.println("user didn't visit poi between this time period");
+      return null;
+    }
   }
 
   /**
@@ -537,36 +538,23 @@ public class DataBase {
    * @return arraylist containing all pois between start and end || null if not visited any poi
    * @author Vitor Hugo
    */
-  public ArrayList<Poi> getUserPoisNotVisited (User u, TimePeriod tp) {
-    if (u == null) throw new IllegalArgumentException("argument 'u' to getUserPoisNotVisited() is null");
-    if (tp == null) throw new IllegalArgumentException("argument 'tp' to getUserPoisNotVisited() is null");
-    if (this.userST.contains(u.getIdNumber())) {
-      ArrayList<Poi> pois = new ArrayList<>();
-      // iterate over all point of interest
-      for (Integer poi : this.poiST.keys()) {
-        Poi p = this.poiST.get(poi);
-        // if the user doesn't exist in visitors add it to list
-        if (!p.containsVisitor(u)) {
-          pois.add(p);
-        }
-        // otherwise search in timeperiod list for each user
-        else {
-          LocalDateTime start = tp.getStart();
-          LocalDateTime end = tp.getEnd();
-          for (String visitor : p.getVisitorST().keys()) {
-            ArrayList<TimePeriod> times = p.getVisitorST().get(visitor);
-            for (TimePeriod t : times) {
-              if ((t.getStart().isAfter(start) || t.getStart().isEqual(start)) 
-                  && (t.getEnd().isBefore(end) || t.getEnd().isEqual(end))) {
-                pois.add(p);
-              }
-            }
-          }
+  public ArrayList<Poi> getUserPoisNotVisited (User user, Long start, Long end) {
+    if (user == null) throw new IllegalArgumentException("argument 'user' to getUserPoisVisited() is null");
+    if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
+    if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
+
+    ArrayList<Poi> poisNotVisited = new ArrayList<>();
+    if (this.userST.contains(user.getIdNumber())) {
+      User u = this.userST.get(user.getIdNumber());
+      ArrayList<Poi> poisVisited = getUserPoisVisited(u, start, end);
+      for (Integer poiId : this.poiST.keys()) {
+        Poi p = this.poiST.get(poiId);
+        if (!poisVisited.contains(p)) {
+          poisNotVisited.add(p);
         }
       }
-      return pois;
     }
-    return null;    
+    return poisNotVisited; 
   }
 
   /**
@@ -577,28 +565,25 @@ public class DataBase {
    * @return arraylist containing all users that visited poi between start and end || null if not any
    * @author Vitor Hugo
    */
-  public ArrayList<User> getUsersThatVisitedPoi (Poi p, TimePeriod tp) {
-    if (p == null) throw new IllegalArgumentException("argument 'p' to getUsersThatVisitedPoi() is null");
-    if (tp == null) throw new IllegalArgumentException("argument 'tp' to getUsersThatVisitedPoi() is null");
+  public ArrayList<User> getUsersThatVisitedPoi (Poi poi, Long start, Long end) {
+    if (poi == null) throw new IllegalArgumentException("argument 'user' to getUserPoisVisited() is null");
+    if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
+    if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
 
-    if (this.poiST.contains(p.getNodeId())) {
+    if (this.poiST.contains(poi.getNodeId())) {
+      Poi p = this.poiST.get(poi.getNodeId());
       ArrayList<User> users = new ArrayList<>();
-      for (Integer poiId : this.poiST.keys()) {
-        Poi poi = this.poiST.get(poiId);
-        for (String userId : poi.getVisitorST().keys()) {
-          LocalDateTime start = tp.getStart();
-          LocalDateTime end = tp.getEnd();
-          ArrayList<TimePeriod> times = poi.getVisitorST().get(userId);
-          for (TimePeriod t : times) {
-            if ((t.getStart().isAfter(start) || t.getStart().isEqual(start)) && (t.getEnd().isBefore(end) || t.getEnd().isEqual(end)))
-            users.add(this.userST.get(userId));
-          }
+      for (Long l : p.getVisitorsEntrance().keys(start, end)) {
+        for (User u : p.getVisitorsEntrance().get(l)) {
+          users.add(u);
         }
       }
       return users;
     }
-
-    return null;
+    else {
+      System.out.println("poi doesn't have visitors between this time period");
+      return null;
+    }
   }
   
   /**
@@ -608,7 +593,26 @@ public class DataBase {
    * @return arraylist containing all poi that weren't visited between specified time || null if all were visited
    */
   public ArrayList<Poi> getPoiNotVisited (Long start, Long end) {
-    return null;
+    if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
+    if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
+
+    if (!this.poiST.isEmpty()) {
+      ArrayList<Poi> pois = new ArrayList<>();
+      for (Integer poiId : this.poiST.keys()) {
+        Poi p = this.poiST.get(poiId);
+        for (Long timestamp : p.getVisitorsEntrance().keys(start, end)) {
+          if (!p.getVisitorsEntrance().get(timestamp).isEmpty()) {
+            pois.add(p);
+          }
+        }
+      }
+      return pois;
+    }
+    else {
+      System.out.println("no pois under specification found");
+      return null;
+    }
+    
   }
 
   /**
@@ -616,7 +620,7 @@ public class DataBase {
    * @author Vitor Hugo
    */
   public void now() {
-    LocalDateTime currentTime = LocalDateTime.now();
+    /*LocalDateTime currentTime = LocalDateTime.now();
     if (!this.poiST.isEmpty()) {
       for (Integer poisId : this.poiST.keys()) {
         Poi p = this.poiST.get(poisId);
@@ -626,9 +630,8 @@ public class DataBase {
         ArrayList<User> currentUsers = getUsersThatVisitedPoi(p, currentTimePeriod);
         currentUsers.forEach(System.out::println);
       }
-    }
+    }*/
   }
-
   
 
 }

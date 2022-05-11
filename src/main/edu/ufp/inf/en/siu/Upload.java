@@ -6,10 +6,11 @@ import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
 
 public class Upload {
 
+    // private constructor
     private Upload(){}
 
-    private static final String nodesPath = "data/in/dataset1_nodes.txt";
-    private static final String waysPath = "data/in/dataset1_ways_nodepairs.txt";
+    private static final String nodesPath = "data/in/nodes.txt";
+    private static final String waysPath = "data/in/ways2.txt";
 
     /**
      * uploads nodes from nodesPath to database

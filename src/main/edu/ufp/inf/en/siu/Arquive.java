@@ -7,6 +7,9 @@ import edu.princeton.cs.algs4.Out;
  * Static class for arquiving purposes
  */
 public class Arquive {
+
+    // private constructor
+    private Arquive() {}
     
     private static final String path_users = "/Users/VitorHugo/dev/java/projects/siu/data/out/users_out.txt";
     private static final String path_nodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/nodes_out.txt";
