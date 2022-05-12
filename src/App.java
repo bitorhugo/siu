@@ -2,7 +2,6 @@
 import java.io.IOException;
 import java.time.LocalDate;
 
-import edu.princeton.cs.algs4.Out;
 import main.edu.ufp.inf.en.siu.*;
 
 import javafx.application.Application;
@@ -40,8 +39,7 @@ public class App extends Application{
         db.listWays();
         
         Map map = new Map(db);
-        System.out.println(map.shortestPath(db.searchNode(128560437), db.searchNode(128564068)));
-        
+        System.out.println(map.shortestPath("walking", db.searchNode(128560437), db.searchNode(128564068)));
         
     }
 

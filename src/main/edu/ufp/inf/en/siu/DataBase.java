@@ -1,7 +1,6 @@
 package main.edu.ufp.inf.en.siu;
 
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import edu.princeton.cs.algs4.RedBlackBST;
@@ -249,7 +248,7 @@ public class DataBase {
       System.out.println("Way count: " + this.waysST.size());
       for (var i : this.waysST.keys()) {
         Way w = this.waysST.get(i);
-        System.out.println("Way: " + i);
+        System.out.println(w);
       }
     }
   }
@@ -487,7 +486,7 @@ public class DataBase {
    * @author Vitor Hugo
    */
   public Poi searchPoi (Poi p) {
-    if (p == null) throw new IllegalArgumentException("argumento to searchPoi() is null");
+    if (p == null) throw new IllegalArgumentException("argument to searchPoi() is null");
     return this.poiST.get(p.getNodeId());
   }
   

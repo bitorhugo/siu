@@ -99,6 +99,7 @@ public class Map {
         
         // print to terminal path from origin to destination
         //dsp.pathTo(destination.getIndexMap()).forEach(System.out::println);
+        
         return dsp.distTo(destination.getIndexMap());
     }
 
