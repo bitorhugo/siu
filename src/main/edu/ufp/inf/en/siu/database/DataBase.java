@@ -111,7 +111,9 @@ public class DataBase {
    */
   public User searchUser(String id) {
     if (id == null) throw new IllegalArgumentException("argument to searchUser() is null");
-    return this.userST.get(id);
+    User u = this.userST.get(id);
+    Arquive.searchedUser(u);
+    return u;
   }
 
   /**
