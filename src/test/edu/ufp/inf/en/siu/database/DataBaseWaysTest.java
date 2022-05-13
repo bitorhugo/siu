@@ -56,8 +56,8 @@ public class DataBaseWaysTest {
         assertTrue(!db.getWaysST().isEmpty());
         assertTrue(db.getWaysST().size() == 1);
 
-        assertTrue(db.searchWay(w1).equals(w1));
-        assertTrue(!db.searchWay(w1).equals(w2));
+        assertTrue(db.searchWay(w1.getWayId()).equals(w1));
+        assertTrue(!db.searchWay(w1.getWayId()).equals(w2));
     }
 
     

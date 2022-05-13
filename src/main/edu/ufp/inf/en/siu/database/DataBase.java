@@ -236,13 +236,13 @@ public class DataBase {
 
   /**
    * searches for a specified way in database
-   * @param w way to search for
+   * @param id id of way to look for
    * @return way if found || null if not found
    * @author Vitor Hugo
    */
-  public Way searchWay (Way w) {
-    if (w == null) throw new IllegalArgumentException("argument to searchWay() is null");
-    return this.waysST.get(w.getWayId());
+  public Way searchWay (Integer id) {
+    if (id == null) throw new IllegalArgumentException("argument to searchWay() is null");
+    return this.waysST.get(id);
   }
 
   /**
@@ -491,9 +491,9 @@ public class DataBase {
    * @return poi if found || null if not found
    * @author Vitor Hugo
    */
-  public Poi searchPoi (Poi p) {
-    if (p == null) throw new IllegalArgumentException("argument to searchPoi() is null");
-    return this.poiST.get(p.getNodeId());
+  public Poi searchPoi (Integer id) {
+    if (id == null) throw new IllegalArgumentException("argument to searchPoi() is null");
+    return this.poiST.get(id);
   }
   
   /**

@@ -78,8 +78,8 @@ public class DataBasePoisTest {
         assertTrue(!db.getNodesST().isEmpty());
         assertTrue(db.getNodesST().size() == 2);
 
-        assertTrue(db.searchPoi(p1).equals(p1));
-        assertTrue(!db.searchPoi(p1).equals(p2));
+        assertTrue(db.searchPoi(p1.getNodeId()).equals(p1));
+        assertTrue(!db.searchPoi(p1.getNodeId()).equals(p2));
         
         assertTrue(db.searchNode(p1.getNodeId()).equals(p1));
         assertTrue(!db.searchNode(p1.getNodeId()).equals(p2));

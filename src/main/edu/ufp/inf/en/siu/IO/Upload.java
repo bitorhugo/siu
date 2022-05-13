@@ -15,9 +15,9 @@ public class Upload {
     // private constructor
     private Upload(){}
 
-    private static final String nodesPath = "data/in/nodes.txt";
-    private static final String waysPath = "data/in/ways2.txt";
-    private static final String graphPath = "data/in/map_in.txt";
+    private static final String nodesPath = "data/in/txt/nodes.txt";
+    private static final String waysPath = "data/in/txt/ways2.txt";
+    private static final String graphPath = "data/in/txt/map_in.txt";
 
     /**
      * uploads nodes from nodesPath to database

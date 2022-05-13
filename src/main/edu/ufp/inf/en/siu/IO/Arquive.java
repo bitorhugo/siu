@@ -1,7 +1,9 @@
 package main.edu.ufp.inf.en.siu.IO;
 
 
+import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.Out;
+import main.edu.ufp.inf.en.siu.database.DataBase;
 import main.edu.ufp.inf.en.siu.database.Node;
 import main.edu.ufp.inf.en.siu.database.Poi;
 import main.edu.ufp.inf.en.siu.database.Tag;
@@ -15,25 +17,42 @@ public class Arquive {
 
     // private constructor
     private Arquive() {}
+
+    private static final String NEWLINE = "\n";
     
-    private static final String path_users = "/Users/VitorHugo/dev/java/projects/siu/data/out/users_out.txt";
-    private static final String path_searchedUsers = "/Users/VitorHugo/dev/java/projects/siu/data/out/searched_users_out.txt";
+    private static final String path_users = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/users_out.txt";
+    private static final String path_searchedUsers = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/searched_users_out.txt";
+    private static final String path_datasetUsers = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/dataset_users_out.txt";
 
-    private static final String path_nodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/nodes_out.txt";
-    private static final String path_searchedNodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/searched_nodes_out.txt";
+    private static final String path_nodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/nodes_out.txt";
+    private static final String path_searchedNodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/searched_nodes_out.txt";
+    private static final String path_datasetNodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/dataset_nodes_out.txt";
     
-    private static final String path_ways = "/Users/VitorHugo/dev/java/projects/siu/data/out/ways_out.txt";
-    private static final String path_searchedWays = "/Users/VitorHugo/dev/java/projects/siu/data/out/searched-ways_out.txt";
+    private static final String path_ways = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/ways_out.txt";
+    private static final String path_searchedWays = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/searched-ways_out.txt";
+    private static final String path_datasetWays = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/dataset_ways_out.txt";
 
-    private static final String path_poi = "/Users/VitorHugo/dev/java/projects/siu/data/out/poi_out.txt";
-    private static final String path_searchedPoi = "/Users/VitorHugo/dev/java/projects/siu/data/out/searched_poi_out.txt";
+    private static final String path_poi = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/poi_out.txt";
+    private static final String path_searchedPoi = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/searched_poi_out.txt";
+    private static final String path_datasetPois = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/dataset_pois_out.txt";
 
-    private static final String path_tags = "/Users/VitorHugo/dev/java/projects/siu/data/out/tags_out.txt";
-    private static final String path_searchedTags = "/Users/VitorHugo/dev/java/projects/siu/data/out/searched_tags_out.txt";
+    private static final String path_tags = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/tags_out.txt";
+    private static final String path_searchedTags = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/searched_tags_out.txt";
+
+    private static final String path_graph = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/graph_out.txt";
 
     public static void User (User u) {
         Out out = new Out(path_users);
         out.print(u);
+    }
+
+    public static void Users (DataBase db) {
+        Out out = new Out(path_datasetUsers);
+        out.print(db.getUserST().size() + NEWLINE);
+        for (var v : db.getUserST().keys()) {
+            User u = db.searchUser(v);
+            out.print(u + NEWLINE);
+        }
     }
 
     public static void searchedUser (User u) {
@@ -46,6 +65,15 @@ public class Arquive {
         out.print(n);
     }
 
+    public static void Nodes (DataBase db) {
+        Out out = new Out(path_datasetNodes);
+        out.print(db.getNodesST().size() + NEWLINE);
+        for (var v : db.getNodesST().keys()) {
+            Node n = db.searchNode(v);
+            out.print(n + NEWLINE);
+        }
+    }
+
     public static void searchedNode (Node n) {
         Out out = new Out(path_searchedNodes);
         out.print(n);
@@ -56,6 +84,15 @@ public class Arquive {
         out.print(p);        
     }
 
+    public static void Pois (DataBase db) {
+        Out out = new Out(path_datasetPois);
+        out.print(db.getPoiST().size() + NEWLINE);
+        for (var v : db.getPoiST().keys()) {
+            Poi u = db.searchPoi(v);
+            out.print(u + NEWLINE);
+        }
+    }
+
     public static void searchedPoi(Poi p) {
         Out out = new Out(path_searchedPoi);
         out.print(p);        
@@ -64,6 +101,15 @@ public class Arquive {
     public static void Way(Way w) {
         Out out = new Out(path_ways);
         out.print(w);
+    }
+    
+    public static void Ways (DataBase db) {
+        Out out = new Out(path_datasetWays);
+        out.print(db.getWaysST().size() + NEWLINE);
+        for (var v : db.getWaysST().keys()) {
+            Way u = db.searchWay(v);
+            out.print(u + NEWLINE);
+        }
     }
 
     public static void searchedWay(Way w) {
@@ -105,4 +151,8 @@ public class Arquive {
         out.println();
     }
 
+    public static void graph (EdgeWeightedDigraph graph) {
+        Out out = new Out(path_graph);
+        out.print(graph);
+    }
 }

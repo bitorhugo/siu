@@ -2,6 +2,7 @@
 import java.io.IOException;
 import java.time.LocalDate;
 
+import main.edu.ufp.inf.en.siu.IO.Arquive;
 import main.edu.ufp.inf.en.siu.IO.Upload;
 import main.edu.ufp.inf.en.siu.database.DataBase;
 import main.edu.ufp.inf.en.siu.map.Map;
@@ -36,12 +37,15 @@ public class App extends Application{
         db.addUser(b);
         Upload.Nodes(db);
         Upload.Ways(db);
+        Arquive.Nodes(db);
+        
+        /*
         db.listNodes();
         db.listWays();
         
         Map map = new Map();
         Upload.Graph(map);
-        System.out.println(map.getGraph());
+        System.out.println(map.getGraph());*/
     }
 
 }
