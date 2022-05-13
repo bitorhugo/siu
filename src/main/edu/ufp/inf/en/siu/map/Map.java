@@ -1,9 +1,13 @@
-package main.edu.ufp.inf.en.siu;
+package main.edu.ufp.inf.en.siu.map;
 
 import edu.princeton.cs.algs4.DijkstraSP;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.RedBlackBST;
-import main.edu.ufp.inf.en.siu.Way.Transport;
+import main.edu.ufp.inf.en.siu.database.DataBase;
+import main.edu.ufp.inf.en.siu.database.Node;
+import main.edu.ufp.inf.en.siu.database.Tag;
+import main.edu.ufp.inf.en.siu.database.Way;
+import main.edu.ufp.inf.en.siu.database.Way.Transport;
 
 public class Map {
     

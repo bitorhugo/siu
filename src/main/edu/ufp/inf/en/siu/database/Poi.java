@@ -1,11 +1,14 @@
-package main.edu.ufp.inf.en.siu;
+package main.edu.ufp.inf.en.siu.database;
 
 import java.util.ArrayList;
 
 import edu.princeton.cs.algs4.RedBlackBST;
 import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
+import main.edu.ufp.inf.en.siu.TimePeriod;
+import main.edu.ufp.inf.en.siu.user.User;
 
 // extends node
+@SuppressWarnings("unused")
 public class Poi extends Node{
 
   // maps timeperiod to user
@@ -55,7 +58,6 @@ public class Poi extends Node{
     this.visitorsEntrance = visitorsEntrance;
   }
 
-  // TODO: refactor for standalone use, for each timestamp only one user is allowed
   public void addVisitor (User u, Long entrance) {
     if (u == null) throw new IllegalArgumentException("argument 'u' to addVisitor() is null");
     if (entrance == null) throw new IllegalArgumentException("argument 'entrance' to addVisitor() is null");

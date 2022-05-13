@@ -1,4 +1,4 @@
-package main.edu.ufp.inf.en.siu;
+package main.edu.ufp.inf.en.siu.user;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -7,6 +7,8 @@ import java.util.Objects;
 
 import edu.princeton.cs.algs4.RedBlackBST;
 import main.edu.ufp.inf.en.lp2._1_intro.person.Person;
+import main.edu.ufp.inf.en.siu.database.DataBase;
+import main.edu.ufp.inf.en.siu.database.Poi;
 
 public abstract class User extends Person {
 

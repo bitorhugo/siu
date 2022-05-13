@@ -1,4 +1,4 @@
-package main.edu.ufp.inf.en.siu;
+package main.edu.ufp.inf.en.siu.database;
 
 import java.util.Objects;
 
@@ -17,7 +17,7 @@ public class Way extends DirectedEdge {
     HIGHWAYVEHICLE(1833.33), 
     BUS(750);
 
-    final double speed;
+    public final double speed;
     private Transport (double speed){
       this.speed = speed;
     }    

@@ -1,4 +1,4 @@
-package main.edu.ufp.inf.en.siu;
+package main.edu.ufp.inf.en.siu.user;
 
 import java.time.LocalDate;
 import java.util.Objects;

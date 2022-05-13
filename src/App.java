@@ -2,8 +2,10 @@
 import java.io.IOException;
 import java.time.LocalDate;
 
-import main.edu.ufp.inf.en.siu.*;
-
+import main.edu.ufp.inf.en.siu.IO.Upload;
+import main.edu.ufp.inf.en.siu.database.DataBase;
+import main.edu.ufp.inf.en.siu.map.Map;
+import main.edu.ufp.inf.en.siu.user.Admin;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,7 +34,6 @@ public class App extends Application{
         
         Admin b = new Admin("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(b);
-        Arquive.User(db.removeUser(b));
         Upload.Nodes(db);
         Upload.Ways(db);
         db.listNodes();

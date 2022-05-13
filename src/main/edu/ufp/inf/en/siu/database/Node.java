@@ -1,4 +1,4 @@
-package main.edu.ufp.inf.en.siu;
+package main.edu.ufp.inf.en.siu.database;
 
 import java.util.Objects;
 

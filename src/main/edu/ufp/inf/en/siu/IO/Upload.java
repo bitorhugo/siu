@@ -1,9 +1,14 @@
-package main.edu.ufp.inf.en.siu;
+package main.edu.ufp.inf.en.siu.IO;
 
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
+import main.edu.ufp.inf.en.siu.database.DataBase;
+import main.edu.ufp.inf.en.siu.database.Node;
+import main.edu.ufp.inf.en.siu.database.Tag;
+import main.edu.ufp.inf.en.siu.database.Way;
+import main.edu.ufp.inf.en.siu.map.Map;
 
 public class Upload {
 

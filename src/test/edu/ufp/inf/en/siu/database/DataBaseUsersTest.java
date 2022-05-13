@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
-import main.edu.ufp.inf.en.siu.*;
+import main.edu.ufp.inf.en.siu.database.DataBase;
+import main.edu.ufp.inf.en.siu.user.Admin;
+import main.edu.ufp.inf.en.siu.user.Basic;
 
 public class DataBaseUsersTest {
     

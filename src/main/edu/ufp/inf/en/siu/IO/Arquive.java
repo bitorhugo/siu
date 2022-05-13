@@ -1,7 +1,12 @@
-package main.edu.ufp.inf.en.siu;
+package main.edu.ufp.inf.en.siu.IO;
 
 
 import edu.princeton.cs.algs4.Out;
+import main.edu.ufp.inf.en.siu.database.Node;
+import main.edu.ufp.inf.en.siu.database.Poi;
+import main.edu.ufp.inf.en.siu.database.Tag;
+import main.edu.ufp.inf.en.siu.database.Way;
+import main.edu.ufp.inf.en.siu.user.User;
 
 /**
  * Static class for arquiving purposes

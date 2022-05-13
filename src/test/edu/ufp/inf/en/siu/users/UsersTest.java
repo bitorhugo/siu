@@ -6,7 +6,10 @@ import static org.junit.Assert.assertTrue;
 import java.time.Instant;
 
 import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
-import main.edu.ufp.inf.en.siu.*;
+import main.edu.ufp.inf.en.siu.database.DataBase;
+import main.edu.ufp.inf.en.siu.database.Poi;
+import main.edu.ufp.inf.en.siu.user.Admin;
+import main.edu.ufp.inf.en.siu.user.User;
 
 public class UsersTest {
     

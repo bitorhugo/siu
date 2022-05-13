@@ -1,4 +1,4 @@
-package main.edu.ufp.inf.en.siu;
+package main.edu.ufp.inf.en.siu.database;
 
 
 import java.time.Instant;
@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 import edu.princeton.cs.algs4.StdRandom;
+import main.edu.ufp.inf.en.siu.IO.Arquive;
+import main.edu.ufp.inf.en.siu.user.User;
 
 
 public class DataBase {
