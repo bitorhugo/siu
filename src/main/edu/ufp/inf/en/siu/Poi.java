@@ -12,7 +12,7 @@ public class Poi extends Node{
   private RedBlackBST<String, ArrayList<TimePeriod>> visitorST = new RedBlackBST<>();
   
   private RedBlackBST<Long, ArrayList<User>> visitorsEntrance = new RedBlackBST<>();
-  private Long averageTimeSpent; // measured in seconds
+  private RedBlackBST<Long, ArrayList<User>> visitorsExit = new RedBlackBST<>();
   
   public Poi(Integer nodeId, Point coordinates) {
     super(nodeId, coordinates);
@@ -28,13 +28,7 @@ public class Poi extends Node{
   public void setVisitorST(RedBlackBST<String, ArrayList<TimePeriod>> visitorST) {
     this.visitorST = visitorST;
   }
-  public Long getAverageTimeSpent() {
-    return averageTimeSpent;
-  }
-  public void setAverageTimeSpent(Long averageTimeSpent) {
-    this.averageTimeSpent = averageTimeSpent;
-  }
-
+  
   /*
   public void addVisitor (User u, TimePeriod tp) {
     if (u == null) throw new IllegalArgumentException("argument to addVisitor() is null");
@@ -61,6 +55,7 @@ public class Poi extends Node{
     this.visitorsEntrance = visitorsEntrance;
   }
 
+  // TODO: refactor for standalone use, for each timestamp only one user is allowed
   public void addVisitor (User u, Long entrance) {
     if (u == null) throw new IllegalArgumentException("argument 'u' to addVisitor() is null");
     if (entrance == null) throw new IllegalArgumentException("argument 'entrance' to addVisitor() is null");
@@ -92,6 +87,6 @@ public class Poi extends Node{
   
   @Override
   public String toString() {
-      return super.toString() + "," + this.averageTimeSpent;
+      return super.toString();
   }
 }

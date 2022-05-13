@@ -10,7 +10,7 @@ public class Way extends DirectedEdge {
   /**
    * average speed at which each means of transport travel (measured in meters/minute)
    */
-  private enum Transport {
+  public enum Transport {
     WALKING(80),
     CYCLING(308.33),
     CITYVEHICLE(833.333),

@@ -38,9 +38,9 @@ public class App extends Application{
         db.listNodes();
         db.listWays();
         
-        Map map = new Map(db);
-        System.out.println(map.shortestPath("walking", db.searchNode(128560437), db.searchNode(128564068)));
-        
+        Map map = new Map();
+        Upload.Graph(map);
+        System.out.println(map.getGraph());
     }
 
 }

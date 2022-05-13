@@ -1,10 +1,12 @@
 package main.edu.ufp.inf.en.siu;
 
 
+import java.time.Instant;
 import java.util.ArrayList;
 
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
+import edu.princeton.cs.algs4.StdRandom;
 
 
 public class DataBase {
@@ -619,17 +621,21 @@ public class DataBase {
    * @author Vitor Hugo
    */
   public void now() {
-    /*LocalDateTime currentTime = LocalDateTime.now();
+    long timestamp = Instant.now().getEpochSecond();
+    // calculate random number of seconds (15min max)
+    Long timespent = StdRandom.uniform(((15*60l)));
+    Long start = timestamp - timespent;
+    Long end = timestamp + timespent;
     if (!this.poiST.isEmpty()) {
-      for (Integer poisId : this.poiST.keys()) {
-        Poi p = this.poiST.get(poisId);
-        TimePeriod currentTimePeriod = new TimePeriod(currentTime.minusSeconds(p.getAverageTimeSpent()),
-                                                      currentTime.plusSeconds(p.getAverageTimeSpent()));
+      for (Integer poiId : this.poiST.keys()) {
+        Poi p = this.poiST.get(poiId);
         System.out.println(p);
-        ArrayList<User> currentUsers = getUsersThatVisitedPoi(p, currentTimePeriod);
-        currentUsers.forEach(System.out::println);
+        System.out.println(timespent);
+        for (Long ts : p.getVisitorsEntrance().keys(start, end)) {
+          System.out.println(p.getVisitorsEntrance().get(ts));
+        }
       }
-    }*/
+    }
   }
   
 

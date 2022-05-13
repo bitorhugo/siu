@@ -1,16 +1,19 @@
 package main.edu.ufp.inf.en.siu;
 
-import java.util.ArrayList;
-
 import edu.princeton.cs.algs4.DijkstraSP;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.RedBlackBST;
+import main.edu.ufp.inf.en.siu.Way.Transport;
 
 public class Map {
     
     private EdgeWeightedDigraph graph;
-    private ArrayList<EdgeWeightedDigraph> subGraphs = new ArrayList<>();
+    /**
+     * maps graph index to node
+     */
     private RedBlackBST<Integer, Node> nodes = new RedBlackBST<>();
+
+    public Map() {}
 
     public Map(int numNodes) {
         this.graph = new EdgeWeightedDigraph(numNodes);
@@ -27,6 +30,7 @@ public class Map {
         for (var v : db.getNodesST().keys()) {
             Node n = db.getNodesST().get(v);
             n.setIndexMap(i);
+            this.nodes.put(i, n);
             i++;
         }
         // iterate over all ways and add them as directedEdges of graph
@@ -38,6 +42,24 @@ public class Map {
             this.graph.addEdge(w);
         }
 
+    }
+
+    /**
+     * Constructor by copy.
+     * Used to create subgraph
+     * @param map map to use as foundation
+     */
+    public Map (Map map, Tag... tags) {
+        this(map.graph.V());
+        for (Integer i : map.nodes.keys()) {
+            Node n = map.nodes.get(i);
+            for (Tag t : tags) {
+                if (n.containsTag(t)) {
+                    break;
+                }
+            }
+
+        }
     }
 
     public EdgeWeightedDigraph getGraph() {
@@ -56,61 +78,34 @@ public class Map {
         this.nodes = nodes;
     }
 
-    public ArrayList<EdgeWeightedDigraph> getSubGraphs() {
-        return subGraphs;
-    }
-
-    public void setSubGraphs(ArrayList<EdgeWeightedDigraph> subGraphs) {
-        this.subGraphs = subGraphs;
-    }
-
-    // TODO: ask teacher about this..
-    public void createSubGraph (Tag... tags) {
-        this.graph.edges().forEach(edge -> {
-            Way w = (Way) edge;
-            EdgeWeightedDigraph subGraph = new EdgeWeightedDigraph(this.graph.V());
-            for (Tag tag : tags) {
-                if (w.containsTag(tag)) {
-                    subGraph.addEdge(w);
-                }
-            }
-        });
-    }
-
     /**
-     * Calculates the shortest path between two nodes using a transportation
-     * @param transportType the type of transportation used (e.g: bus, walking, cycling, cityVehicle, highwayVehicle)
+     * Calculates the shortest distance between two nodes using a transportation
+     * @param transportType the type of transportation used (e.g: bus, walking, ...)
      * @param origin origin node
      * @param destination destination node
-     * @return distance in meters or seconds depending on transportation used
+     * @return distance in minutes depending on transportation used
      * @author Vitor Hugo
      */
-    public double shortestPath (String transportType, Node origin, Node destination) {
+    public double shortestDistance (String transportType, Node origin, Node destination) {
         if (transportType == null) throw new IllegalArgumentException("argument to shortestPath() is null");
-
-        // set corresponding transportType weight as Way chosenWeight
-        this.graph.edges().forEach(edge -> {
-                                    Way w = (Way)edge;
-                                    w.setChosenWeight(transportType);
-                                });
 
         // use djikstras to calculate shortest path
         DijkstraSP dsp = new DijkstraSP(this.graph, origin.getIndexMap());
         
         // print to terminal path from origin to destination
-        //dsp.pathTo(destination.getIndexMap()).forEach(System.out::println);
+        dsp.pathTo(destination.getIndexMap()).forEach(System.out::println);
         
-        return dsp.distTo(destination.getIndexMap());
+        // return time value in minutes
+        return (dsp.distTo(destination.getIndexMap())) / (Transport.valueOf(transportType).speed);
     }
 
     /**
-     * Calculates the shortest physical path between two nodes
-     * @param origin
-     * @param destination
-     * @return
+     * Calculates the shortest distance path between two nodes
+     * @param origin node to start from 
+     * @param destination destination node
+     * @return distance in meters 
      */
-    public double shortestPath (Node origin, Node destination) {
-        
+    public double shortestDistance (Node origin, Node destination) {
         // use djikstras to calculate shortest path
         DijkstraSP dsp = new DijkstraSP(this.graph, origin.getIndexMap());
         
@@ -120,6 +115,5 @@ public class Map {
     
         return dsp.distTo(destination.getIndexMap());
     }
-
 
 }

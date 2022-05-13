@@ -1,5 +1,6 @@
 package main.edu.ufp.inf.en.siu;
 
+import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
@@ -11,6 +12,7 @@ public class Upload {
 
     private static final String nodesPath = "data/in/nodes.txt";
     private static final String waysPath = "data/in/ways2.txt";
+    private static final String graphPath = "data/in/map_in.txt";
 
     /**
      * uploads nodes from nodesPath to database
@@ -89,6 +91,13 @@ public class Upload {
 
     }
 
+    /**
+     * uploads graph from graphPath to map
+     * @param map
+     */
+    public static void Graph (Map map) {
+        In in = new In(graphPath);
+        map.setGraph(new EdgeWeightedDigraph(in));
+    }
     
-
 }
