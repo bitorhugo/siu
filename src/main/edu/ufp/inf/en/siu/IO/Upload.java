@@ -1,5 +1,7 @@
 package main.edu.ufp.inf.en.siu.IO;
 
+import java.util.Scanner;
+
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
@@ -55,6 +57,39 @@ public class Upload {
                 db.addNode(n);
             }
         }
+        in.close();
+    }
+
+    /**
+     * uploads nodes from input source to database
+     * @param input source
+     * @param db database
+     */
+    public static void Nodes(String input, DataBase db) {
+        if (db == null) throw new IllegalAccessError("argument to uploadDB() is null");
+        In in = new In(new Scanner(input));
+
+        in.readInt();
+        while (in.hasNextLine()) {
+            String []lines = in.readLine().split(",");
+            if (lines[0].length() > 0) {
+                Node n = new Node(Integer.parseInt(lines[0]), new Point(Float.parseFloat(lines[1]), Float.parseFloat(lines[2])));
+                // check to see if line contains key-value pairs
+                if (lines.length > 2) {
+                    SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
+                    // iterate over remaining key value pairs of line
+                    for (int i = 3; i < lines.length - 1; i+=2) {
+                        if (lines[i].contains(":")) {
+                            lines[i] = lines[i].replace(':', '_');
+                        }
+                        tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
+                    }
+                    n.setTags(tags);
+                }
+                db.addNode(n);
+            }
+        }
+        in.close();
     }
 
     /**
@@ -93,7 +128,7 @@ public class Upload {
                 db.addWay(w);
             }
         }
-
+        in.close();
     }
 
     /**
@@ -103,6 +138,7 @@ public class Upload {
     public static void Graph (Map map) {
         In in = new In(graphPath);
         map.setGraph(new EdgeWeightedDigraph(in));
+        in.close();
     }
     
 }
