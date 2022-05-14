@@ -17,7 +17,7 @@ public class Basic extends User {
 
   @Override
   public String toString() {
-    return "Basic(" + super.toString() + ")";
+    return "Basic," + super.toString();
   }
 
   @Override

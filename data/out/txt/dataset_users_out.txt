@@ -1,0 +1,7 @@
+6
+Basic(Camila,Porto,12342,2001-12-08,camila@email.com,camila2023)
+Admin,Vitor,Porto,38132,1998-08-21,vitor@email.com,hugo123
+Basic(Ana,Porto,68723,1989-07-07,ana@email.com,ana123)
+Admin,Nicole,Porto,786321,2019-04-23,nicole@email.com,nicole321
+Basic(Antonio,Porto,89723,1960-04-25,antonio@email.com,toni123)
+Basic(Teresa,Porto,9842819,1964-04-11,teresa@email.com,teresa123)

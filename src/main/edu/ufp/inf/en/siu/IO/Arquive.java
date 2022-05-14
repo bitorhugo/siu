@@ -50,7 +50,7 @@ public class Arquive {
         Out out = new Out(path_datasetUsers);
         out.print(db.getUserST().size() + NEWLINE);
         for (var v : db.getUserST().keys()) {
-            User u = db.searchUser(v);
+            User u = db.getUserST().get(v);
             out.print(u + NEWLINE);
         }
     }

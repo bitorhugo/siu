@@ -1,5 +1,6 @@
 package main.edu.ufp.inf.en.siu.IO;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
@@ -11,15 +12,43 @@ import main.edu.ufp.inf.en.siu.database.Tag;
 import main.edu.ufp.inf.en.siu.database.node.Node;
 import main.edu.ufp.inf.en.siu.database.way.Way;
 import main.edu.ufp.inf.en.siu.map.Map;
+import main.edu.ufp.inf.en.siu.user.*;
 
 public class Upload {
 
     // private constructor
     private Upload(){}
 
+    private static final String usersPath = "data/in/txt/users.txt";
     private static final String nodesPath = "data/in/txt/nodes.txt";
     private static final String waysPath = "data/in/txt/ways2.txt";
     private static final String graphPath = "data/in/txt/map_in.txt";
+
+    /**
+     * file format:
+     *  number of users
+     *  UserType,Name,Addr,ID,Birth,Email,Password
+     * @param db
+     */
+    public static void Users(DataBase db) {
+        In in = new In(usersPath);
+        in.readInt();
+
+        while (in.hasNextLine()) {
+            String []lines = in.readLine().split(",");
+            if (lines[0].length() > 0) {
+                User u;
+                if (lines[0].equals("Admin")) {
+                    u = new Admin(lines[1],lines[2], lines[3], LocalDate.parse(lines[4]), lines[5], lines[6]);
+                }
+                else {
+                    u = new Basic(lines[1],lines[2], lines[3], LocalDate.parse(lines[4]), lines[5], lines[6]);
+                }
+                db.addUser(u);
+            }
+        }
+
+    }
 
     /**
      * uploads nodes from nodesPath to database
@@ -131,6 +160,11 @@ public class Upload {
         in.close();
     }
 
+    /**
+     * uploads ways from input source to database
+     * @param input
+     * @param db
+     */
     public static void Ways(String input, DataBase db) {
         if (db == null) throw new IllegalArgumentException("argument to uploadWays() is null");
 

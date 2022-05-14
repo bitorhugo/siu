@@ -1,6 +1,7 @@
 package main.edu.ufp.inf.en.siu.map;
 
 import edu.princeton.cs.algs4.DijkstraSP;
+import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.RedBlackBST;
 import main.edu.ufp.inf.en.siu.database.DataBase;
@@ -48,11 +49,11 @@ public class Map {
 
     }
 
-    public Map (Node... nodes) {
-        this(nodes.length);
+    public Map (Map map, Node... nodes) {
+        this(map.graph.V() - nodes.length);
         int i = 0;
         for (Node node : nodes) {
-            this.nodes.put(i, node);
+            map.graph.adj(node.getIndexMap());
             i++;
         }
         
@@ -129,6 +130,23 @@ public class Map {
             dsp.pathTo(destination.getIndexMap()).forEach(System.out::println);
     
         return dsp.distTo(destination.getIndexMap());
+    }
+
+    /**
+     * calculates shortest path between two nodes
+     * @param origin origin node
+     * @param destination destination node
+     * @return shortest path
+     */
+    public Iterable<DirectedEdge> shortestPath (Node origin, Node destination) {
+        DijkstraSP dsp = new DijkstraSP(this.graph, origin.getIndexMap());
+        if (dsp.hasPathTo(destination.getIndexMap())) {
+            return dsp.pathTo(destination.getIndexMap());
+        }
+        else {
+            System.out.println("no path form origin to destination found");
+            return null;
+        }
     }
 
 }

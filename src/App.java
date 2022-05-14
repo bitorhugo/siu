@@ -7,8 +7,9 @@ import main.edu.ufp.inf.en.siu.IO.ArquiveBIN;
 import main.edu.ufp.inf.en.siu.IO.Upload;
 import main.edu.ufp.inf.en.siu.IO.UploadBIN;
 import main.edu.ufp.inf.en.siu.database.DataBase;
+import main.edu.ufp.inf.en.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.siu.map.Map;
-import main.edu.ufp.inf.en.siu.user.Admin;
+import main.edu.ufp.inf.en.siu.user.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,8 +36,11 @@ public class App extends Application{
 
         DataBase db = new DataBase();
         
-        Admin b = new Admin("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
-        db.addUser(b);
+        Upload.Users(db);
+
+        Arquive.Users(db);
+
+        /*
         Upload.Nodes(db);
         db.listNodes();
         Upload.Ways(db);
