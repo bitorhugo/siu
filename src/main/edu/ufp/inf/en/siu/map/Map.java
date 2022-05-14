@@ -1,6 +1,9 @@
 package main.edu.ufp.inf.en.siu.map;
 
+import edu.princeton.cs.algs4.Bag;
+import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.DijkstraSP;
+import edu.princeton.cs.algs4.DirectedDFS;
 import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.RedBlackBST;
@@ -49,33 +52,23 @@ public class Map {
 
     }
 
-    public Map (Map map, Node... nodes) {
-        this(map.graph.V() - nodes.length);
-        int i = 0;
-        for (Node node : nodes) {
-            map.graph.adj(node.getIndexMap());
-            i++;
-        }
-        
-    }
-
     /**
      * Constructor by copy.
-     * Used to create subgraph
+     * Used to create subgraph without ways with specified tags
      * @param map map to use as foundation
      */
     public Map (Map map, Tag... tags) {
         this(map.graph.V());
         
-        for (Integer i : map.nodes.keys()) {
-            Node n = map.nodes.get(i);
-            for (Tag t : tags) {
-                if (n.containsTag(t)) {
-                    break;
+        for (Tag t : tags) {
+            for (DirectedEdge edge : map.graph.edges()) {
+                Way w = (Way) edge;
+                if (!w.containsTag(t)) {
+                    this.graph.addEdge(w);
                 }
             }
-
         }
+        
     }
 
     public EdgeWeightedDigraph getGraph() {
@@ -92,6 +85,21 @@ public class Map {
 
     public void setNodes(RedBlackBST<Integer, Node> nodes) {
         this.nodes = nodes;
+    }
+
+    /**
+     * checks wether graph is connected
+     * @return true if connected | false if disconnected
+     * @author Vitor Hugo
+     */
+    public boolean isConnected () {
+        Digraph digraph = new Digraph(this.graph.V());
+        for (DirectedEdge edge : this.graph.edges()) {
+            digraph.addEdge(edge.to(), edge.from());
+        }
+        DirectedDFS dfs = new DirectedDFS(digraph, 0);
+        
+        return dfs.count() == this.graph.V() ? true : false;
     }
 
     /**

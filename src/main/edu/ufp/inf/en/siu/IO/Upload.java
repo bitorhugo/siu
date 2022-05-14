@@ -21,7 +21,7 @@ public class Upload {
 
     private static final String usersPath = "data/in/txt/users.txt";
     private static final String nodesPath = "data/in/txt/nodes.txt";
-    private static final String waysPath = "data/in/txt/ways2.txt";
+    private static final String waysPath = "data/in/txt/ways.txt";
     private static final String graphPath = "data/in/txt/map_in.txt";
 
     /**

@@ -7,6 +7,7 @@ import main.edu.ufp.inf.en.siu.IO.ArquiveBIN;
 import main.edu.ufp.inf.en.siu.IO.Upload;
 import main.edu.ufp.inf.en.siu.IO.UploadBIN;
 import main.edu.ufp.inf.en.siu.database.DataBase;
+import main.edu.ufp.inf.en.siu.database.Tag;
 import main.edu.ufp.inf.en.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.siu.map.Map;
 import main.edu.ufp.inf.en.siu.user.*;
@@ -40,23 +41,23 @@ public class App extends Application{
 
         Arquive.Users(db);
 
-        /*
         Upload.Nodes(db);
         db.listNodes();
         Upload.Ways(db);
         Arquive.Nodes(db);
-
+        /*
         ArquiveBIN.NodesBIN(db);
         UploadBIN.NodesBIN(db);
         
-        
-        /*
         db.listNodes();
         db.listWays();
-        
-        Map map = new Map();
-        Upload.Graph(map);
-        System.out.println(map.getGraph());*/
+        */
+        Map map = new Map(db);
+        System.out.println(map.isConnected());
+        System.out.println(map.getGraph());
+        Map m1 = new Map (map, Tag.ALT_NAME);
+        System.out.println(m1.isConnected());
+        System.out.println(m1.getGraph());
     }
 
 }
