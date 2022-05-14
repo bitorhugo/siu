@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 import edu.princeton.cs.algs4.StdRandom;
+import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.siu.IO.Arquive;
 import main.edu.ufp.inf.en.siu.user.User;
 
@@ -642,5 +643,27 @@ public class DataBase {
     }
   }
   
+  /**
+   * searches for semaphores nearby coordinates
+   * @param coordinates coordinates
+   * @return semaphores found
+   */
+  public ArrayList<Poi> closestSemaphore (Point coordinates) {
+    if (coordinates == null) throw new IllegalArgumentException("arguemnt to colsestSemaphore() is null");
+
+    // random radius to search for sempahores (0-50 m)
+    double radius = StdRandom.uniform(0.0, 50);
+
+    ArrayList<Poi> semaphores = new ArrayList<>();
+    for (var v : this.poiST.keys()) {
+      Poi p = this.poiST.get(v);
+      if (p.getCoordinates().dist(coordinates) <= radius) {
+        if (p.containsTag(Tag.SEMAPHORE)) {
+          semaphores.add(p);
+        }
+      }
+    }
+    return semaphores;
+  }
 
 }

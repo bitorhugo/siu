@@ -36,11 +36,11 @@ public class Point {
 
 
     public float distX (Point p) {
-        return p.x - this.x;
+        return Math.abs(p.x - this.x);
     }
 
     public float distY (Point p) {
-        return p.y - this.y;
+        return Math.abs(p.y - this.y);
     }
 
     public float dist (Point p) {

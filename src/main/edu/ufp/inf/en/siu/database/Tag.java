@@ -27,7 +27,8 @@ public enum Tag {
     LIT("default"),
     LEISURE("default"),
     OPENING_HOURS("default"),
-    MAXSPEED("default");
+    MAXSPEED("default"),
+    SEMAPHORE("default");
 
     private String []value;
     

@@ -36,6 +36,6 @@ javaFx library: see https://openjfx.io/openjfx-docs/ for more info
 # R12: 
 # R13: DONE
 # R14: DONE
-# R15: 1/2 DONE
+# R15: DONE
 # R16: 
 # R17: 
