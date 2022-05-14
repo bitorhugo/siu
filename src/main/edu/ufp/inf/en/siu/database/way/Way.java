@@ -1,9 +1,10 @@
-package main.edu.ufp.inf.en.siu.database;
+package main.edu.ufp.inf.en.siu.database.way;
 
 import java.util.Objects;
 
 import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
+import main.edu.ufp.inf.en.siu.database.Tag;
 
 public class Way extends DirectedEdge {
 

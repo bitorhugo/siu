@@ -4,10 +4,10 @@ import edu.princeton.cs.algs4.DijkstraSP;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.RedBlackBST;
 import main.edu.ufp.inf.en.siu.database.DataBase;
-import main.edu.ufp.inf.en.siu.database.Node;
 import main.edu.ufp.inf.en.siu.database.Tag;
-import main.edu.ufp.inf.en.siu.database.Way;
-import main.edu.ufp.inf.en.siu.database.Way.Transport;
+import main.edu.ufp.inf.en.siu.database.node.Node;
+import main.edu.ufp.inf.en.siu.database.way.Way;
+import main.edu.ufp.inf.en.siu.database.way.Way.Transport;
 
 public class Map {
     
@@ -19,8 +19,8 @@ public class Map {
 
     public Map() {}
 
-    public Map(int numNodes) {
-        this.graph = new EdgeWeightedDigraph(numNodes);
+    public Map(int V) {
+        this.graph = new EdgeWeightedDigraph(V);
     }
 
     public Map(int V, int E) {
@@ -48,6 +48,16 @@ public class Map {
 
     }
 
+    public Map (Node... nodes) {
+        this(nodes.length);
+        int i = 0;
+        for (Node node : nodes) {
+            this.nodes.put(i, node);
+            i++;
+        }
+        
+    }
+
     /**
      * Constructor by copy.
      * Used to create subgraph
@@ -55,6 +65,7 @@ public class Map {
      */
     public Map (Map map, Tag... tags) {
         this(map.graph.V());
+        
         for (Integer i : map.nodes.keys()) {
             Node n = map.nodes.get(i);
             for (Tag t : tags) {

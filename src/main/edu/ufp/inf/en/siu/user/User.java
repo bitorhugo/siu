@@ -8,7 +8,7 @@ import java.util.Objects;
 import edu.princeton.cs.algs4.RedBlackBST;
 import main.edu.ufp.inf.en.lp2._1_intro.person.Person;
 import main.edu.ufp.inf.en.siu.database.DataBase;
-import main.edu.ufp.inf.en.siu.database.Poi;
+import main.edu.ufp.inf.en.siu.database.poi.Poi;
 
 public abstract class User extends Person {
 

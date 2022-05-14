@@ -9,6 +9,9 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 import edu.princeton.cs.algs4.StdRandom;
 import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.siu.IO.Arquive;
+import main.edu.ufp.inf.en.siu.database.node.Node;
+import main.edu.ufp.inf.en.siu.database.poi.Poi;
+import main.edu.ufp.inf.en.siu.database.way.Way;
 import main.edu.ufp.inf.en.siu.user.User;
 
 
@@ -651,8 +654,8 @@ public class DataBase {
   public ArrayList<Poi> closestSemaphore (Point coordinates) {
     if (coordinates == null) throw new IllegalArgumentException("arguemnt to colsestSemaphore() is null");
 
-    // random radius to search for sempahores (0-50 m)
-    double radius = StdRandom.uniform(0.0, 50);
+    // random radius to search for sempahores (50-150 m)
+    double radius = StdRandom.uniform(50, 150);
 
     ArrayList<Poi> semaphores = new ArrayList<>();
     for (var v : this.poiST.keys()) {

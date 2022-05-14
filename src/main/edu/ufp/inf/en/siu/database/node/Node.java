@@ -1,9 +1,10 @@
-package main.edu.ufp.inf.en.siu.database;
+package main.edu.ufp.inf.en.siu.database.node;
 
 import java.util.Objects;
 
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
+import main.edu.ufp.inf.en.siu.database.Tag;
 
 public class Node {
 

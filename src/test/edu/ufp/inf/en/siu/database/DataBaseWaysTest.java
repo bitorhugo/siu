@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 import main.edu.ufp.inf.en.siu.database.DataBase;
-import main.edu.ufp.inf.en.siu.database.Way;
+import main.edu.ufp.inf.en.siu.database.way.Way;
 
 public class DataBaseWaysTest {
 

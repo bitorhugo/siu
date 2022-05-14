@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.siu.database.DataBase;
-import main.edu.ufp.inf.en.siu.database.Poi;
+import main.edu.ufp.inf.en.siu.database.poi.Poi;
 
 public class DataBasePoisTest {
     

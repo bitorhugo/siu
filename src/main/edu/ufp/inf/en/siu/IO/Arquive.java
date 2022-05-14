@@ -4,10 +4,10 @@ package main.edu.ufp.inf.en.siu.IO;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.Out;
 import main.edu.ufp.inf.en.siu.database.DataBase;
-import main.edu.ufp.inf.en.siu.database.Node;
-import main.edu.ufp.inf.en.siu.database.Poi;
 import main.edu.ufp.inf.en.siu.database.Tag;
-import main.edu.ufp.inf.en.siu.database.Way;
+import main.edu.ufp.inf.en.siu.database.node.Node;
+import main.edu.ufp.inf.en.siu.database.poi.Poi;
+import main.edu.ufp.inf.en.siu.database.way.Way;
 import main.edu.ufp.inf.en.siu.user.User;
 
 /**

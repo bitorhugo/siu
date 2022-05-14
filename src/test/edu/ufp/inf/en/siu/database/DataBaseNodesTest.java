@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import main.edu.ufp.inf.en.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.siu.database.DataBase;
-import main.edu.ufp.inf.en.siu.database.Node;
+import main.edu.ufp.inf.en.siu.database.node.Node;
 
 public class DataBaseNodesTest {
 
