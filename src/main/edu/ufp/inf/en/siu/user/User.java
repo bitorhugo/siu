@@ -13,8 +13,11 @@ import main.edu.ufp.inf.en.siu.database.poi.Poi;
 public abstract class User extends Person {
 
   private String email;
+  
   private String password;
+  
   private DataBase db;
+  
   private RedBlackBST<Long, Poi> visitedPoi = new RedBlackBST<>();
 
   public User(String name, String address, String idNumber, LocalDate birth) {
@@ -24,29 +27,41 @@ public abstract class User extends Person {
   public String getEmail() {
     return email;
   }
+  
   public void setEmail(String email) {
     this.email = email;
   }
+  
   public String getPassword() {
     return password;
   }
+  
   public void setPassword(String password) {
     this.password = password;
   }
+  
   public DataBase getDb() {
     return db;
   }
+  
   public void setDb(DataBase db) {
     this.db = db;
   }
+  
   public RedBlackBST<Long, Poi> getVisitedPoi() {
     return visitedPoi;
   }
+  
   public void setVisitedPoi(RedBlackBST<Long, Poi> visitedPoi) {
     this.visitedPoi = visitedPoi;
   }
   
-  public void addVisitedPoi (Poi poi, Long entrance) {
+  /**
+   * visits a point of interest
+   * @param poi point of interest
+   * @param entrance time of entrance
+   */
+  public void visitPoi (Poi poi, Long entrance) {
     if (poi == null) throw new IllegalArgumentException("argument 'poi' to addVisitedPoi() is null");
     if (entrance == null) throw new IllegalArgumentException("argument 'entrance' to addVisitedPoi() is null");
     // check weather poi is in database
@@ -59,6 +74,9 @@ public abstract class User extends Person {
     }
   }
 
+  /**
+   * returns all pois visited by user
+   */
   public void history () {
     if (!this.visitedPoi.isEmpty()) {
       for (Long timestamp : this.visitedPoi.keys()) {
@@ -75,6 +93,16 @@ public abstract class User extends Person {
       if (this.getClass() != obj.getClass()) return false;
       User u = (User) obj;
       return Objects.equals(this.getIdNumber(), u.getIdNumber());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.getName(),
+                        this.getIdNumber(),
+                        this.getAddress(), 
+                        this.getBirth(), 
+                        this.email, 
+                        this.password); 
   }
 
   @Override

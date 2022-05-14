@@ -24,7 +24,7 @@ public class UsersTest {
 
         long timestamp = Instant.now().getEpochSecond();
 
-        a.addVisitedPoi(p, timestamp);
+        a.visitPoi(p, timestamp);
         
         assertTrue(!a.getVisitedPoi().isEmpty());
         assertTrue(a.getVisitedPoi().size() == 1);
@@ -44,7 +44,7 @@ public class UsersTest {
 
         long timestamp = Instant.now().getEpochSecond();
 
-        a.addVisitedPoi(p, timestamp);
+        a.visitPoi(p, timestamp);
 
         a.history();
         

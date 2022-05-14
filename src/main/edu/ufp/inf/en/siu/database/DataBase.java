@@ -264,6 +264,72 @@ public class DataBase {
   }
 
   /**
+   * adds a poi to database
+   * @param p poi
+   * @author Vitor Hugo
+   */
+  public void addPoi (Poi p) {
+    if (p == null) throw new IllegalArgumentException("argument to addPoi() is null");
+    this.nodesST.put(p.getNodeId(), p);
+    this.poiST.put(p.getNodeId(), p);
+  }
+
+  /**
+   * removes a poi from database
+   * @param p poi to remove
+   * @return poi removed if found || null if not found
+   * @author Vitor Hugo
+   */
+  public Poi removePoi (Poi p) {
+    if (p == null) throw new IllegalArgumentException("argument to addPoi() is null");
+    if (this.nodesST.contains(p.getNodeId()) && this.poiST.contains(p.getNodeId())) {
+      this.nodesST.delete(p.getNodeId());
+      this.poiST.delete(p.getNodeId());
+      Arquive.Poi(p);
+      return p;
+    }
+    else {
+      System.out.println("poi not present in database");
+      return null;
+    }
+  }
+
+  /**
+   * edits a poi from database
+   * @param o old poi
+   * @param n new poi
+   * @author Vitor Hugo
+   */
+  public void editPoi (Poi o, Poi n) {
+    if (o == null) throw new IllegalArgumentException("argument 'o' to addPoi() is null");
+    if (n == null) throw new IllegalArgumentException("argument 'n' to addPoi() is null");
+    if (removePoi(o) != null) addPoi(n);
+  }
+
+  /**
+   * searches for a poi in database
+   * @param p poi to search for
+   * @return poi if found || null if not found
+   * @author Vitor Hugo
+   */
+  public Poi searchPoi (Integer id) {
+    if (id == null) throw new IllegalArgumentException("argument to searchPoi() is null");
+    return this.poiST.get(id);
+  }
+  
+  /**
+   * lists all poi from database
+   * @author Vitor Hugo
+   */
+  public void listPoi () {
+    if (!this.poiST.isEmpty()) {
+      for (var integer : this.poiST.keys()) {
+        System.out.println("Poi: " + integer);
+      }
+    }
+  }
+
+  /**
    * adds a tag to database
    * A key-value pair ST is used (SepareteChainingST<Tag, ArrayList<Object>>)
    * key -> tag 't'
@@ -442,72 +508,6 @@ public class DataBase {
         if (object instanceof Way) {
           System.out.println(object);
         }
-      }
-    }
-  }
-
-  /**
-   * adds a poi to database
-   * @param p poi
-   * @author Vitor Hugo
-   */
-  public void addPoi (Poi p) {
-    if (p == null) throw new IllegalArgumentException("argument to addPoi() is null");
-    this.nodesST.put(p.getNodeId(), p);
-    this.poiST.put(p.getNodeId(), p);
-  }
-
-  /**
-   * removes a poi from database
-   * @param p poi to remove
-   * @return poi removed if found || null if not found
-   * @author Vitor Hugo
-   */
-  public Poi removePoi (Poi p) {
-    if (p == null) throw new IllegalArgumentException("argument to addPoi() is null");
-    if (this.nodesST.contains(p.getNodeId()) && this.poiST.contains(p.getNodeId())) {
-      this.nodesST.delete(p.getNodeId());
-      this.poiST.delete(p.getNodeId());
-      Arquive.Poi(p);
-      return p;
-    }
-    else {
-      System.out.println("poi not present in database");
-      return null;
-    }
-  }
-
-  /**
-   * edits a poi from database
-   * @param o old poi
-   * @param n new poi
-   * @author Vitor Hugo
-   */
-  public void editPoi (Poi o, Poi n) {
-    if (o == null) throw new IllegalArgumentException("argument 'o' to addPoi() is null");
-    if (n == null) throw new IllegalArgumentException("argument 'n' to addPoi() is null");
-    if (removePoi(o) != null) addPoi(n);
-  }
-
-  /**
-   * searches for a poi in database
-   * @param p poi to search for
-   * @return poi if found || null if not found
-   * @author Vitor Hugo
-   */
-  public Poi searchPoi (Integer id) {
-    if (id == null) throw new IllegalArgumentException("argument to searchPoi() is null");
-    return this.poiST.get(id);
-  }
-  
-  /**
-   * lists all poi from database
-   * @author Vitor Hugo
-   */
-  public void listPoi () {
-    if (!this.poiST.isEmpty()) {
-      for (var integer : this.poiST.keys()) {
-        System.out.println("Poi: " + integer);
       }
     }
   }

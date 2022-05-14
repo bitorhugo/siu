@@ -16,6 +16,15 @@ public class Basic extends User {
   }
 
   @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (this.getClass() != obj.getClass()) return false;
+    Basic u = (Basic) obj;
+    return Objects.equals(this.getIdNumber(), u.getIdNumber());
+  }
+
+  @Override
   public String toString() {
     return "Basic," + super.toString();
   }
