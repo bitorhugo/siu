@@ -1,6 +1,5 @@
 package main.edu.ufp.inf.en.siu.map;
 
-import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.DijkstraSP;
 import edu.princeton.cs.algs4.DirectedDFS;
@@ -16,9 +15,7 @@ import main.edu.ufp.inf.en.siu.database.way.Way.Transport;
 public class Map {
     
     private EdgeWeightedDigraph graph;
-    /**
-     * maps graph index to node
-     */
+
     private RedBlackBST<Integer, Node> nodes = new RedBlackBST<>();
 
     public Map() {}
@@ -88,6 +85,17 @@ public class Map {
     }
 
     /**
+     * updates map graph 
+     * @param db database to retrieve updated data from
+     * @author Vitor Hugo
+     */
+    public void update (DataBase db) {
+        Map map = new Map(db);
+        this.setGraph(map.graph);
+        this.setNodes(map.nodes);
+    }
+
+    /**
      * checks wether graph is connected
      * @return true if connected | false if disconnected
      * @author Vitor Hugo
@@ -128,6 +136,7 @@ public class Map {
      * @param origin node to start from 
      * @param destination destination node
      * @return distance in meters 
+     * @author Vitor Hugo
      */
     public double shortestDistance (Node origin, Node destination) {
         // use djikstras to calculate shortest path
@@ -145,6 +154,7 @@ public class Map {
      * @param origin origin node
      * @param destination destination node
      * @return shortest path
+     * @author Vitor Hugo
      */
     public Iterable<DirectedEdge> shortestPath (Node origin, Node destination) {
         DijkstraSP dsp = new DijkstraSP(this.graph, origin.getIndexMap());

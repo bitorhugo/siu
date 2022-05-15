@@ -75,7 +75,7 @@ public abstract class User extends Person {
   }
 
   /**
-   * returns all pois visited by user
+   * returns all point of interest visited by user
    */
   public void history () {
     if (!this.visitedPoi.isEmpty()) {

@@ -22,6 +22,7 @@ public class App extends Application{
 
     @Override
     public void start(Stage primaryStage) throws IOException{
+        
         Parent root = FXMLLoader.load(getClass().getResource("main/edu/ufp/inf/en/resources/test.fxml"));
         
         Scene scene = new Scene(root, 300, 300);
@@ -30,6 +31,8 @@ public class App extends Application{
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+
+    
     
     public static void main(String[] args) throws Exception {    
         
@@ -38,20 +41,10 @@ public class App extends Application{
         DataBase db = new DataBase();
         
         Upload.Users(db);
-
-        Arquive.Users(db);
-
         Upload.Nodes(db);
-        db.listNodes();
         Upload.Ways(db);
-        Arquive.Nodes(db);
-        /*
-        ArquiveBIN.NodesBIN(db);
-        UploadBIN.NodesBIN(db);
+        // TODO: upload POI
         
-        db.listNodes();
-        db.listWays();
-        */
         Map map = new Map(db);
         System.out.println(map.isConnected());
         System.out.println(map.getGraph());
