@@ -18,8 +18,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class App extends Application{
+public class App {
 
+    /*
     @Override
     public void start(Stage primaryStage) throws IOException{
         
@@ -30,7 +31,7 @@ public class App extends Application{
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
-    }
+    }*/
 
     
     
@@ -43,7 +44,9 @@ public class App extends Application{
         Upload.Users(db);
         Upload.Nodes(db);
         Upload.Ways(db);
-        // TODO: upload POI
+        
+        User u = db.searchUser("38132");
+        System.out.println(u);
         
         Map map = new Map(db);
         System.out.println(map.isConnected());

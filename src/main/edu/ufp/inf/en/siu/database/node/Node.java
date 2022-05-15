@@ -90,29 +90,38 @@ public class Node {
   }
 
   /**
-   * lists all tags in node
-   */
-  public StringBuilder listTags() {
-    StringBuilder str = new StringBuilder();
-    if (!this.tags.isEmpty()) {
-      for (var v : this.tags.keys()) {
-        str.append(v);
-        str.append(",");
-        str.append(this.tags.get(v));
-        str.append(",");
-      }
-      System.out.println(str);
-    }
-    return str;
-  }
-
-  /**
    * checks if node contains a certain tag
    * @param t tag to search
    * @return true if found || false if not 
    */
   public boolean containsTag(Tag t) {
     return this.tags.contains(t);
+  }
+
+  /**
+   * lists all tags in node
+   */
+  public StringBuilder listTags() {
+    StringBuilder str = new StringBuilder();
+    if (!this.tags.isEmpty()) {
+      int i = 0;
+      for (var v : this.tags.keys()) {
+        if (i == this.tags.size() - 1) {
+          str.append(v);
+          str.append(",");
+          str.append(this.tags.get(v));
+        }
+        else {
+          str.append(v);
+          str.append(",");
+          str.append(this.tags.get(v));
+          str.append(",");
+        }
+        i ++;
+      }
+      System.out.println(str);
+    }
+    return str;
   }
 
   @Override
