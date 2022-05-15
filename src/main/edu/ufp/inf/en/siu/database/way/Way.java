@@ -4,25 +4,10 @@ import java.util.Objects;
 
 import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
-import main.edu.ufp.inf.en.siu.database.Tag;
+import main.edu.ufp.inf.en.siu.database.tag.Tag;
+import main.edu.ufp.inf.en.siu.database.transport.Transport;
 
 public class Way extends DirectedEdge {
-
-  /**
-   * average speed at which each means of transport travel (measured in meters/minute)
-   */
-  public enum Transport {
-    WALKING(80),
-    CYCLING(308.33),
-    CITYVEHICLE(833.333),
-    HIGHWAYVEHICLE(1833.33), 
-    BUS(750);
-
-    public final double speed;
-    private Transport (double speed){
-      this.speed = speed;
-    }    
-  }
 
   private final Integer wayId;
   private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
@@ -154,10 +139,11 @@ public class Way extends DirectedEdge {
     return str;
   }
 
+  /*
   @Override
   public double weight() {
     return this.chosenWeight;
-  }
+  }*/
 
   @Override
   public int hashCode() {

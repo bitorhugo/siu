@@ -7,10 +7,11 @@ import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.RedBlackBST;
 import main.edu.ufp.inf.en.siu.database.DataBase;
-import main.edu.ufp.inf.en.siu.database.Tag;
 import main.edu.ufp.inf.en.siu.database.node.Node;
+import main.edu.ufp.inf.en.siu.database.tag.Tag;
+import main.edu.ufp.inf.en.siu.database.transport.Transport;
 import main.edu.ufp.inf.en.siu.database.way.Way;
-import main.edu.ufp.inf.en.siu.database.way.Way.Transport;
+
 
 public class Map {
     

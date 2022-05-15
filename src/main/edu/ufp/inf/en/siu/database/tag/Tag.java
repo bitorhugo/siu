@@ -1,4 +1,4 @@
-package main.edu.ufp.inf.en.siu.database;
+package main.edu.ufp.inf.en.siu.database.tag;
 
 
 public enum Tag {

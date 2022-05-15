@@ -4,8 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import main.edu.ufp.inf.en.siu.database.Tag;
 import main.edu.ufp.inf.en.siu.database.node.Node;
+import main.edu.ufp.inf.en.siu.database.tag.Tag;
 
 public class NodesTest {
     
