@@ -80,11 +80,20 @@ public class Way extends DirectedEdge {
     this.distanceWeight = distanceWeight;
   }
 
-
+  /**
+   * adds a tag to way
+   * @param t tag
+   * @param value value of tag
+   */
   public void addTag (Tag t, String value) {
     this.tags.put(t, value);
   }
 
+  /**
+   * removes a tag from way
+   * @param t tag to remove
+   * @return removed tag
+   */
   public Tag removeTag (Tag t) {
     if (t == null) throw new IllegalArgumentException("argument to removeTag() is null");
     if (this.tags.contains(t)) {
@@ -97,12 +106,31 @@ public class Way extends DirectedEdge {
     }
   }
 
+  /**
+   * edits a tag from way
+   * @param o old tag
+   * @param n new tag
+   * @param value value for new tag
+   */
   public void editTag (Tag o, Tag n, String value) {
     if (o == null) throw new IllegalArgumentException("argument 'o' to editTag() is null");
     if (n == null) throw new IllegalArgumentException("argument 'n' to editTag() is null");
     if (removeTag(o) != null) addTag(n, value);
   }
 
+  /**
+   * checks if way has specified tag
+   * @param t tag
+   * @return true if found || false if not found
+   */
+  public boolean containsTag(Tag t) {
+    return this.tags.contains(t);
+  }
+
+  /**
+   * lists all tags from way
+   * @return a string with all tags
+   */
   public StringBuilder listTags() {
     StringBuilder str = new StringBuilder();
     if (!this.tags.isEmpty()) {
@@ -124,10 +152,6 @@ public class Way extends DirectedEdge {
       System.out.println(str);
     }
     return str;
-  }
-
-  public boolean containsTag(Tag t) {
-    return this.tags.contains(t);
   }
 
   @Override
