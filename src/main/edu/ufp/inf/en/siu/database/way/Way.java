@@ -97,14 +97,29 @@ public class Way extends DirectedEdge {
     }
   }
 
+  public void editTag (Tag o, Tag n, String value) {
+    if (o == null) throw new IllegalArgumentException("argument 'o' to editTag() is null");
+    if (n == null) throw new IllegalArgumentException("argument 'n' to editTag() is null");
+    if (removeTag(o) != null) addTag(n, value);
+  }
+
   public StringBuilder listTags() {
     StringBuilder str = new StringBuilder();
-    if (this.tags.isEmpty()) {
+    if (!this.tags.isEmpty()) {
+      int i = 0;
       for (var v : this.tags.keys()) {
-        str.append(v);
-        str.append(",");
-        str.append(this.tags.get(v));
-        str.append(",");
+        if (i == this.tags.size() - 1) {
+          str.append(v);
+          str.append(",");
+          str.append(this.tags.get(v));
+        }
+        else {
+          str.append(v);
+          str.append(",");
+          str.append(this.tags.get(v));
+          str.append(",");
+        }
+        i ++;
       }
       System.out.println(str);
     }
