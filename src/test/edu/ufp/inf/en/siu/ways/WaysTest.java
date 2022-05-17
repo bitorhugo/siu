@@ -4,8 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import main.edu.ufp.inf.en.siu.database.tag.Tag;
-import main.edu.ufp.inf.en.siu.database.way.Way;
+import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
+import main.edu.ufp.inf.en.models.siu.database.way.Way;
 
 public class WaysTest {
     

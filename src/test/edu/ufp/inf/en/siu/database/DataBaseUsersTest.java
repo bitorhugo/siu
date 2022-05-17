@@ -3,11 +3,12 @@ package test.edu.ufp.inf.en.siu.database;
 import java.time.LocalDate;
 
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
 
-import main.edu.ufp.inf.en.siu.database.DataBase;
-import main.edu.ufp.inf.en.siu.user.Admin;
-import main.edu.ufp.inf.en.siu.user.Basic;
+import main.edu.ufp.inf.en.models.siu.database.DataBase;
+import main.edu.ufp.inf.en.models.siu.user.Admin;
+import main.edu.ufp.inf.en.models.siu.user.Basic;
+
+import static org.junit.Assert.assertTrue;
 
 public class DataBaseUsersTest {
     

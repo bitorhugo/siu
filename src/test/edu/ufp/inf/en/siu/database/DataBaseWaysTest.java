@@ -2,10 +2,10 @@ package test.edu.ufp.inf.en.siu.database;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import main.edu.ufp.inf.en.models.siu.database.DataBase;
+import main.edu.ufp.inf.en.models.siu.database.way.Way;
 
-import main.edu.ufp.inf.en.siu.database.DataBase;
-import main.edu.ufp.inf.en.siu.database.way.Way;
+import static org.junit.Assert.assertTrue;
 
 public class DataBaseWaysTest {
 
