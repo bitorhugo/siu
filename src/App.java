@@ -15,10 +15,10 @@ public class App extends Application{
         
         // load fxml file
         Parent loginGUI = FXMLLoader.load(getClass().getResource("main/edu/ufp/inf/en/resources/Login.fxml"));
-        Parent AdminGUI = FXMLLoader.load(getClass().getResource("main/edu/ufp/inf/en/resources/AdminGUI.fxml"));
+        
         
         // set scene
-        Scene scene = new Scene(AdminGUI, 300, 300);
+        Scene scene = new Scene(loginGUI, 300, 300);
         primaryStage.setTitle("SIU LOGIN");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
