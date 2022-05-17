@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
+import main.edu.ufp.inf.en.models.siu.user.Admin;
 import main.edu.ufp.inf.en.models.siu.user.User;
 
 
@@ -36,13 +37,14 @@ public class LoginController {
     private Stage stage;
     private Scene scene;
     private Parent AdminGUI;
+    private Parent BasicGUI;
 
     private DataBase database = new DataBase();
 
     /**
-     *
-     * @param event
-     * @throws IOException
+     * handler for submitButtonAction
+     * @param event event
+     * @throws IOException IO exception
      */
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
@@ -54,34 +56,52 @@ public class LoginController {
 
         User u = database.searchUser(id);
 
-        if (u != null && u.getPassword().equals(password)) {
-            //textActionTarget.setText("Valid credentials");
-            AdminGUI = FXMLLoader.load(getClass().getResource("../resources/AdminGUI.fxml"));
-            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(AdminGUI);
-            stage.setScene(scene);
-            stage.show();
+        // surround with try/catch in case user is null
+        // otherwise nullPointerException will rise and throw an error
+        try {
+            if (u.getPassword().equals(password)) {
+                //textActionTarget.setText("Valid credentials");
+                if (u instanceof Admin)
+                    switchToAdminGUI(event);
+                else
+                    switchToBasicGUI(event);
+            }
+            else {
+                textActionTarget.setText("Invalid credentials");
+            }
+        } catch (Exception e) {
+            textActionTarget.setText("user not found");
         }
-        else {
-            textActionTarget.setText("Invalid credentials");
-        }
+        
         
     }
 
     /**
-     *
-     * @param event
+     * switches scene to AdminGUI
+     * @param event event
+     * @throws IOException IO exception
+     * @author Vitor Hugo
      */
-    @FXML
-    protected void handleSubmitButtonAction2(ActionEvent event) {
-        textActionTarget.setText("Sign in button calling Controller->handleSubmitButtonAction2()");
-    }
-
     public void switchToAdminGUI(ActionEvent event) throws IOException {
-        AdminGUI = FXMLLoader.load(getClass().getResource("main/edu/ufp/inf/en/resources/AdminGUI.fxml"));
+        AdminGUI = FXMLLoader.load(getClass().getResource("../resources/AdminGUI.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(AdminGUI);
+        scene = new Scene(AdminGUI, 300, 300);
         stage.setScene(scene);
         stage.show();
     }
+
+    /**
+     * switches scene to BasicGUI
+     * @param event event
+     * @throws IOException IO exception
+     * @author Vitor Hugo
+     */
+    private void switchToBasicGUI(ActionEvent event) throws IOException {
+        BasicGUI = FXMLLoader.load(getClass().getResource("../resources/BasicGUI.fxml"));
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(BasicGUI, 300, 300);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }
