@@ -10,10 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.Node;
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -141,22 +139,20 @@ public class MapController implements Initializable{
             Integer from = handleFromTextField(event);
             Integer to = handleToTextField(event);
 
-            switchToPathScene(event);
+            switchToPathScene(event, from, to);
 
-            System.out.println("FROM: " + from);
-            System.out.println("TO: " + to);
-            System.out.println("GO");
+            
         } catch (Exception e) {
             invalidText.setText("INVALID");
         }
         
     }
 
-    public void switchToPathScene (ActionEvent event) throws IOException {
+    public void switchToPathScene (ActionEvent event, Integer from, Integer to) throws IOException {
         // load fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Path.fxml"));
         loader.setControllerFactory(c -> {
-            return new PathController(map);
+            return new PathController(map, from, to);
         });
         // set stage and scene
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();

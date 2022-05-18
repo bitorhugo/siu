@@ -61,14 +61,13 @@ public class LoginController {
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
 
-        String id = usernameField.getText();
-        String password = passwordField.getText();
-
-        User u = database.searchUser(id);
-
         // surround with try/catch in case user is null
         // otherwise nullPointerException will rise and throw an error
         try {
+            String id = usernameField.getText();
+            String password = passwordField.getText();
+            User u = database.searchUser(id);
+            
             if (u.getPassword().equals(password)) {
                 //textActionTarget.setText("Valid credentials");
                 if (u instanceof Admin)
