@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.edu.ufp.inf.en.controllers.LoginController;
 import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 
@@ -21,15 +22,21 @@ public class App extends Application{
         Upload.Ways(db);
         
         // load fxml file
-        Parent loginGUI = FXMLLoader.load(getClass().getResource("main/edu/ufp/inf/en/resources/Login.fxml"));
+        //Parent loginGUI = FXMLLoader.load(getClass().getResource("main/edu/ufp/inf/en/resources/Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("main/edu/ufp/inf/en/resources/Login.fxml"));
         
+        loader.setControllerFactory(c -> {
+            return new LoginController(db);
+        });
+
+        
+
         // set db as primaryStage data
-        primaryStage.setUserData(db);
+        //primaryStage.setUserData(db);
         
-        // set scene
-        Scene scene = new Scene(loginGUI, 700, 700);
+        // stage config
         primaryStage.setTitle("SIU LOGIN");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(new Scene(loader.load()));
         primaryStage.setResizable(false);
         primaryStage.show();
 

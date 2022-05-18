@@ -10,10 +10,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.edu.ufp.inf.en.models.siu.IO.Upload;
+
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.user.Admin;
 import main.edu.ufp.inf.en.models.siu.user.User;
@@ -42,11 +41,17 @@ public class LoginController {
 
     private DataBase database;
 
-    @FXML
-    private void receiveData(MouseEvent event) {
-        Node node = (Node) event.getSource();
-        stage = (Stage) node.getScene().getWindow();
-        this.database = (DataBase) stage.getUserData();
+    
+    public LoginController (DataBase db) {
+        this.database = db;
+    }
+
+    public DataBase getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(DataBase database) {
+        this.database = database;
     }
 
     /**
@@ -56,11 +61,6 @@ public class LoginController {
      */
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
-
-        // get database from Stage.UserData
-        Node node = (Node) event.getSource();
-        stage = (Stage) node.getScene().getWindow();
-        this.database = (DataBase) stage.getUserData();
 
         String id = usernameField.getText();
         String password = passwordField.getText();
@@ -73,7 +73,7 @@ public class LoginController {
             if (u.getPassword().equals(password)) {
                 //textActionTarget.setText("Valid credentials");
                 if (u instanceof Admin)
-                    switchToAdminGUI(event);
+                    switchToAdminGUI(event, (Admin)u);
                 else
                     switchToBasicGUI(event);
             }
@@ -93,12 +93,16 @@ public class LoginController {
      * @throws IOException IO exception
      * @author Vitor Hugo
      */
-    public void switchToAdminGUI(ActionEvent event) throws IOException {
-        AdminGUI = FXMLLoader.load(getClass().getResource("../resources/AdminGUI.fxml"));
+    public void switchToAdminGUI(ActionEvent event, Admin admin) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/AdminGUI.fxml"));
+        
+        // inject constructor
+        loader.setControllerFactory(c -> {
+            return new AdminController(admin);
+        });
+
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        // send database as argument
-        stage.setUserData(database);
-        scene = new Scene(AdminGUI, 700, 700);
+        scene = new Scene(loader.load());
         stage.setScene(scene);
         stage.show();
     }

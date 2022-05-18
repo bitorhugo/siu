@@ -22,7 +22,7 @@ public class Upload {
     private static final String usersPath = "data/in/txt/users.txt";
     private static final String nodesPath = "data/in/txt/nodes.txt";
     private static final String waysPath = "data/in/txt/ways.txt";
-    private static final String graphPath = "data/in/txt/map_in.txt";
+    private static final String graphPath = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/graph_in.txt";
 
     /**
      * file format:

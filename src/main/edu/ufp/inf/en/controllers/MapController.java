@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 
 public class MapController implements Initializable{
@@ -43,6 +44,10 @@ public class MapController implements Initializable{
                 e.printStackTrace();
             }
         });
+
+        this.map = new Map();
+        
+        
     }
 
     public void getMenuOption (ActionEvent event) throws IOException {

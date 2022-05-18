@@ -57,7 +57,6 @@ public class Map {
      */
     public Map (Map map, Tag... tags) {
         this(map.graph.V());
-        
         for (Tag t : tags) {
             for (DirectedEdge edge : map.graph.edges()) {
                 Way w = (Way) edge;

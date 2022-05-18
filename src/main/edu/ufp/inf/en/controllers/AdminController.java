@@ -31,6 +31,10 @@ public class AdminController {
 
     private Admin admin;
 
+    public AdminController (Admin admin) {
+        this.admin = admin;
+    }
+
     @FXML
     protected void handleMapButtonAction (ActionEvent event) throws IOException {
         switchScene(event, "../resources/Map.fxml");
@@ -53,7 +57,17 @@ public class AdminController {
 
     @FXML
     protected void handleLogoutButtonAction (ActionEvent event) throws IOException {
-        switchScene(event, "../resources/Login.fxml");
+        // load fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Login.fxml"));
+        // inject constructor into controller
+        loader.setControllerFactory(c -> {
+            return new LoginController(admin.getDb());
+        });
+        // set stage and scene
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(loader.load());
+        stage.setScene(scene);
+        stage.show();
     }
 
    protected void switchScene (ActionEvent event, String fxmlPath) throws IOException {
