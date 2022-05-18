@@ -8,16 +8,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
-import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 
@@ -32,13 +34,19 @@ public class MapController implements Initializable{
     private String[] menuChoices = {"EDIT", "HISTORY", "EXPORT", "LOGOUT"};
 
     @FXML
-    private LineChart<Number,Number> waysGraph;
+    private TextField fromTextField;
+
+    @FXML
+    private TextField toTextField;
+
+    @FXML
+    private Text invalidText;
+
     @FXML
     private ScatterChart<Number, Number> nodesMap;
 
     private Stage stage;
     private Scene scene;
-    private Parent loginGUI;
 
     private Map map;
     private DataBase database;
@@ -110,6 +118,45 @@ public class MapController implements Initializable{
         // inject constructor into controller
         loader.setControllerFactory(c -> {
             return new LoginController(this.database);
+        });
+        // set stage and scene
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(loader.load());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public Integer handleFromTextField (ActionEvent event) {
+        return Integer.parseInt(fromTextField.getText()); 
+        
+    }
+
+    public Integer handleToTextField (ActionEvent event) {
+        return Integer.parseInt(toTextField.getText()); 
+    }
+
+    public void handleGOButton(ActionEvent event) {
+        try {
+            invalidText.setText("");
+            Integer from = handleFromTextField(event);
+            Integer to = handleToTextField(event);
+
+            switchToPathScene(event);
+
+            System.out.println("FROM: " + from);
+            System.out.println("TO: " + to);
+            System.out.println("GO");
+        } catch (Exception e) {
+            invalidText.setText("INVALID");
+        }
+        
+    }
+
+    public void switchToPathScene (ActionEvent event) throws IOException {
+        // load fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Path.fxml"));
+        loader.setControllerFactory(c -> {
+            return new PathController(map);
         });
         // set stage and scene
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
