@@ -4,79 +4,27 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
-import main.edu.ufp.inf.en.models.siu.user.Admin;
+import main.edu.ufp.inf.en.models.siu.user.*;
 
-public class AdminController {
+public class AdminController extends BasicController{
+
+    public final double WIDTH = 700;
+    public final double HEIGHT = 700;
 
     @FXML
-    private Button mapButton;
-    @FXML
-    private Button editButton;
-    @FXML
-    private Button historyButton;
-    @FXML
-    private Button exportButton;
-    @FXML
-    private Button logoutButton;
+    private Button editButton;   
+
+    public AdminController (User user) {
+        super(user);
+        if (!(this.getUser() instanceof Admin))
+            throw new IllegalArgumentException("argument to AdminController constructor is not an Admin");
+    }
     
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
-    private Admin admin;
-
-    public AdminController (Admin admin) {
-        this.admin = admin;
-    }
-
     @FXML
-    protected void handleMapButtonAction (ActionEvent event) throws IOException {
-        switchScene(event, "../resources/Map.fxml");
+    public void handleEditButtonAction (ActionEvent event) throws IOException {
+        
     }
-
-    @FXML
-    protected void handleEditButtonAction (ActionEvent event) throws IOException {
-        switchScene(event, "../resources/Edit.fxml");
-    }
-
-    @FXML
-    protected void handleHistoryButtonAction (ActionEvent event) throws IOException {
-        switchScene(event, "../resources/History.fxml");
-    }
-
-    @FXML
-    protected void handleExportButtonAction (ActionEvent event) throws IOException {
-        switchScene(event, "../resources/Export.fxml");
-    }
-
-    @FXML
-    protected void handleLogoutButtonAction (ActionEvent event) throws IOException {
-        // load fxml
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Login.fxml"));
-        // inject constructor into controller
-        loader.setControllerFactory(c -> {
-            return new LoginController(admin.getDb());
-        });
-        // set stage and scene
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(loader.load());
-        stage.setScene(scene);
-        stage.show();
-    }
-
-   protected void switchScene (ActionEvent event, String fxmlPath) throws IOException {
-    root = FXMLLoader.load(getClass().getResource(fxmlPath));
-    stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    scene = new Scene(root, 700, 700);
-    stage.setScene(scene);
-    stage.show();
-   }
 
 
 }

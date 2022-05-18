@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -14,8 +13,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
-import main.edu.ufp.inf.en.models.siu.user.Admin;
-import main.edu.ufp.inf.en.models.siu.user.User;
+import main.edu.ufp.inf.en.models.siu.user.*;
 
 
 /**
@@ -23,6 +21,9 @@ import main.edu.ufp.inf.en.models.siu.user.User;
  *
  */
 public class LoginController {
+
+    public final double WIDTH = 700;
+    public final double HEIGHT = 700;
 
     /**
      * For the controller to be able to access the Text label, its name should be the same in the fxml and css
@@ -36,8 +37,6 @@ public class LoginController {
 
     private Stage stage;
     private Scene scene;
-    private Parent AdminGUI;
-    private Parent BasicGUI;
 
     private DataBase database;
 
@@ -75,7 +74,7 @@ public class LoginController {
                 if (u instanceof Admin)
                     switchToAdminGUI(event, (Admin)u);
                 else
-                    switchToBasicGUI(event);
+                    switchToBasicGUI(event, (Basic)u);
             }
             else {
                 textActionTarget.setText("Invalid credentials");
@@ -101,8 +100,11 @@ public class LoginController {
             return new AdminController(admin);
         });
 
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(loader.load());
+
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.setWidth(WIDTH);
+        stage.setHeight(HEIGHT);
         stage.setScene(scene);
         stage.show();
     }
@@ -113,10 +115,16 @@ public class LoginController {
      * @throws IOException IO exception
      * @author Vitor Hugo
      */
-    private void switchToBasicGUI(ActionEvent event) throws IOException {
-        BasicGUI = FXMLLoader.load(getClass().getResource("../resources/BasicGUI.fxml"));
+    private void switchToBasicGUI(ActionEvent event, Basic basic) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/BasicGUI.fxml"));
+        
+        // inject constructor
+        loader.setControllerFactory(c -> {
+            return new BasicController(basic);
+        });
+
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(BasicGUI, 700, 700);
+        scene = new Scene(loader.load());
         stage.setScene(scene);
         stage.show();
     }

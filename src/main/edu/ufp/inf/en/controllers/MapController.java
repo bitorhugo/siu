@@ -15,9 +15,13 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import main.edu.ufp.inf.en.models.siu.IO.Upload;
+import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 
 public class MapController implements Initializable{
+
+    public final double WIDTH = 700;
+    public final double HEIGHT = 700;
 
     @FXML
     private ChoiceBox<String> menuChoiceBox;
@@ -32,6 +36,17 @@ public class MapController implements Initializable{
     private Parent loginGUI;
 
     private Map map;
+    private DataBase database;
+
+    public MapController () {}
+
+    public MapController (Map map) {
+        this.map = map;
+    }
+
+    public MapController (DataBase database) {
+        this.database = database;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -81,9 +96,15 @@ public class MapController implements Initializable{
     }
 
     public void handleLogoutChoice (ActionEvent event) throws IOException {
-        loginGUI = FXMLLoader.load(getClass().getResource("../resources/Login.fxml"));
+        // load fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Login.fxml"));
+        // inject constructor into controller
+        loader.setControllerFactory(c -> {
+            return new LoginController(this.database);
+        });
+        // set stage and scene
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(loginGUI, 700, 700);
+        scene = new Scene(loader.load());
         stage.setScene(scene);
         stage.show();
     }
