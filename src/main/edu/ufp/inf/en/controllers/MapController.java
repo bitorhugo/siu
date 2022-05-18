@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+import main.edu.ufp.inf.en.models.siu.map.Map;
 
 public class MapController implements Initializable{
 
@@ -28,6 +29,8 @@ public class MapController implements Initializable{
     private Stage stage;
     private Scene scene;
     private Parent loginGUI;
+
+    private Map map;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

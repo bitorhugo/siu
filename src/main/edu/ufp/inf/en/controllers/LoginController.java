@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.edu.ufp.inf.en.models.siu.IO.Upload;
@@ -39,7 +40,14 @@ public class LoginController {
     private Parent AdminGUI;
     private Parent BasicGUI;
 
-    private DataBase database = new DataBase();
+    private DataBase database;
+
+    @FXML
+    private void receiveData(MouseEvent event) {
+        Node node = (Node) event.getSource();
+        stage = (Stage) node.getScene().getWindow();
+        this.database = (DataBase) stage.getUserData();
+    }
 
     /**
      * handler for submitButtonAction
@@ -48,9 +56,12 @@ public class LoginController {
      */
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
-        Upload.Users(database);
-        Upload.Nodes(database);
-        Upload.Ways(database);
+
+        // get database from Stage.UserData
+        Node node = (Node) event.getSource();
+        stage = (Stage) node.getScene().getWindow();
+        this.database = (DataBase) stage.getUserData();
+
         String id = usernameField.getText();
         String password = passwordField.getText();
 
@@ -85,6 +96,8 @@ public class LoginController {
     public void switchToAdminGUI(ActionEvent event) throws IOException {
         AdminGUI = FXMLLoader.load(getClass().getResource("../resources/AdminGUI.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        // send database as argument
+        stage.setUserData(database);
         scene = new Scene(AdminGUI, 700, 700);
         stage.setScene(scene);
         stage.show();
