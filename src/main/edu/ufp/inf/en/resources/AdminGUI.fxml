@@ -6,8 +6,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,34 +13,66 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="CENTER" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.edu.ufp.inf.en.controllers.LoginController">
+<GridPane alignment="CENTER" hgap="10.0" vgap="10" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.edu.ufp.inf.en.controllers.AdminController">
 
     <padding>
-        <Insets bottom="10" left="25" right="25" top="25" />
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
-
-    <Text id="welcome-text" fill="#4a4847" text="Admin" GridPane.columnIndex="1" GridPane.columnSpan="2">
-      <font>
-         <Font name="Iosevka" size="21.0" />
-      </font></Text>
-
-    <TextField fx:id="usernameField" promptText="username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-    <PasswordField fx:id="passwordField" promptText="password" GridPane.columnIndex="1" GridPane.rowIndex="2">
-      <font>
-         <Font name="Iosevka" size="13.0" />
-      </font></PasswordField>
-
-    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
+   <HBox alignment="CENTER" prefHeight="0.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
       <children>
-         <Button fx:id="signIn" mnemonicParsing="false" onAction="#handleSubmitButtonAction" text="Sign in">
+         <Button fx:id="mapButton" mnemonicParsing="false" onAction="#handleMapButtonAction" prefHeight="31.0" prefWidth="65.0" text="Map">
             <font>
                <Font name="Iosevka" size="13.0" />
             </font>
          </Button>
-      </children></HBox>
-
-    <Text fx:id="textActionTarget" wrappingWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+         <Button fx:id="editButton" mnemonicParsing="false" onAction="#handleEditButtonAction" prefHeight="25.0" prefWidth="59.0" text="Edit">
+            <font>
+               <Font name="Iosevka" size="13.0" />
+            </font>
+         </Button>
+      </children>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="19.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+      <children>
+         <Button fx:id="historyButton" mnemonicParsing="false" onAction="#handleHistoryButtonAction" prefHeight="25.0" prefWidth="69.0" text="History">
+            <font>
+               <Font name="Iosevka" size="13.0" />
+            </font>
+         </Button>
+         <Button fx:id="exportButton" mnemonicParsing="false" onAction="#handleExportButtonAction" prefHeight="25.0" prefWidth="60.0" text="Export">
+            <font>
+               <Font name="Iosevka" size="13.0" />
+            </font>
+         </Button>
+      </children>
+   </HBox>
+   <HBox alignment="CENTER" GridPane.columnIndex="1">
+      <children>
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Menu">
+            <font>
+               <Font name="Iosevka" size="13.0" />
+            </font>
+         </Text>
+      </children>
+   </HBox>
+   <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="14">
+      <children>
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select a choice to start">
+            <font>
+               <Font name="Iosevka" size="13.0" />
+            </font>
+         </Text>
+      </children>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="67.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11">
+      <children>
+         <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogoutButtonAction" prefHeight="24.0" prefWidth="68.0" text="Logout">
+            <font>
+               <Font name="Iosevka Bold" size="13.0" />
+            </font>
+         </Button>
+      </children>
+   </HBox>
 
     <columnConstraints>
         <ColumnConstraints />
@@ -50,6 +80,7 @@
       <ColumnConstraints />
     </columnConstraints>
     <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
         <RowConstraints />
         <RowConstraints />
         <RowConstraints />
@@ -57,6 +88,15 @@
         <RowConstraints />
         <RowConstraints />
         <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
       <RowConstraints />
     </rowConstraints>
 

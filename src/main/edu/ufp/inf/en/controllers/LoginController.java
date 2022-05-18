@@ -85,7 +85,7 @@ public class LoginController {
     public void switchToAdminGUI(ActionEvent event) throws IOException {
         AdminGUI = FXMLLoader.load(getClass().getResource("../resources/AdminGUI.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(AdminGUI, 300, 300);
+        scene = new Scene(AdminGUI, 700, 700);
         stage.setScene(scene);
         stage.show();
     }
@@ -99,7 +99,7 @@ public class LoginController {
     private void switchToBasicGUI(ActionEvent event) throws IOException {
         BasicGUI = FXMLLoader.load(getClass().getResource("../resources/BasicGUI.fxml"));
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(BasicGUI, 300, 300);
+        scene = new Scene(BasicGUI, 700, 700);
         stage.setScene(scene);
         stage.show();
     }

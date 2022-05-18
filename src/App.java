@@ -18,7 +18,7 @@ public class App extends Application{
         
         
         // set scene
-        Scene scene = new Scene(loginGUI, 300, 300);
+        Scene scene = new Scene(loginGUI, 700, 700);
         primaryStage.setTitle("SIU LOGIN");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
