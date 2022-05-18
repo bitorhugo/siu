@@ -45,6 +45,7 @@ public class MapController implements Initializable{
     }
 
     public MapController (DataBase database) {
+        this(new Map(database));
         this.database = database;
     }
 
@@ -60,9 +61,7 @@ public class MapController implements Initializable{
             }
         });
 
-        this.map = new Map();
-        
-        
+        // TODO: draw line chart using map
     }
 
     public void getMenuOption (ActionEvent event) throws IOException {
