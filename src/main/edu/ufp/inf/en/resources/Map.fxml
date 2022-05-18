@@ -5,9 +5,8 @@
 <!-- Declare GridPane associated with a FXML controller java class -->
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.ScatterChart?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -21,14 +20,6 @@
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
-   <LineChart fx:id="mapGraph" title="SIU MAP" titleSide="BOTTOM" GridPane.columnIndex="1" GridPane.rowIndex="4">
-     <xAxis>
-       <CategoryAxis side="BOTTOM" />
-     </xAxis>
-     <yAxis>
-       <NumberAxis minorTickVisible="false" side="LEFT" />
-     </yAxis>
-   </LineChart>
    <HBox alignment="TOP_RIGHT" GridPane.columnIndex="1">
       <children>
          <Label fx:id="menuLabel" alignment="CENTER" prefHeight="25.0" prefWidth="68.0" text="Menu" textAlignment="CENTER">
@@ -39,6 +30,14 @@
          <ChoiceBox fx:id="menuChoiceBox" prefHeight="26.0" prefWidth="44.0" />
       </children>
    </HBox>
+   <ScatterChart fx:id="nodesMap" alternativeRowFillVisible="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" legendSide="RIGHT" legendVisible="false" title="SIU MAP" verticalGridLinesVisible="false" verticalZeroLineVisible="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
+     <xAxis>
+       <NumberAxis prefHeight="0.0" prefWidth="470.0" side="BOTTOM" />
+     </xAxis>
+     <yAxis>
+       <NumberAxis prefHeight="322.0" prefWidth="0.0" side="LEFT" />
+     </yAxis>
+   </ScatterChart>
 
     <columnConstraints>
         <ColumnConstraints />
@@ -54,6 +53,7 @@
         <RowConstraints />
         <RowConstraints />
         <RowConstraints />
+      <RowConstraints />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />

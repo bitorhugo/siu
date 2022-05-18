@@ -1,12 +1,18 @@
 import java.io.IOException;
 
+import edu.princeton.cs.algs4.EdgeWeightedDigraph;
+import edu.princeton.cs.algs4.StdRandom;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.edu.ufp.inf.en.controllers.LoginController;
+import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
+import main.edu.ufp.inf.en.models.siu.IO.Arquive;
 import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
+import main.edu.ufp.inf.en.models.siu.database.node.Node;
+import main.edu.ufp.inf.en.models.siu.map.Map;
 
 
 public class App extends Application{

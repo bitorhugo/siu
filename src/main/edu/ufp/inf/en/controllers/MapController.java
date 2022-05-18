@@ -12,8 +12,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.map.Map;
@@ -29,7 +32,9 @@ public class MapController implements Initializable{
     private String[] menuChoices = {"EDIT", "HISTORY", "EXPORT", "LOGOUT"};
 
     @FXML
-    private LineChart<Number,Number> mapGraph;
+    private LineChart<Number,Number> waysGraph;
+    @FXML
+    private ScatterChart<Number, Number> nodesMap;
 
     private Stage stage;
     private Scene scene;
@@ -61,7 +66,12 @@ public class MapController implements Initializable{
             }
         });
 
-        // TODO: draw line chart using map
+        XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
+        for (var v : this.map.getNodes().keys()) {
+            Point point = this.map.getNodes().get(v).getCoordinates();
+            series1.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
+        }
+        nodesMap.getData().add(series1);
     }
 
     public void getMenuOption (ActionEvent event) throws IOException {
