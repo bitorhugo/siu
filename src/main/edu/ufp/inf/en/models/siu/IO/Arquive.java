@@ -67,8 +67,8 @@ public class Arquive {
 
     public static void Nodes (DataBase db) {
         Out out = new Out(path_datasetNodes);
-        out.print(db.getNodesST().size() + NEWLINE);
-        for (var v : db.getNodesST().keys()) {
+        out.print(db.numberOfNodes() + NEWLINE);
+        for (var v : db.nodesKeys()) {
             Node n = db.searchNode(v);
             out.print(n + NEWLINE);
         }
@@ -105,8 +105,8 @@ public class Arquive {
     
     public static void Ways (DataBase db) {
         Out out = new Out(path_datasetWays);
-        out.print(db.getWaysST().size() + NEWLINE);
-        for (var v : db.getWaysST().keys()) {
+        out.print(db.numberOfWays() + NEWLINE);
+        for (var v : db.waysKeys()) {
             Way u = db.searchWay(v);
             out.print(u + NEWLINE);
         }

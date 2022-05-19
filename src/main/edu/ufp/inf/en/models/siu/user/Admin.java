@@ -3,8 +3,23 @@ package main.edu.ufp.inf.en.models.siu.user;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import main.edu.ufp.inf.en.models.siu.database.node.Node;
+import main.edu.ufp.inf.en.models.siu.database.way.Way;
+
+/**
+ * @author Vitor Hugo
+ */
 public class Admin extends User {
 
+  /**
+   * class constructor
+   * @param name name
+   * @param address address
+   * @param idNumber id number
+   * @param birth date of birth
+   * @param email email
+   * @param password account password
+   */
   public Admin(String name, String address, String idNumber, LocalDate birth, String email, String password) {
     super(name, address, idNumber, birth);
     this.setEmail(email);
@@ -13,8 +28,7 @@ public class Admin extends User {
 
   /**
    * adds a user
-   * @param u user to add
-   * @author Vitor Hugo
+   * @param u user to add   
    */
   public void addUser(User u) {
     this.getDb().addUser(u);
@@ -24,7 +38,6 @@ public class Admin extends User {
    * removes a user
    * @param u user to remove
    * @return removed user
-   * @author Vitor Hugo
    */
   public User removeUser(User u) {
     return this.getDb().removeUser(u);
@@ -34,10 +47,61 @@ public class Admin extends User {
    * edits a user
    * @param o old user to edit
    * @param n new user to replace the old one
-   * @author Vitor Hugo
    */
   public void editUser(User o, User n) {
     this.getDb().editUser(o, n);
+  }
+
+  /**
+   * adds a node to database
+   */
+  public void addNode (Node n) {
+    this.getDb().addNode(n);
+  }
+
+  /**
+   * removes a node from database
+   * @param n node to be removed
+   * @return removed node if successful || null if not 
+   */
+  public Node removeNode (Node n) {
+    this.getDb().removeNode(n);
+    return n;
+  }
+
+  /**
+   * edits a way from database
+   * @param o old way
+   * @param n new way
+   */
+  public void editNode(Node o, Node n) {
+    this.getDb().editNode(o, n);
+  }
+
+  /**
+   * adds a way to database
+   */
+  public void addWay(Way w) {
+    this.getDb().addWay(w);
+  }
+
+  /**
+   * removes a way from database
+   * @param w way to be removed
+   * @return removed way
+   */
+  public Way removeWay(Way w) {
+    this.getDb().removeWay(w);
+    return w;
+  }
+
+  /**
+   * edits a way from database
+   * @param o old way
+   * @param n new way
+   */
+  public void editWay(Way o, Way n) {
+    this.getDb().editWay(o, n);
   }
 
   @Override

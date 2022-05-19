@@ -28,24 +28,12 @@ public class DataBase {
   
   private SeparateChainingHashST<Tag, ArrayList<Object>> tagsST = new SeparateChainingHashST<>();
  
-  public RedBlackBST<String, User> getUserST() {
-    return userST;
-  }
-
   public void setUserST(RedBlackBST<String, User> userST) {
     this.userST = userST;
   }
 
-  public RedBlackBST<Integer, Node> getNodesST() {
-    return nodesST;
-  }
-
   public void setNodesST(RedBlackBST<Integer, Node> nodesST) {
     this.nodesST = nodesST;
-  }
-
-  public RedBlackBST<Integer, Way> getWaysST() {
-    return waysST;
   }
 
   public void setWaysST(RedBlackBST<Integer, Way> waysST) {
@@ -121,6 +109,10 @@ public class DataBase {
     return u;
   }
 
+  public boolean contains(User u) {
+    return this.userST.contains(u.getIdNumber())
+  }
+
   /**
    * lists all users from DataBase
    * @author Vitor Hugo
@@ -151,7 +143,7 @@ public class DataBase {
    */
   public Node removeNode(Node n) {
     if (n == null) throw new IllegalArgumentException("argument to removeNode() is null");
-    if (this.nodesST.contains(n.getNodeId())) {
+    if (this.containsNode(n)) {
       this.nodesST.delete(n.getNodeId());
       Arquive.Node(n);
       return n;
@@ -183,6 +175,33 @@ public class DataBase {
   public Node searchNode(Integer id) {
     if (id == null) throw new IllegalArgumentException("argument for searchNode() is null");
     return this.nodesST.get(id);
+  }
+
+  /**
+   * checks if node exists in database
+   * @param n node
+   * @return true if found || false if not
+   */
+  public boolean containsNode(Node n) {
+    return this.nodesST.contains(n.getNodeId()) ? true : false;
+  }
+
+  /**
+   * returns all keys of nodes symbol table
+   * @return an iterable of nodesST keys
+   * @author Vitor Hugo
+   */
+  public Iterable<Integer> nodesKeys() {
+    return this.nodesST.keys();
+  }
+
+  /**
+   * return number of nodes in database
+   * @return nodesST size
+   * @author Vitor Hugo
+   */
+  public int numberOfNodes() {
+    return this.nodesST.size();
   }
 
   /**
@@ -248,6 +267,31 @@ public class DataBase {
   public Way searchWay (Integer id) {
     if (id == null) throw new IllegalArgumentException("argument to searchWay() is null");
     return this.waysST.get(id);
+  }
+
+  /**
+   * checks if database contains way
+   * @param w way
+   * @return true if found || false if not found
+   */
+  public boolean containsWay(Way w) {
+    return this.waysST.contains(w.getWayId()) ? true : false;
+  }
+
+  /**
+   * returns all keys of ways symbol table
+   * @return an iterable of waysST keys
+   */
+  public Iterable<Integer> waysKeys() {
+    return this.waysST.keys();
+  }
+
+  /**
+   * number of ways in database
+   * @return waysST size
+   */
+  public int numberOfWays() {
+    return this.waysST.size();
   }
 
   /**

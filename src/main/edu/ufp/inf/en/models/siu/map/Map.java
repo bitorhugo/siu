@@ -30,20 +30,23 @@ public class Map {
     }
 
     public Map(DataBase db) {
-        this(db.getNodesST().size());
+        this(db.numberOfNodes());
         int i = 0;
         // iterate over all nodes from db and set the correspondent index for them
-        for (var v : db.getNodesST().keys()) {
-            Node n = db.getNodesST().get(v);
+        for (var nodeId : db.nodesKeys()) {
+            Node n = db.searchNode(nodeId);
+            //Node n = db.getNodesST().get(v);
             n.setIndexMap(i);
             this.nodes.put(i, n);
             i++;
         }
         // iterate over all ways and add them as directedEdges of graph
-        for (var v : db.getWaysST().keys()) {
-            Way w = db.getWaysST().get(v);
-            Node o = db.getNodesST().get(w.from());
-            Node t = db.getNodesST().get(w.to());
+        for (var wayId : db.waysKeys()) {
+            Way w = db.searchWay(wayId);
+            Node o = db.searchNode(w.from());
+            //Node o = db.getNodesST().get(w.from());
+            //Node t = db.getNodesST().get(w.to());
+            Node t = db.searchNode(w.to());
             w = new Way(w.getWayId(), w.getTags(), o.getIndexMap(), t.getIndexMap(), w.weight());
             this.graph.addEdge(w);
         }

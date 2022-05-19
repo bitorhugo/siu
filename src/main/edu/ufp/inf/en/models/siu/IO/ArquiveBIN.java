@@ -31,15 +31,7 @@ public class ArquiveBIN {
      * @param db database
      */
     public static void NodesBIN(DataBase db) {
-        BinaryOut out = new BinaryOut(path_nodes_bin);
-        out.write(String.valueOf(db.getNodesST().size()));
-        out.write(NEWLINE);
-        for (var v : db.getNodesST().keys()) {
-            Node n = db.searchNode(v);
-            out.write(n.toString());
-            out.write(NEWLINE);
-        }
-        out.close();
+       
     }
 
     /**
@@ -52,15 +44,7 @@ public class ArquiveBIN {
      * @param db database
      */
     public static void WaysBIN(DataBase db) {
-        BinaryOut out = new BinaryOut(path_ways_bin);
-        out.write(db.getWaysST().size());
-        out.write(NEWLINE);
-        for (var v : db.getWaysST().keys()) {
-            Way w = db.searchWay(v);
-            out.write(w.toString());
-            out.write(NEWLINE);
-        }
-        out.close();
+        
     }
     
     /**

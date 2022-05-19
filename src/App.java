@@ -12,7 +12,11 @@ import main.edu.ufp.inf.en.models.siu.IO.Arquive;
 import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
+import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.map.Map;
+import main.edu.ufp.inf.en.models.siu.user.Admin;
+import main.edu.ufp.inf.en.models.siu.user.Basic;
+import main.edu.ufp.inf.en.models.siu.user.User;
 
 
 public class App extends Application{
