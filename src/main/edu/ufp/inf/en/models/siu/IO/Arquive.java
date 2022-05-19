@@ -86,8 +86,8 @@ public class Arquive {
 
     public static void Pois (DataBase db) {
         Out out = new Out(path_datasetPois);
-        out.print(db.getPoiST().size() + NEWLINE);
-        for (var v : db.getPoiST().keys()) {
+        out.print(db.numberOfPois() + NEWLINE);
+        for (var v : db.poisKeys()) {
             Poi u = db.searchPoi(v);
             out.print(u + NEWLINE);
         }

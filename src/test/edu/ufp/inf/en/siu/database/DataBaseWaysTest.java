@@ -15,8 +15,7 @@ public class DataBaseWaysTest {
         Way w = new Way(123, 0, 1, 10);
 
         db.addWay(w);
-        assertTrue(!db.getWaysST().isEmpty());
-        assertTrue(db.getWaysST().size() == 1);
+        assertTrue(db.numberOfWays() == 1);
     }
 
     @Test
@@ -25,10 +24,9 @@ public class DataBaseWaysTest {
         Way w = new Way(123, 0, 1, 10);
 
         db.addWay(w);
-        assertTrue(!db.getWaysST().isEmpty());
-        assertTrue(db.getWaysST().size() == 1);
+        assertTrue(db.numberOfWays() == 1);
         db.removeWay(w);
-        assertTrue(db.getWaysST().isEmpty());
+        assertTrue(db.numberOfWays() == 0);
     }
 
     @Test
@@ -37,13 +35,12 @@ public class DataBaseWaysTest {
         Way o = new Way(123, 0, 1, 10);
         Way n = new Way(321, 5, 1, 15);
 
-        db.addWay(o);
-        assertTrue(!db.getWaysST().isEmpty());
-        assertTrue(db.getWaysST().size() == 1);
+        db.addWay(o);        
+        assertTrue(db.numberOfWays() == 1);
         db.editWay(o, n);
-        assertTrue(db.getWaysST().size() == 1);
-        assertTrue(!db.getWaysST().contains(o.getWayId()));
-        assertTrue(db.getWaysST().contains(n.getWayId()));
+        assertTrue(db.numberOfWays() == 1);
+        assertTrue(!db.containsWay(o));
+        assertTrue(db.containsWay(n));
     }
     
     @Test
@@ -53,8 +50,7 @@ public class DataBaseWaysTest {
         Way w1 = new Way(321, 5, 1, 15);
 
         db.addWay(w1);
-        assertTrue(!db.getWaysST().isEmpty());
-        assertTrue(db.getWaysST().size() == 1);
+        assertTrue(db.numberOfWays() == 1);
 
         assertTrue(db.searchWay(w1.getWayId()).equals(w1));
         assertTrue(!db.searchWay(w1.getWayId()).equals(w2));

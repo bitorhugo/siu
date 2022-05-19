@@ -18,8 +18,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
-import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.map.Map;
+import main.edu.ufp.inf.en.models.siu.user.User;
 
 public class MapController implements Initializable{
 
@@ -47,22 +47,22 @@ public class MapController implements Initializable{
     private Scene scene;
 
     private Map map;
-    private DataBase database;
+    private User user;
 
     public MapController () {}
 
-    public MapController (Map map, DataBase database) {
+    public MapController (Map map, User user) {
         this.map = map;
-        this.database = database;
+        this.user = user;
     }
 
     public MapController (Map map) {
         this.map = map;
     }
 
-    public MapController (DataBase database) {
-        this(new Map(database));
-        this.database = database;
+    public MapController (User user) {
+        this(new Map(user.getDb()));
+        this.user = user;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class MapController implements Initializable{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Login.fxml"));
         // inject constructor into controller
         loader.setControllerFactory(c -> {
-            return new LoginController(this.database);
+            return new LoginController(user.getDb());
         });
         // set stage and scene
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -157,7 +157,7 @@ public class MapController implements Initializable{
         // load fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Path.fxml"));
         loader.setControllerFactory(c -> {
-            return new PathController(map, database, from, to);
+            return new PathController(map, user, from, to);
         });
         // set stage and scene
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();

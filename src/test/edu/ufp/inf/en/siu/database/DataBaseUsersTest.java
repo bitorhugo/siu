@@ -17,8 +17,7 @@ public class DataBaseUsersTest {
         DataBase db = new DataBase();
         Admin admin = new Admin("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(admin);
-        assertTrue(!db.getUserST().isEmpty());
-        assertTrue(db.getUserST().size() == 1);
+        assertTrue(db.numberOfUsers() == 1);
         assertTrue(db.searchUser(admin.getIdNumber()) instanceof Admin);
     }
 
@@ -27,8 +26,7 @@ public class DataBaseUsersTest {
         DataBase db = new DataBase();
         Basic basic = new Basic("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(basic);
-        assertTrue(!db.getUserST().isEmpty());
-        assertTrue(db.getUserST().size() == 1);
+        assertTrue(db.numberOfUsers() == 1);
     }
 
     @Test
@@ -38,8 +36,7 @@ public class DataBaseUsersTest {
         Basic basic = new Basic("Hugo", "Porto", "1234", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(admin);
         db.addUser(basic);
-        assertTrue(!db.getUserST().isEmpty());
-        assertTrue(db.getUserST().size() == 2);
+        assertTrue(db.numberOfUsers() == 2);
     }
 
     @Test
@@ -48,7 +45,7 @@ public class DataBaseUsersTest {
         Admin admin = new Admin("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(admin);
         db.removeUser(admin);
-        assertTrue(db.getUserST().isEmpty());
+        assertTrue(db.numberOfUsers() == 0);
     }
 
     @Test
@@ -57,7 +54,7 @@ public class DataBaseUsersTest {
         Basic basic = new Basic("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(basic);
         db.removeUser(basic);
-        assertTrue(db.getUserST().isEmpty());
+        assertTrue(db.numberOfUsers() == 0);
     }
 
     @Test
@@ -69,7 +66,7 @@ public class DataBaseUsersTest {
         db.addUser(basic);
         db.removeUser(admin);
         db.removeUser(basic);
-        assertTrue(db.getUserST().isEmpty());
+        assertTrue(db.numberOfUsers() == 0);
     }
 
     @Test
@@ -79,8 +76,8 @@ public class DataBaseUsersTest {
         Admin newAdmin = new Admin("Hugo", "Porto", "1234", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(oldAdmin);
         db.editUser(oldAdmin, newAdmin);
-        assertTrue(!db.getUserST().contains(oldAdmin.getIdNumber()));
-        assertTrue(db.getUserST().contains(newAdmin.getIdNumber()));
+        assertTrue(!db.contains(oldAdmin));
+        assertTrue(db.contains(newAdmin));
     }
 
     @Test
@@ -90,8 +87,8 @@ public class DataBaseUsersTest {
         Basic newAdmin = new Basic("Hugo", "Porto", "1234", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(oldAdmin);
         db.editUser(oldAdmin, newAdmin);
-        assertTrue(!db.getUserST().contains(oldAdmin.getIdNumber()));
-        assertTrue(db.getUserST().contains(newAdmin.getIdNumber()));
+        assertTrue(!db.contains(oldAdmin));
+        assertTrue(db.contains(newAdmin));
     }
 
     @Test
@@ -101,8 +98,8 @@ public class DataBaseUsersTest {
         Basic neww = new Basic("Hugo", "Porto", "1234", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(old);
         db.editUser(old, neww);
-        assertTrue(!db.getUserST().contains(old.getIdNumber()));
-        assertTrue(db.getUserST().contains(neww.getIdNumber()));
+        assertTrue(!db.contains(old));
+        assertTrue(db.contains(neww));
     }
 
     @Test

@@ -68,13 +68,17 @@ public abstract class User extends Person {
     if (poi == null) throw new IllegalArgumentException("argument 'poi' to addVisitedPoi() is null");
     if (entrance == null) throw new IllegalArgumentException("argument 'entrance' to addVisitedPoi() is null");
     // check weather poi is in database
-    if (this.db.getPoiST().contains(poi.getNodeId())) {
+    if (this.db.containsPoi(poi)) {
       Poi p = this.db.searchPoi(poi.getNodeId());
       // update visitors of p
       this.db.searchPoi(p.getNodeId()).addVisitor(this, entrance);
       // add poi to visitedPoi
       this.visitedPoi.put(entrance, p);
     }
+  }
+
+  public void visitPoi (Integer pois, Long... entrances) {
+    
   }
 
   /**

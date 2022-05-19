@@ -16,8 +16,7 @@ public class DataBaseNodesTest {
 
         db.addNode(n);
         System.out.println(n);
-        assertTrue(!db.getNodesST().isEmpty());
-        assertTrue(db.getNodesST().size() == 1);
+        assertTrue(db.numberOfNodes() == 1);
     }
 
     @Test
@@ -26,10 +25,9 @@ public class DataBaseNodesTest {
         Node n = new Node(1234, new Point(123, 321));
 
         db.addNode(n);
-        assertTrue(!db.getNodesST().isEmpty());
-        assertTrue(db.getNodesST().size() == 1);
+        assertTrue(db.numberOfNodes() == 1);
         db.removeNode(n);
-        assertTrue(db.getNodesST().isEmpty());
+        assertTrue(db.numberOfNodes() == 0);   
     }
 
     @Test
@@ -39,11 +37,10 @@ public class DataBaseNodesTest {
         Node n = new Node(4567, new Point(123, 321));
 
         db.addNode(n);
-        assertTrue(!db.getNodesST().isEmpty());
-        assertTrue(db.getNodesST().size() == 1);
+        assertTrue(db.numberOfNodes() == 1);
         db.editNode(o, n);
-        assertTrue(!db.getNodesST().contains(o.getNodeId()));
-        assertTrue(db.getNodesST().contains(n.getNodeId()));
+        assertTrue(!db.containsNode(o));
+        assertTrue(db.containsNode(n));
     }
 
     @Test
@@ -53,8 +50,7 @@ public class DataBaseNodesTest {
         Node n2 = new Node(4567, new Point(176, 353));
 
         db.addNode(n1);
-        assertTrue(!db.getNodesST().isEmpty());
-        assertTrue(db.getNodesST().size() == 1);
+        assertTrue(db.numberOfNodes() == 1);
         
         assertTrue(db.searchNode(n1.getNodeId()).equals(n1));
         assertTrue(!db.searchNode(n1.getNodeId()).equals(n2));

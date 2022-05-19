@@ -40,10 +40,6 @@ public class DataBase {
     this.waysST = waysST;
   }
 
-  public RedBlackBST<Integer, Poi> getPoiST() {
-    return poiST;
-  }
-
   public void setPoiST(RedBlackBST<Integer, Poi> poiST) {
     this.poiST = poiST;
   }
@@ -391,7 +387,7 @@ public class DataBase {
    * number of pois in database
    * @return poisST size
    */
-  public int numberOfPoi() {
+  public int numberOfPois() {
     return this.poiST.size();
   }
 

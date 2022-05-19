@@ -51,7 +51,7 @@ public class BasicController implements UserControllerI{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Map.fxml"));
         // inject constructor into controller
         loader.setControllerFactory(c -> {
-            return new MapController(this.user.getDb());
+            return new MapController(user);
         });
         // set stage and scene
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();

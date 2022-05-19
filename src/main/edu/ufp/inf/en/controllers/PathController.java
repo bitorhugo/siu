@@ -20,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.map.Map;
+import main.edu.ufp.inf.en.models.siu.user.User;
 
 public class PathController implements Initializable {
 
@@ -36,16 +37,16 @@ public class PathController implements Initializable {
     private LineChart<Number,Number> pathGraph;
 
     private Map map;
-    private DataBase database;
+    private User user;
     private Integer from;
     private Integer to;
 
     Stage stage;
     Scene scene;
 
-    public PathController (Map map, DataBase database, Integer from, Integer to) {
+    public PathController (Map map, User user, Integer from, Integer to) {
         this.map = map;
-        this.database = database;
+        this.user = user;
         this.from = from;
         this.to = to;
     }
@@ -88,7 +89,7 @@ public class PathController implements Initializable {
         // load fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Map.fxml"));
         loader.setControllerFactory(c -> {
-            return new MapController(map, database);
+            return new MapController(map, user);
         });
         // set stage and scene
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();

@@ -18,11 +18,9 @@ public class DataBasePoisTest {
 
         db.addPoi(poi);
 
-        assertTrue(!db.getPoiST().isEmpty());
-        assertTrue(db.getPoiST().size() == 1);
+        assertTrue(db.numberOfPois() == 1);
 
-        assertTrue(!db.getNodesST().isEmpty());
-        assertTrue(db.getNodesST().size() == 1);
+        assertTrue(db.numberOfNodes() == 1);
     }
 
     @Test 
@@ -32,17 +30,15 @@ public class DataBasePoisTest {
 
         db.addPoi(poi);
 
-        assertTrue(!db.getPoiST().isEmpty());
-        assertTrue(db.getPoiST().size() == 1);
+        assertTrue(db.numberOfPois() == 1);
 
-        assertTrue(!db.getNodesST().isEmpty());
-        assertTrue(db.getNodesST().size() == 1);
+        assertTrue(db.numberOfNodes() == 1);
 
         db.removePoi(poi);
 
-        assertTrue(db.getPoiST().isEmpty());
+        assertTrue(db.numberOfPois() == 0);
 
-        assertTrue(db.getNodesST().isEmpty());
+        assertTrue(db.numberOfNodes() == 0);
     }
 
     @Test
@@ -52,15 +48,14 @@ public class DataBasePoisTest {
         Poi n = new Poi(321, new Point(65.2f, 12f));
 
         db.addPoi(o);
-        assertTrue(!db.getPoiST().isEmpty());
-        assertTrue(db.getPoiST().size() == 1);
+        assertTrue(db.numberOfPois() == 1);
 
         db.editPoi(o, n);
-        assertTrue(!db.getPoiST().contains(o.getNodeId()));
-        assertTrue(db.getPoiST().contains(n.getNodeId()));
+        assertTrue(!db.containsNode(o));
+        assertTrue(db.containsNode(n));
 
-        assertTrue(!db.getNodesST().contains(o.getNodeId()));
-        assertTrue(db.getNodesST().contains(n.getNodeId()));
+        assertTrue(!db.containsNode(o));
+        assertTrue(db.containsNode(n));
     }
 
     @Test
@@ -72,11 +67,9 @@ public class DataBasePoisTest {
         db.addPoi(p1);
         db.addPoi(p2);
 
-        assertTrue(!db.getPoiST().isEmpty());
-        assertTrue(db.getPoiST().size() == 2);
+        assertTrue(db.numberOfPois() == 2);
 
-        assertTrue(!db.getNodesST().isEmpty());
-        assertTrue(db.getNodesST().size() == 2);
+        assertTrue(db.numberOfNodes() == 2);
 
         assertTrue(db.searchPoi(p1.getNodeId()).equals(p1));
         assertTrue(!db.searchPoi(p1.getNodeId()).equals(p2));

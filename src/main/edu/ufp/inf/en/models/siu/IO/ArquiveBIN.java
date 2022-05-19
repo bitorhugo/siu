@@ -57,15 +57,7 @@ public class ArquiveBIN {
      * @param db database
      */
     public static void PoisBIN(DataBase db) {
-        BinaryOut out = new BinaryOut(path_pois_bin);
-        out.write(db.getPoiST().size());
-        out.write(NEWLINE);
-        for (var v : db.getPoiST().keys()) {
-            Poi p = db.searchPoi(v);
-            out.write(p.toString());
-            out.write(NEWLINE);
-        }
-        out.close();
+    
     }
 
     /**
