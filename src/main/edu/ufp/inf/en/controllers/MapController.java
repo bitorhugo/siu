@@ -51,6 +51,11 @@ public class MapController implements Initializable{
 
     public MapController () {}
 
+    public MapController (Map map, DataBase database) {
+        this.map = map;
+        this.database = database;
+    }
+
     public MapController (Map map) {
         this.map = map;
     }
@@ -73,7 +78,7 @@ public class MapController implements Initializable{
         });
 
         XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
-        for (var v : this.map.getNodes().keys()) {
+        for (var v : this.map.indeces()) {
             Point point = this.map.getNodes().get(v).getCoordinates();
             series1.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
         }
@@ -133,7 +138,7 @@ public class MapController implements Initializable{
         return Integer.parseInt(toTextField.getText()); 
     }
 
-    public void handleGOButton(ActionEvent event) {
+    public void handlePathButton(ActionEvent event) {
         try {
             invalidText.setText("");
             Integer from = handleFromTextField(event);
@@ -152,7 +157,7 @@ public class MapController implements Initializable{
         // load fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Path.fxml"));
         loader.setControllerFactory(c -> {
-            return new PathController(map, from, to);
+            return new PathController(map, database, from, to);
         });
         // set stage and scene
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();

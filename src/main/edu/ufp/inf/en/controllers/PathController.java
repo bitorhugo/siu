@@ -2,8 +2,8 @@ package main.edu.ufp.inf.en.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import edu.princeton.cs.algs4.DirectedEdge;
@@ -16,32 +16,45 @@ import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 
 public class PathController implements Initializable {
 
     @FXML
     private Button backButton;
+
+    @FXML
+    private Button goButton;
+
+    @FXML
+    private Text distanceText;
     
     @FXML
     private LineChart<Number,Number> pathGraph;
 
     private Map map;
+    private DataBase database;
     private Integer from;
     private Integer to;
 
     Stage stage;
     Scene scene;
 
-    public PathController (Map map, Integer from, Integer to) {
+    public PathController (Map map, DataBase database, Integer from, Integer to) {
         this.map = map;
+        this.database = database;
         this.from = from;
         this.to = to;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        DecimalFormat df = new DecimalFormat("#.##");
+        double dist = this.map.shortestDistance(this.map.getNodeFromIndex(from), this.map.getNodeFromIndex(to));
+        this.distanceText.setText(df.format(dist) + "m");
         
         Iterable<DirectedEdge> path = this.map.shortestPath(this.map.getNodes().get(from),this.map.getNodes().get(to));
 
@@ -67,8 +80,7 @@ public class PathController implements Initializable {
             seriesArr.get(i).getData().add(new XYChart.Data<>(xTo, yTo));
             i++;
         }
-        
-        
+    
         pathGraph.getData().addAll(seriesArr);
     }
 
@@ -76,13 +88,17 @@ public class PathController implements Initializable {
         // load fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Map.fxml"));
         loader.setControllerFactory(c -> {
-            return new MapController(map);
+            return new MapController(map, database);
         });
         // set stage and scene
         stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(loader.load());
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void handleGoButton (ActionEvent event) {
+        
     }
 
 }

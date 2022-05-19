@@ -343,12 +343,12 @@ public class DataBase {
     // create arraylist to insert as a value
     ArrayList<Object> al = new ArrayList<>();
 
-    if (!this.nodesST.isEmpty()) {
+    if (!this.poiST.isEmpty()) {
       // iterate over nodes
-      for (var i : this.nodesST.keys()) {
-        Node n = this.nodesST.get(i);
-        if (n.containsTag(t)) {
-          al.add(n);
+      for (var i : this.poiST.keys()) {
+        Poi p = this.poiST.get(i);
+        if (p.containsTag(t)) {
+          al.add(p);
         }
       }
     }
@@ -371,10 +371,10 @@ public class DataBase {
    * @param value value of tag
    * @author Vitor Hugo
    */
-  public void addNodeTag (Node n, Tag t, String value) {
+  public void addPoiTag (Poi p, Tag t, String value) {
     if (t == null) throw new IllegalArgumentException("argument to addNodeTag() is null");
-    if (this.nodesST.contains(n.getNodeId())) {
-      this.nodesST.get(n.getNodeId()).addTag(t, value);
+    if (this.poiST.contains(p.getNodeId())) {
+      this.poiST.get(p.getNodeId()).addTag(t, value);
       addTag(t);
     }
     else {
@@ -428,9 +428,9 @@ public class DataBase {
    * @return tag removed if found || null if not found
    * @author Vitor Hugo
    */
-  public Tag removeNodeTag (Node n, Tag t) {
-    if (this.nodesST.contains(n.getNodeId())){
-      this.nodesST.get(n.getNodeId()).removeTag(t);
+  public Tag removePoiTag (Node n, Tag t) {
+    if (this.poiST.contains(n.getNodeId())){
+      this.poiST.get(n.getNodeId()).removeTag(t);
       removeTagsObject(n, t);
       Arquive.Tag(n, t);
       return t;
@@ -446,8 +446,8 @@ public class DataBase {
    * @author Vitor Hugo
    */
   public Tag removeWayTag (Way w, Tag t) {
-    if (this.nodesST.contains(w.getWayId())){
-      this.nodesST.get(w.getWayId()).removeTag(t);
+    if (this.waysST.contains(w.getWayId())){
+      this.waysST.get(w.getWayId()).removeTag(t);
       removeTagsObject(w, t);
       Arquive.Tag(w, t);
       return t;

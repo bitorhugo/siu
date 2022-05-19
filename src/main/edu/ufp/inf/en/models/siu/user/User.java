@@ -10,6 +10,7 @@ import main.edu.ufp.inf.en.models.lp2._1_intro.person.Person;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 
+// TODO: take out setter and getter of db to achieve desired encapsulation
 public abstract class User extends Person {
 
   private String email;

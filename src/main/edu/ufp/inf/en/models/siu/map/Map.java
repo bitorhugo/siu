@@ -84,6 +84,14 @@ public class Map {
         this.nodes = nodes;
     }
 
+    public Node getNodeFromIndex(Integer index) {
+        return this.nodes.get(index);
+    }
+
+    public Iterable<Integer> indeces() {
+        return this.nodes.keys();
+    }
+
     /**
      * updates map graph 
      * @param db database to retrieve updated data from
@@ -96,7 +104,7 @@ public class Map {
     }
 
     /**
-     * checks wether graph is connected
+     * checks wether graph is strongly connected
      * @return true if connected | false if disconnected
      * @author Vitor Hugo
      */
@@ -105,8 +113,10 @@ public class Map {
         for (DirectedEdge edge : this.graph.edges()) {
             digraph.addEdge(edge.to(), edge.from());
         }
-        DirectedDFS dfs = new DirectedDFS(digraph, 0);
-        
+        DirectedDFS ddfs = new DirectedDFS(digraph, 0);
+        System.out.println(ddfs.count());
+        DirectedDFS dfs = new DirectedDFS(digraph, this.nodes.keys());
+        System.out.println(dfs.count());
         return dfs.count() == this.graph.V() ? true : false;
     }
 

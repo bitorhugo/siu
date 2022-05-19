@@ -9,6 +9,7 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
+import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 import main.edu.ufp.inf.en.models.siu.map.Map;
@@ -72,7 +73,8 @@ public class Upload {
             if (lines[0].length() > 0) {
                 Node n = new Node(Integer.parseInt(lines[0]), new Point(Float.parseFloat(lines[1]), Float.parseFloat(lines[2])));
                 // check to see if line contains key-value pairs
-                if (lines.length > 2) {
+                if (lines.length > 3) {
+                    Poi p = new Poi(n);
                     SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
                     // iterate over remaining key value pairs of line
                     for (int i = 3; i < lines.length - 1; i+=2) {
@@ -81,41 +83,12 @@ public class Upload {
                         }
                         tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
                     }
-                    n.setTags(tags);
+                    p.setTags(tags);
+                    db.addPoi(p);
                 }
-                db.addNode(n);
-            }
-        }
-        in.close();
-    }
-
-    /**
-     * uploads nodes from input source to database
-     * @param input source
-     * @param db database
-     */
-    public static void Nodes(String input, DataBase db) {
-        if (db == null) throw new IllegalAccessError("argument to uploadDB() is null");
-        In in = new In(new Scanner(input));
-
-        in.readInt();
-        while (in.hasNextLine()) {
-            String []lines = in.readLine().split(",");
-            if (lines[0].length() > 0) {
-                Node n = new Node(Integer.parseInt(lines[0]), new Point(Float.parseFloat(lines[1]), Float.parseFloat(lines[2])));
-                // check to see if line contains key-value pairs
-                if (lines.length > 2) {
-                    SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
-                    // iterate over remaining key value pairs of line
-                    for (int i = 3; i < lines.length - 1; i+=2) {
-                        if (lines[i].contains(":")) {
-                            lines[i] = lines[i].replace(':', '_');
-                        }
-                        tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
-                    }
-                    n.setTags(tags);
+                else {
+                    db.addNode(n);
                 }
-                db.addNode(n);
             }
         }
         in.close();

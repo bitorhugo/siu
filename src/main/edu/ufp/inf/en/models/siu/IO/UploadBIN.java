@@ -16,9 +16,8 @@ public class UploadBIN {
      * @param db
      */
     public static void NodesBIN (DataBase db) {
-        BinaryIn in = new BinaryIn(path_nodes);
-        String nodesDataSet = in.readString();
-        Upload.Nodes(nodesDataSet, db);
+        
+        
     }
 
     /**

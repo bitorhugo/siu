@@ -38,7 +38,7 @@ public class App extends Application{
         });
         
         // stage config
-        primaryStage.setTitle("SIU LOGIN");
+        primaryStage.setTitle("SIU");
         primaryStage.setScene(new Scene(loader.load()));
         primaryStage.setWidth(WIDTH);
         primaryStage.setHeight(HEIGHT);
@@ -46,8 +46,6 @@ public class App extends Application{
         primaryStage.show();
 
     }
-
-    
     
     public static void main(String[] args) throws Exception {    
         launch();
