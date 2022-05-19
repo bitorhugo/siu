@@ -110,7 +110,15 @@ public class DataBase {
   }
 
   public boolean contains(User u) {
-    return this.userST.contains(u.getIdNumber())
+    return this.userST.contains(u.getIdNumber());
+  }
+
+  public Iterable<String> usersKeys() {
+    return this.userST.keys();
+  }
+
+  public int numberOfUsers() {
+    return this.userST.size();
   }
 
   /**
@@ -183,7 +191,7 @@ public class DataBase {
    * @return true if found || false if not
    */
   public boolean containsNode(Node n) {
-    return this.nodesST.contains(n.getNodeId()) ? true : false;
+    return this.nodesST.contains(n.getNodeId());
   }
 
   /**
@@ -275,7 +283,7 @@ public class DataBase {
    * @return true if found || false if not found
    */
   public boolean containsWay(Way w) {
-    return this.waysST.contains(w.getWayId()) ? true : false;
+    return this.waysST.contains(w.getWayId());
   }
 
   /**
@@ -362,6 +370,31 @@ public class DataBase {
     return this.poiST.get(id);
   }
   
+  /**
+   * checks if poi exists in database
+   * @param p poi
+   * @return true if found || false if not found
+   */
+  public boolean containsPoi(Poi p) {
+    return this.poiST.contains(p.getNodeId());
+  }
+
+  /**
+   * returns all keys of pois symbol table
+   * @return an iterable of poisST keys
+   */
+  public Iterable<Integer> poisKeys() {
+    return this.poiST.keys();
+  }
+
+  /**
+   * number of pois in database
+   * @return poisST size
+   */
+  public int numberOfPoi() {
+    return this.poiST.size();
+  }
+
   /**
    * lists all poi from database
    * @author Vitor Hugo
