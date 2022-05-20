@@ -149,6 +149,7 @@ public class MapController implements Initializable{
             
         } catch (Exception e) {
             invalidText.setText("INVALID");
+            e.printStackTrace();
         }
         
     }

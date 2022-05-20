@@ -3,6 +3,7 @@ package main.edu.ufp.inf.en.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -19,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
+import main.edu.ufp.inf.en.models.siu.database.transport.Transport;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 import main.edu.ufp.inf.en.models.siu.user.User;
 
@@ -38,8 +40,10 @@ public class PathController implements Initializable {
 
     private Map map;
     private User user;
-    private Integer from;
-    private Integer to;
+    private Integer from; // node index
+    private Integer to; // node index
+    private Iterable<DirectedEdge> path;
+    private double time;
 
     Stage stage;
     Scene scene;
@@ -49,6 +53,7 @@ public class PathController implements Initializable {
         this.user = user;
         this.from = from;
         this.to = to;
+        this.time = 0.0;
     }
 
     @Override
@@ -57,7 +62,11 @@ public class PathController implements Initializable {
         double dist = this.map.shortestDistance(this.map.getNodeFromIndex(from), this.map.getNodeFromIndex(to));
         this.distanceText.setText(df.format(dist) + "m");
         
-        Iterable<DirectedEdge> path = this.map.shortestPath(this.map.getNodes().get(from),this.map.getNodes().get(to));
+        this.time = this.map.shortestDistance(
+            "bus", this.map.getNodeFromIndex(from), this.map.getNodeFromIndex(to)
+            );
+
+        this.path = this.map.shortestPath(this.map.getNodes().get(from),this.map.getNodes().get(to));
 
         path.forEach(System.out::println);
 
@@ -99,7 +108,31 @@ public class PathController implements Initializable {
     }
 
     public void handleGoButton (ActionEvent event) {
-        
+        Long ts = (System.currentTimeMillis() / 1000L); // convert milliseconds to seconds
+        // add time to poi to ts
+        ts = (long) (ts + time);
+
+        // convert map indeces to poiIDs'
+        // must copy iterable values to arraylist to know list size
+        ArrayList<DirectedEdge> arr = new ArrayList<>();
+        this.path.forEach(arr::add);
+
+        ArrayList<Integer> poisID = new ArrayList<>();
+        int i = 0; 
+        for (var v : arr) {
+            if (i == (arr.size() - 1)) {
+                poisID.add(this.map.getNodeFromIndex(v.from()).getNodeId());
+                poisID.add(this.map.getNodeFromIndex(v.to()).getNodeId());
+            }
+            else {
+                poisID.add(this.map.getNodeFromIndex(v.from()).getNodeId());
+            }
+            i++;
+        }
+
+        System.out.println(poisID);
+
+        user.visitPoi(poisID, ts);
     }
 
 }

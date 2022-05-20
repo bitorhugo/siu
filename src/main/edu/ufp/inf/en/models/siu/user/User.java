@@ -77,7 +77,7 @@ public abstract class User extends Person {
     }
   }
 
-  public void visitPoi (Integer pois, Long... entrances) {
+  public void visitPoi (Iterable<Integer> pois, Long... entrances) {
     
   }
 

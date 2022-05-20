@@ -141,7 +141,7 @@ public class Map {
         dsp.pathTo(destination.getIndexMap()).forEach(System.out::println);
         
         // return time value in minutes
-        return (dsp.distTo(destination.getIndexMap())) / (Transport.valueOf(transportType).speed);
+        return (dsp.distTo(destination.getIndexMap())) / (Transport.valueOf(transportType.toUpperCase()).speed);
     }
 
     /**
