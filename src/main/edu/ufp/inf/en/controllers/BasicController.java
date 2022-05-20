@@ -62,7 +62,17 @@ public class BasicController implements UserControllerI{
 
     @FXML
     public void handleHistoryButtonAction (ActionEvent event) throws IOException {
-        
+        // load fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/History.fxml"));
+        // inject constructor into controller
+        loader.setControllerFactory(c -> {
+            return new HistoryController(this.user);
+        });
+        // set stage and scene
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(loader.load());
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML

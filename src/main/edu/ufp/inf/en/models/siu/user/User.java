@@ -79,17 +79,14 @@ public abstract class User extends Person {
   }
 
   /**
-   * visits a poi
-   * @param pois poi visited
-   * @param timestamp time user was in/on the poi
+   * adds list of pois to visitPoi
+   * @param pois list of pois
+   * @param timestamp time user was in/on the pois
    */
   public void visitPoi (List<Integer> pois, List<Long> timestamps) {
-    pois.forEach(System.out::println);
-    timestamps.forEach(System.out::println);
-
     // check if for each poi we have a related timestamp
     if (pois.size() != timestamps.size())
-      throw new IllegalArgumentException("list must have the same size");
+      throw new IllegalArgumentException("lists must have the same size");
 
     // add to visitedPoi
     for (int i = 0; i < pois.size(); i++) {
@@ -101,19 +98,22 @@ public abstract class User extends Person {
     }
     
     this.history();
-
   }
 
   /**
    * returns all point of interest visited by user
    */
-  public void history () {
+  public String history () {
+    String history = new String();
     if (!this.visitedPoi.isEmpty()) {
       for (Long timestamp : this.visitedPoi.keys()) {
-        System.out.println("Poi " + this.visitedPoi.get(timestamp).getNodeId()
-                            + " Date visited: " + LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.UTC));
+        Integer poiID = this.visitedPoi.get(timestamp).getNodeId();
+        LocalDateTime date = LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.UTC);
+        history += "Poi: " + poiID + " Date visited: " + date + ";";
+        System.out.println(history);
       }
     }
+    return history;
   }
 
   @Override
