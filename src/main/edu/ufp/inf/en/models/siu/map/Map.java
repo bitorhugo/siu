@@ -1,5 +1,8 @@
 package main.edu.ufp.inf.en.models.siu.map;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.DijkstraSP;
 import edu.princeton.cs.algs4.DirectedDFS;
@@ -131,8 +134,8 @@ public class Map {
      * @return distance in minutes depending on transportation used
      * @author Vitor Hugo
      */
-    public double shortestDistance (String transportType, Node origin, Node destination) {
-        if (transportType == null) throw new IllegalArgumentException("argument to shortestPath() is null");
+    public double shortestDistance (Transport transport, Node origin, Node destination) {
+        if (transport == null) throw new IllegalArgumentException("argument to shortestPath() is null");
 
         // use djikstras to calculate shortest path
         DijkstraSP dsp = new DijkstraSP(this.graph, origin.getIndexMap());
@@ -141,7 +144,7 @@ public class Map {
         dsp.pathTo(destination.getIndexMap()).forEach(System.out::println);
         
         // return time value in minutes
-        return (dsp.distTo(destination.getIndexMap())) / (Transport.valueOf(transportType.toUpperCase()).speed);
+        return (dsp.distTo(destination.getIndexMap()) / transport.speed);
     }
 
     /**
@@ -169,7 +172,7 @@ public class Map {
      * @return shortest path
      * @author Vitor Hugo
      */
-    public Iterable<DirectedEdge> shortestPath (Node origin, Node destination) {
+    public Iterable<DirectedEdge> shortestPath(Node origin, Node destination) {
         DijkstraSP dsp = new DijkstraSP(this.graph, origin.getIndexMap());
         if (dsp.hasPathTo(destination.getIndexMap())) {
             return dsp.pathTo(destination.getIndexMap());
@@ -178,6 +181,23 @@ public class Map {
             System.out.println("no path form origin to destination found");
             return null;
         }
+    }
+
+    /**
+     * calculates time weight for each route of a path
+     * @param path path
+     * @return the amount of time each route in path will take
+     */
+    public Iterable<Long> shortestPathTime(Iterable<DirectedEdge> path, Transport transport) {
+        
+        List<Long> times = new ArrayList<>();
+
+        // for each edge of path, calculate its weight in time
+        path.forEach(p -> {
+            long time = (long) ((p.weight() / transport.speed));
+            times.add(time);
+        });
+        return times;
     }
 
 }

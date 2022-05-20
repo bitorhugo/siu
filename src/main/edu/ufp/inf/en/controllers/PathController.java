@@ -3,8 +3,8 @@ package main.edu.ufp.inf.en.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import edu.princeton.cs.algs4.DirectedEdge;
@@ -19,7 +19,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.edu.ufp.inf.en.models.siu.database.DataBase;
+
 import main.edu.ufp.inf.en.models.siu.database.transport.Transport;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 import main.edu.ufp.inf.en.models.siu.user.User;
@@ -43,7 +43,7 @@ public class PathController implements Initializable {
     private Integer from; // node index
     private Integer to; // node index
     private Iterable<DirectedEdge> path;
-    private double time;
+    private Iterable<Long>time;
 
     Stage stage;
     Scene scene;
@@ -53,20 +53,20 @@ public class PathController implements Initializable {
         this.user = user;
         this.from = from;
         this.to = to;
-        this.time = 0.0;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // calculate total distance
         DecimalFormat df = new DecimalFormat("#.##");
         double dist = this.map.shortestDistance(this.map.getNodeFromIndex(from), this.map.getNodeFromIndex(to));
         this.distanceText.setText(df.format(dist) + "m");
         
-        this.time = this.map.shortestDistance(
-            "bus", this.map.getNodeFromIndex(from), this.map.getNodeFromIndex(to)
-            );
-
+        // calculate shortest path
         this.path = this.map.shortestPath(this.map.getNodes().get(from),this.map.getNodes().get(to));
+
+        // calculate time it takes to travel each edge
+        this.time = this.map.shortestPathTime(path, Transport.BUS);
 
         path.forEach(System.out::println);
 
@@ -109,17 +109,24 @@ public class PathController implements Initializable {
 
     public void handleGoButton (ActionEvent event) {
         Long ts = (System.currentTimeMillis() / 1000L); // convert milliseconds to seconds
-        // add time to poi to ts
-        ts = (long) (ts + time);
-
-        // convert map indeces to poiIDs'
+        
+        List<Long> timestamps = new ArrayList<>();
+        timestamps.add(ts);
+        
+        this.time.forEach(t -> {
+            long timestamp = t += ts;
+            timestamps.add(timestamp);
+        });
+        
         // must copy iterable values to arraylist to know list size
         ArrayList<DirectedEdge> arr = new ArrayList<>();
         this.path.forEach(arr::add);
 
+        // save each route node to poisID
         ArrayList<Integer> poisID = new ArrayList<>();
         int i = 0; 
         for (var v : arr) {
+            // convert map indeces to poiIDs
             if (i == (arr.size() - 1)) {
                 poisID.add(this.map.getNodeFromIndex(v.from()).getNodeId());
                 poisID.add(this.map.getNodeFromIndex(v.to()).getNodeId());
@@ -129,10 +136,8 @@ public class PathController implements Initializable {
             }
             i++;
         }
-
-        System.out.println(poisID);
-
-        user.visitPoi(poisID, ts);
+        
+        user.visitPoi(poisID, timestamps);
     }
 
 }

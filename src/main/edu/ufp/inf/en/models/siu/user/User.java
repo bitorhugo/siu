@@ -3,6 +3,7 @@ package main.edu.ufp.inf.en.models.siu.user;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Objects;
 
 import edu.princeton.cs.algs4.RedBlackBST;
@@ -77,8 +78,30 @@ public abstract class User extends Person {
     }
   }
 
-  public void visitPoi (Iterable<Integer> pois, Long... entrances) {
+  /**
+   * visits a poi
+   * @param pois poi visited
+   * @param timestamp time user was in/on the poi
+   */
+  public void visitPoi (List<Integer> pois, List<Long> timestamps) {
+    pois.forEach(System.out::println);
+    timestamps.forEach(System.out::println);
+
+    // check if for each poi we have a related timestamp
+    if (pois.size() != timestamps.size())
+      throw new IllegalArgumentException("list must have the same size");
+
+    // add to visitedPoi
+    for (int i = 0; i < pois.size(); i++) {
+      Poi p = this.db.searchPoi(pois.get(i));
+      if (p != null) {
+        p.addVisitor(this, timestamps.get(i));
+        this.visitedPoi.put(timestamps.get(i), p); // add user to visitors in poi
+      }
+    }
     
+    this.history();
+
   }
 
   /**

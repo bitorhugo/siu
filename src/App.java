@@ -18,7 +18,7 @@ import main.edu.ufp.inf.en.models.siu.user.Admin;
 import main.edu.ufp.inf.en.models.siu.user.Basic;
 import main.edu.ufp.inf.en.models.siu.user.User;
 
-
+@SuppressWarnings("unused")
 public class App extends Application{
 
     public final double WIDTH = 700;
