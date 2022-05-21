@@ -3,6 +3,7 @@ package main.edu.ufp.inf.en.models.siu.IO;
 import edu.princeton.cs.algs4.BinaryIn;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 
+@SuppressWarnings("unused")
 public class UploadBIN {
     
     private static final String path_nodes = "/Users/VitorHugo/dev/java/projects/siu/data/in/bin/nodesBIN.bin";

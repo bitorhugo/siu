@@ -7,6 +7,7 @@ import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 
+@SuppressWarnings("unused")
 public class ArquiveBIN {
     
     /**

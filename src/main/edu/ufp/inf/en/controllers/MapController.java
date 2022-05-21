@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.map.Map;
+import main.edu.ufp.inf.en.models.siu.user.Admin;
 import main.edu.ufp.inf.en.models.siu.user.User;
 
 public class MapController implements Initializable{
@@ -29,7 +30,8 @@ public class MapController implements Initializable{
     @FXML
     private ChoiceBox<String> menuChoiceBox;
 
-    private String[] menuChoices = {"EDIT", "HISTORY", "EXPORT", "LOGOUT"};
+    private String[] adminMenuChoices = {"EDIT", "HISTORY", "EXPORT", "LOGOUT"};
+    private String[] basicMenuChoices = {"HISTORY", "EXPORT", "LOGOUT"};
 
     @FXML
     private TextField fromTextField;
@@ -69,7 +71,9 @@ public class MapController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // set string values for menu options
-        menuChoiceBox.getItems().addAll(menuChoices);
+        if (this.user instanceof Admin) menuChoiceBox.getItems().addAll(this.adminMenuChoices);
+        else menuChoiceBox.getItems().addAll(basicMenuChoices);
+        
         menuChoiceBox.setOnAction(choice -> {
             try {
                 getMenuOption(choice);
@@ -104,8 +108,18 @@ public class MapController implements Initializable{
 
     }
 
-    public void handleEditChoice (ActionEvent event) {
-
+    public void handleEditChoice (ActionEvent event) throws IOException {
+        // load fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Edit.fxml"));
+        // inject constructor into controller
+        loader.setControllerFactory(c -> {
+            return new EditController(this.user);
+        });
+        // set stage and scene
+        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(loader.load());
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void handleHistoryChoice (ActionEvent event) throws IOException {

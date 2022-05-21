@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
-import main.edu.ufp.inf.en.models.siu.TimePeriod;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.user.User;
@@ -15,8 +14,6 @@ import main.edu.ufp.inf.en.models.siu.user.User;
 public class Poi extends Node{
 
   private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
-
-  private RedBlackBST<String, ArrayList<TimePeriod>> visitorST = new RedBlackBST<>();
   
   private RedBlackBST<Long, ArrayList<User>> visitorsEntrance = new RedBlackBST<>();
   
@@ -36,14 +33,6 @@ public class Poi extends Node{
 
   public void setTags(SeparateChainingHashST<Tag, String> tags) {
     this.tags = tags;
-  }
-
-  public RedBlackBST<String, ArrayList<TimePeriod>> getVisitorST() {
-    return visitorST;
-  }
-  
-  public void setVisitorST(RedBlackBST<String, ArrayList<TimePeriod>> visitorST) {
-    this.visitorST = visitorST;
   }
 
   public RedBlackBST<Long, ArrayList<User>> getVisitorsEntrance() {
@@ -146,20 +135,14 @@ public class Poi extends Node{
   }
 
   public void listVisitors() {
-    if (!this.visitorST.isEmpty()) {
-      for (var v : this.visitorST.keys()) {
-        System.out.println("User: " + v);
-      }
+    for (var v : this.visitorsEntrance.keys()) {
+      System.out.println(this.visitorsEntrance.get(v));
     }
-  }
-
-  public boolean containsVisitor (User u) {
-    if (u == null) throw new IllegalArgumentException("argument to containsUser() is null");
-    return this.visitorST.contains(u.getIdNumber()) ? true : false;
   }
   
   @Override
   public String toString() {
       return super.toString();
   }
+
 }

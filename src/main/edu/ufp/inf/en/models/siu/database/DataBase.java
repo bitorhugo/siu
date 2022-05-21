@@ -599,8 +599,8 @@ public class DataBase {
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
     
-    if (this.userST.contains(user.getIdNumber())) {
-      User u = this.userST.get(user.getIdNumber());
+    if (this.contains(user)) {
+      User u = this.searchUser(user.getIdNumber());
       ArrayList<Poi> pois = new ArrayList<>();
       for (Long l : u.getVisitedPoi().keys(start, end)) {
         pois.add(u.getVisitedPoi().get(l));
