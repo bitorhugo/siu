@@ -66,18 +66,18 @@ public class MapController implements Initializable{
         this(new Map(user.getDb()));
         this.user = user;
     }
-
      
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // set string values for menu options
         if (this.user instanceof Admin) menuChoiceBox.getItems().addAll(this.adminMenuChoices);
         else menuChoiceBox.getItems().addAll(basicMenuChoices);
-        
+
         menuChoiceBox.setOnAction(choice -> {
             try {
                 getMenuOption(choice);
             } catch (IOException e) {
+                System.out.println("Not able to select choice from menu");
                 e.printStackTrace();
             }
         });

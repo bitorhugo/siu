@@ -136,7 +136,10 @@ public class DataBase {
    */
   public void addNode(Node n) {
     if (n == null) throw new IllegalArgumentException("argument to addNode() is null");
-    this.nodesST.put(n.getNodeId(), n);
+    if (!containsNode(n))
+      this.nodesST.put(n.getNodeId(), n);
+    else 
+      System.out.println("node already in database");
   }
 
   /**

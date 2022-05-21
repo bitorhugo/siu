@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
+import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 
 /**
@@ -70,12 +71,39 @@ public class Admin extends User {
   }
 
   /**
-   * edits a way from database
+   * edits a node from database
    * @param o old way
    * @param n new way
    */
   public void editNode(Node o, Node n) {
     this.getDb().editNode(o, n);
+  }
+
+  /**
+   * adds a poi to dabatase
+   * @param p
+   */
+  public void addPoi(Poi p) {
+    this.getDb().addPoi(p);
+  }
+
+  /**
+   * removes a poi from database
+   * @param p poi to be removed
+   * @return removed poi
+   */
+  public Poi removePoi (Poi p) {
+    this.getDb().removePoi(p);
+    return p;
+  }
+
+  /**
+   * edits a poi from database
+   * @param o old poi
+   * @param n new poi
+   */
+  public void editPoi(Poi o, Poi n) {
+    this.getDb().editPoi(o, n);
   }
 
   /**
