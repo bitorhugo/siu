@@ -33,9 +33,9 @@ javaFx library: see https://openjfx.io/openjfx-docs/ for more info
 # R9: DONE
 # R10: DONE
 # R11: DONE
-# R12: 
+# R12: DONE
 # R13: DONE
-# R14: DONE
+# R14: 
 # R15: DONE
-# R16: 
+# R16: DONE
 # R17: 

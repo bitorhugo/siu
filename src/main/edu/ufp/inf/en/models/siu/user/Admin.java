@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
+import main.edu.ufp.inf.en.models.siu.database.node.NodeNotPresentException;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 
@@ -64,18 +65,24 @@ public class Admin extends User {
    * removes a node from database
    * @param n node to be removed
    * @return removed node if successful || null if not 
+   * @throws NodeNotPresentException
    */
-  public Node removeNode (Node n) {
+  public Node removeNode (Node n) throws NodeNotPresentException {
     this.getDb().removeNode(n);
     return n;
+  }
+
+  public Node removeNode (Integer id) throws NodeNotPresentException {
+    return removeNode(new Node (id, null));
   }
 
   /**
    * edits a node from database
    * @param o old way
    * @param n new way
+   * @throws NodeNotPresentException
    */
-  public void editNode(Node o, Node n) {
+  public void editNode(Node o, Node n) throws NodeNotPresentException {
     this.getDb().editNode(o, n);
   }
 
@@ -95,6 +102,15 @@ public class Admin extends User {
   public Poi removePoi (Poi p) {
     this.getDb().removePoi(p);
     return p;
+  }
+
+  /**
+   * removes a poi given its id
+   * @param id poi id
+   * @return removed poi
+   */
+  public Poi removePoi(Integer id) {
+    return removePoi(new Poi(id, null));
   }
 
   /**

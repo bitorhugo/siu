@@ -91,6 +91,8 @@ public class EditController implements Initializable{
                 this.user.addPoi(p);
             }
             this.user.addNode(n);
+            this.addNode.setText("NODE ADDED");
+            this.addNode.selectAll();
         } catch (Exception e) {
             this.addNode.setText("INVALID INPUT");
             this.addNode.selectAll();
@@ -98,7 +100,19 @@ public class EditController implements Initializable{
     }
 
     public void handleRemoveNodeAction(ActionEvent event) {
-        
+        String data[] = this.removeNode.getText().split(";");
+        Integer id = Integer.parseInt(data[0]);
+        try {
+            if (data.length > 3) {
+                this.user.removePoi(id);
+            }
+            else {
+                this.user.removeNode(id);
+            }
+        } catch (Exception e) {
+            this.removeNode.setText("INVALID INPUT");
+            this.removeNode.selectAll();
+        }
     }
 
     public void handleEditNodeAction(ActionEvent event) {

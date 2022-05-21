@@ -10,12 +10,13 @@ import edu.princeton.cs.algs4.StdRandom;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.IO.Arquive;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
+import main.edu.ufp.inf.en.models.siu.database.node.NodeNotPresentException;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 import main.edu.ufp.inf.en.models.siu.user.User;
 
-
+// TODO: create exceptions for when a entity is not on database (e.g. removePoi(p) throws PoiNotFoundException)
 public class DataBase {
   
   private RedBlackBST<String, User> userST = new RedBlackBST<>();
@@ -105,14 +106,27 @@ public class DataBase {
     return u;
   }
 
+  /**
+   * checks if database contains user
+   * @param u user to search for
+   * @return true if found || false if not found
+   */
   public boolean contains(User u) {
     return this.userST.contains(u.getIdNumber());
   }
 
+  /**
+   * returns all keys of usersST
+   * @return an iterable containing all user ids
+   */
   public Iterable<String> usersKeys() {
     return this.userST.keys();
   }
 
+  /**
+   * return the number of users the database has
+   * @return
+   */
   public int numberOfUsers() {
     return this.userST.size();
   }
@@ -147,18 +161,16 @@ public class DataBase {
    * @param n node to remove
    * @return removed node || null if not found
    * @author Vitor Hugo
+   * @throws NodeNotPresentException if {@code n}  not found in database
    */
-  public Node removeNode(Node n) {
+  public Node removeNode(Node n) throws NodeNotPresentException {
     if (n == null) throw new IllegalArgumentException("argument to removeNode() is null");
     if (this.containsNode(n)) {
       this.nodesST.delete(n.getNodeId());
       Arquive.Node(n);
       return n;
     }
-    else {
-      System.out.println("Node not present in database");
-      return null;
-    }
+    else throw new NodeNotPresentException();
   }
 
   /**
@@ -166,8 +178,9 @@ public class DataBase {
    * @param o old node to remove
    * @param n new node to add
    * @author Vitor Hugo
+   * @throws NodeNotPresentException
    */
-  public void editNode(Node o, Node n) {
+  public void editNode(Node o, Node n) throws NodeNotPresentException {
     if (o == null) throw new IllegalArgumentException("argument 'o' for editNode() is null");
     if (n == null) throw new IllegalArgumentException("argument 'n' for editNode() is null");
     if (removeNode(o) != null) addNode(n);
