@@ -65,6 +65,7 @@ public class MapController implements Initializable{
         this.user = user;
     }
 
+     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // set string values for menu options
