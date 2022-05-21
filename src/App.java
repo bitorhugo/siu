@@ -1,4 +1,10 @@
 import java.io.IOException;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.awt.Taskbar;
+import java.awt.Toolkit;
 
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.StdRandom;
@@ -51,7 +57,23 @@ public class App extends Application{
 
     }
     
-    public static void main(String[] args) throws Exception {    
+    public static void main(String[] args) throws Exception {   
+        //loading an image from a file
+        final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+        final URL imageResource = App.class.getClassLoader().getResource("main/edu/ufp/inf/en/resources/icon.png");
+        final Image icon = defaultToolkit.getImage(imageResource);
+        final Taskbar taskbar = Taskbar.getTaskbar();
+
+        try {
+            //set icon for mac os (and other systems which do support this method)
+            taskbar.setIconImage(icon);
+        } catch (final UnsupportedOperationException e) {
+            System.out.println("The os does not support: 'taskbar.setIconImage'");
+        } catch (final SecurityException e) {
+            System.out.println("There was a security exception for: 'taskbar.setIconImage'");
+        }
+
+        // launch app
         launch();
     }
 
