@@ -4,8 +4,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
-import main.edu.ufp.inf.en.models.siu.database.node.NodeNotPresentException;
+import main.edu.ufp.inf.en.models.siu.database.node.NodeNotFoundException;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
+import main.edu.ufp.inf.en.models.siu.database.poi.PoiNotFoundException;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 
 /**
@@ -65,14 +66,14 @@ public class Admin extends User {
    * removes a node from database
    * @param n node to be removed
    * @return removed node if successful || null if not 
-   * @throws NodeNotPresentException
+   * @throws NodeNotFoundException
    */
-  public Node removeNode (Node n) throws NodeNotPresentException {
+  public Node removeNode (Node n) throws NodeNotFoundException {
     this.getDb().removeNode(n);
     return n;
   }
 
-  public Node removeNode (Integer id) throws NodeNotPresentException {
+  public Node removeNode (Integer id) throws NodeNotFoundException {
     return removeNode(new Node (id, null));
   }
 
@@ -80,9 +81,9 @@ public class Admin extends User {
    * edits a node from database
    * @param o old way
    * @param n new way
-   * @throws NodeNotPresentException
+   * @throws NodeNotFoundException
    */
-  public void editNode(Node o, Node n) throws NodeNotPresentException {
+  public void editNode(Node o, Node n) throws NodeNotFoundException {
     this.getDb().editNode(o, n);
   }
 
@@ -98,8 +99,9 @@ public class Admin extends User {
    * removes a poi from database
    * @param p poi to be removed
    * @return removed poi
+   * @throws PoiNotFoundException
    */
-  public Poi removePoi (Poi p) {
+  public Poi removePoi (Poi p) throws PoiNotFoundException {
     this.getDb().removePoi(p);
     return p;
   }
@@ -108,8 +110,9 @@ public class Admin extends User {
    * removes a poi given its id
    * @param id poi id
    * @return removed poi
+   * @throws PoiNotFoundException
    */
-  public Poi removePoi(Integer id) {
+  public Poi removePoi(Integer id) throws PoiNotFoundException {
     return removePoi(new Poi(id, null));
   }
 
@@ -117,8 +120,9 @@ public class Admin extends User {
    * edits a poi from database
    * @param o old poi
    * @param n new poi
+   * @throws PoiNotFoundException
    */
-  public void editPoi(Poi o, Poi n) {
+  public void editPoi(Poi o, Poi n) throws PoiNotFoundException {
     this.getDb().editPoi(o, n);
   }
 

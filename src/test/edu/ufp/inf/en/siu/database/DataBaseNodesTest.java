@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
-import main.edu.ufp.inf.en.models.siu.database.node.NodeNotPresentException;
+import main.edu.ufp.inf.en.models.siu.database.node.NodeNotFoundException;
 
 public class DataBaseNodesTest {
 
@@ -21,7 +21,7 @@ public class DataBaseNodesTest {
     }
 
     @Test
-    public void removeNodeTest() throws NodeNotPresentException {
+    public void removeNodeTest() throws NodeNotFoundException {
         DataBase db = new DataBase();
         Node n = new Node(1234, new Point(123, 321));
 
@@ -32,7 +32,7 @@ public class DataBaseNodesTest {
     }
 
     @Test
-    public void editNodeTest() throws NodeNotPresentException {
+    public void editNodeTest() throws NodeNotFoundException {
         DataBase db = new DataBase();
         Node o = new Node(1234, new Point(123, 321));
         Node n = new Node(4567, new Point(123, 321));
@@ -45,7 +45,7 @@ public class DataBaseNodesTest {
     }
 
     @Test
-    public void searchNodeTest() {
+    public void searchNodeTest() throws NodeNotFoundException {
         DataBase db = new DataBase();
         Node n1 = new Node(1234, new Point(123, 321));
         Node n2 = new Node(4567, new Point(176, 353));

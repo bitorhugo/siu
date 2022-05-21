@@ -10,11 +10,12 @@ import edu.princeton.cs.algs4.StdRandom;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.IO.Arquive;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
-import main.edu.ufp.inf.en.models.siu.database.node.NodeNotPresentException;
+import main.edu.ufp.inf.en.models.siu.database.node.NodeNotFoundException;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 import main.edu.ufp.inf.en.models.siu.user.User;
+import main.edu.ufp.inf.en.models.siu.user.UserNotFoundException;
 
 // TODO: create exceptions for when a entity is not on database (e.g. removePoi(p) throws PoiNotFoundException)
 public class DataBase {
@@ -99,11 +100,16 @@ public class DataBase {
    * @return User if able to present || null is not
    * @author Vitor Hugo
    */
-  public User searchUser(String id) {
+  public User searchUser(String id) throws UserNotFoundException{
     if (id == null) throw new IllegalArgumentException("argument to searchUser() is null");
-    User u = this.userST.get(id);
-    Arquive.searchedUser(u);
-    return u;
+    if (this.contains(id)) {
+      User u = this.userST.get(id);
+      Arquive.searchedUser(u);
+      return u;
+    }
+    else {
+      throw new UserNotFoundException("User not found");
+    }
   }
 
   /**
@@ -111,8 +117,8 @@ public class DataBase {
    * @param u user to search for
    * @return true if found || false if not found
    */
-  public boolean contains(User u) {
-    return this.userST.contains(u.getIdNumber());
+  public boolean contains(String userID) {
+    return this.userST.contains(userID);
   }
 
   /**
@@ -161,16 +167,17 @@ public class DataBase {
    * @param n node to remove
    * @return removed node || null if not found
    * @author Vitor Hugo
-   * @throws NodeNotPresentException if {@code n}  not found in database
+   * @throws NodeNotFoundException if {@code n}  not found in database
    */
-  public Node removeNode(Node n) throws NodeNotPresentException {
+  public Node removeNode(Node n) throws NodeNotFoundException {
     if (n == null) throw new IllegalArgumentException("argument to removeNode() is null");
     if (this.containsNode(n)) {
       this.nodesST.delete(n.getNodeId());
       Arquive.Node(n);
+      System.gc();
       return n;
     }
-    else throw new NodeNotPresentException();
+    else throw new NodeNotFoundException();
   }
 
   /**
@@ -178,9 +185,9 @@ public class DataBase {
    * @param o old node to remove
    * @param n new node to add
    * @author Vitor Hugo
-   * @throws NodeNotPresentException
+   * @throws NodeNotFoundException
    */
-  public void editNode(Node o, Node n) throws NodeNotPresentException {
+  public void editNode(Node o, Node n) throws NodeNotFoundException {
     if (o == null) throw new IllegalArgumentException("argument 'o' for editNode() is null");
     if (n == null) throw new IllegalArgumentException("argument 'n' for editNode() is null");
     if (removeNode(o) != null) addNode(n);
@@ -610,23 +617,17 @@ public class DataBase {
    * @return arraylist containing all pois between start and end || null if not visited any poi
    * @author Vitor Hugo
    */
-  public ArrayList<Poi> getUserPoisVisited (User user, Long start, Long end) {
+  public ArrayList<Poi> getUserPoisVisited (User user, Long start, Long end) throws UserNotFoundException {
     if (user == null) throw new IllegalArgumentException("argument 'user' to getUserPoisVisited() is null");
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
     
-    if (this.contains(user)) {
-      User u = this.searchUser(user.getIdNumber());
-      ArrayList<Poi> pois = new ArrayList<>();
-      for (Long l : u.getVisitedPoi().keys(start, end)) {
-        pois.add(u.getVisitedPoi().get(l));
-      }
-      return pois;
+    User u = this.searchUser(user.getIdNumber());
+    ArrayList<Poi> pois = new ArrayList<>();
+    for (Long l : u.getVisitedPoi().keys(start, end)) {
+      pois.add(u.getVisitedPoi().get(l));
     }
-    else {
-      System.out.println("user didn't visit poi between this time period");
-      return null;
-    }
+    return pois;
   }
 
   /**
@@ -637,20 +638,19 @@ public class DataBase {
    * @return arraylist containing all pois between start and end || null if not visited any poi
    * @author Vitor Hugo
    */
-  public ArrayList<Poi> getUserPoisNotVisited (User user, Long start, Long end) {
+  public ArrayList<Poi> getUserPoisNotVisited (User user, Long start, Long end) throws UserNotFoundException{
     if (user == null) throw new IllegalArgumentException("argument 'user' to getUserPoisVisited() is null");
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
 
     ArrayList<Poi> poisNotVisited = new ArrayList<>();
-    if (this.userST.contains(user.getIdNumber())) {
-      User u = this.userST.get(user.getIdNumber());
-      ArrayList<Poi> poisVisited = getUserPoisVisited(u, start, end);
-      for (Integer poiId : this.poiST.keys()) {
-        Poi p = this.poiST.get(poiId);
-        if (!poisVisited.contains(p)) {
-          poisNotVisited.add(p);
-        }
+    
+    User u = this.searchUser(user.getIdNumber());
+    ArrayList<Poi> poisVisited = getUserPoisVisited(u, start, end);
+    for (Integer poiId : this.poiST.keys()) {
+      Poi p = this.poiST.get(poiId);
+      if (!poisVisited.contains(p)) {
+        poisNotVisited.add(p);
       }
     }
     return poisNotVisited; 

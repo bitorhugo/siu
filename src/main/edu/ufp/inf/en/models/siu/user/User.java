@@ -10,6 +10,7 @@ import edu.princeton.cs.algs4.RedBlackBST;
 import main.edu.ufp.inf.en.models.lp2._1_intro.person.Person;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
+import main.edu.ufp.inf.en.models.siu.database.poi.PoiNotFoundException;
 
 /**
  * @author Vitor Hugo
@@ -64,8 +65,9 @@ public abstract class User extends Person {
    * visits a point of interest
    * @param poi point of interest
    * @param entrance time of entrance
+   * @throws PoiNotFoundException
    */
-  public void visitPoi (Poi poi, Long entrance) {
+  public void visitPoi (Poi poi, Long entrance) throws PoiNotFoundException {
     if (poi == null) throw new IllegalArgumentException("argument 'poi' to addVisitedPoi() is null");
     if (entrance == null) throw new IllegalArgumentException("argument 'entrance' to addVisitedPoi() is null");
     // check weather poi is in database
@@ -82,8 +84,9 @@ public abstract class User extends Person {
    * adds list of pois to visitPoi
    * @param pois list of pois
    * @param timestamp time user was in/on the pois
+   * @throws PoiNotFoundException
    */
-  public void visitPoi (List<Integer> pois, List<Long> timestamps) {
+  public void visitPoi (List<Integer> pois, List<Long> timestamps) throws PoiNotFoundException {
     // check if for each poi we have a related timestamp
     if (pois.size() != timestamps.size())
       throw new IllegalArgumentException("lists must have the same size");

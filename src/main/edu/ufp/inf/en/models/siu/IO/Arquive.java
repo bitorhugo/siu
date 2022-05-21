@@ -49,9 +49,13 @@ public class Arquive {
     public static void Users (DataBase db) {
         Out out = new Out(path_datasetUsers);
         out.print(db.numberOfUsers() + NEWLINE);
-        for (var userId : db.usersKeys()) {
-            User u = db.searchUser(userId);
-            out.print(u + NEWLINE);
+        try {
+            for (var userId : db.usersKeys()) {
+                User u = db.searchUser(userId);
+                out.print(u + NEWLINE);
+            }
+        } catch (Exception e) {
+            e.getMessage();
         }
     }
 

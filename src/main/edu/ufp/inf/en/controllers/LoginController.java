@@ -79,7 +79,7 @@ public class LoginController {
                 textActionTarget.setText("Invalid credentials");
             }
         } catch (Exception e) {
-            textActionTarget.setText("user not found");
+            textActionTarget.setText(e.getMessage());
         }
         
         

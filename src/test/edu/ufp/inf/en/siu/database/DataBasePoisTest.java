@@ -7,6 +7,7 @@ import org.junit.Test;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
+import main.edu.ufp.inf.en.models.siu.database.poi.PoiNotFoundException;
 
 public class DataBasePoisTest {
     
@@ -24,7 +25,7 @@ public class DataBasePoisTest {
     }
 
     @Test 
-    public void removePoiTest() {
+    public void removePoiTest() throws PoiNotFoundException {
         DataBase db = new DataBase();
         Poi poi = new Poi(123, new Point(435.2f, 879f));
 
@@ -42,7 +43,7 @@ public class DataBasePoisTest {
     }
 
     @Test
-    public void editPoiTest() {
+    public void editPoiTest() throws PoiNotFoundException {
         DataBase db = new DataBase();
         Poi o = new Poi(123, new Point(435.2f, 879f));
         Poi n = new Poi(321, new Point(65.2f, 12f));

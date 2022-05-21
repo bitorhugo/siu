@@ -7,13 +7,14 @@ import org.junit.Test;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.user.Admin;
 import main.edu.ufp.inf.en.models.siu.user.Basic;
+import main.edu.ufp.inf.en.models.siu.user.UserNotFoundException;
 
 import static org.junit.Assert.assertTrue;
 
 public class DataBaseUsersTest {
     
     @Test
-    public void testAddUserAdmin() {
+    public void testAddUserAdmin() throws UserNotFoundException {
         DataBase db = new DataBase();
         Admin admin = new Admin("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(admin);
@@ -76,8 +77,8 @@ public class DataBaseUsersTest {
         Admin newAdmin = new Admin("Hugo", "Porto", "1234", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(oldAdmin);
         db.editUser(oldAdmin, newAdmin);
-        assertTrue(!db.contains(oldAdmin));
-        assertTrue(db.contains(newAdmin));
+        assertTrue(!db.contains(oldAdmin.getIdNumber()));
+        assertTrue(db.contains(newAdmin.getIdNumber()));
     }
 
     @Test
@@ -87,8 +88,8 @@ public class DataBaseUsersTest {
         Basic newAdmin = new Basic("Hugo", "Porto", "1234", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(oldAdmin);
         db.editUser(oldAdmin, newAdmin);
-        assertTrue(!db.contains(oldAdmin));
-        assertTrue(db.contains(newAdmin));
+        assertTrue(!db.contains(oldAdmin.getIdNumber()));
+        assertTrue(db.contains(newAdmin.getIdNumber()));
     }
 
     @Test
@@ -98,12 +99,12 @@ public class DataBaseUsersTest {
         Basic neww = new Basic("Hugo", "Porto", "1234", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(old);
         db.editUser(old, neww);
-        assertTrue(!db.contains(old));
-        assertTrue(db.contains(neww));
+        assertTrue(!db.contains(old.getIdNumber()));
+        assertTrue(db.contains(neww.getIdNumber()));
     }
 
     @Test
-    public void testSearchUserAdmin() {
+    public void testSearchUserAdmin() throws UserNotFoundException {
         DataBase db = new DataBase();
         Admin admin = new Admin("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(admin);
@@ -111,7 +112,7 @@ public class DataBaseUsersTest {
     }
 
     @Test
-    public void testSearchUserBasic() {
+    public void testSearchUserBasic() throws UserNotFoundException {
         DataBase db = new DataBase();
         Basic basic = new Basic("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         db.addUser(basic);
@@ -119,7 +120,7 @@ public class DataBaseUsersTest {
     }
 
     @Test
-    public void testSearchUserAdminAndBasic() {
+    public void testSearchUserAdminAndBasic() throws UserNotFoundException {
         DataBase db = new DataBase();
         Admin admin = new Admin("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
         Basic basic = new Basic("Vitor", "Porto", "1234", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
