@@ -71,7 +71,7 @@ public abstract class User extends Person {
     if (poi == null) throw new IllegalArgumentException("argument 'poi' to addVisitedPoi() is null");
     if (entrance == null) throw new IllegalArgumentException("argument 'entrance' to addVisitedPoi() is null");
     // check weather poi is in database
-    if (this.db.containsPoi(poi)) {
+    if (this.db.containsPoi(poi.getNodeId())) {
       Poi p = this.db.searchPoi(poi.getNodeId());
       // update visitors of p
       this.db.searchPoi(p.getNodeId()).addVisitor(this, entrance);

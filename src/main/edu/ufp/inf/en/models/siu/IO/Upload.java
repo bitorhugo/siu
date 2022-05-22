@@ -32,21 +32,27 @@ public class Upload {
      * @param db
      */
     public static void Users(DataBase db) {
+        
         In in = new In(usersPath);
-        in.readInt();
-
-        while (in.hasNextLine()) {
-            String []lines = in.readLine().split(",");
-            if (lines[0].length() > 0) {
-                User u;
-                if (lines[0].equals("Admin")) {
-                    u = new Admin(lines[1],lines[2], lines[3], LocalDate.parse(lines[4]), lines[5], lines[6]);
+        try {
+            in.readInt();
+            while (in.hasNextLine()) {
+                String []lines = in.readLine().split(",");
+                if (lines[0].length() > 0) {
+                    User u;
+                    if (lines[0].equals("Admin")) {
+                        u = new Admin(lines[1],lines[2], lines[3], LocalDate.parse(lines[4]), lines[5], lines[6]);
+                    }
+                    else {
+                        u = new Basic(lines[1],lines[2], lines[3], LocalDate.parse(lines[4]), lines[5], lines[6]);
+                    }
+                    db.addUser(u);
                 }
-                else {
-                    u = new Basic(lines[1],lines[2], lines[3], LocalDate.parse(lines[4]), lines[5], lines[6]);
-                }
-                db.addUser(u);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            in.close();
         }
 
     }
@@ -66,32 +72,37 @@ public class Upload {
         if (db == null) throw new IllegalAccessError("argument to uploadDB() is null");
         In in = new In(nodesPath);
 
-        in.readInt();
-        
-        while (in.hasNextLine()) {
-            String []lines = in.readLine().split(",");
-            if (lines[0].length() > 0) {
-                Node n = new Node(Integer.parseInt(lines[0]), new Point(Float.parseFloat(lines[1]), Float.parseFloat(lines[2])));
-                // check to see if line contains key-value pairs
-                if (lines.length > 3) {
-                    Poi p = new Poi(n);
-                    SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
-                    // iterate over remaining key value pairs of line
-                    for (int i = 3; i < lines.length - 1; i+=2) {
-                        if (lines[i].contains(":")) {
-                            lines[i] = lines[i].replace(':', '_');
+        try {
+            in.readInt();
+            while (in.hasNextLine()) {
+                String []lines = in.readLine().split(",");
+                if (lines[0].length() > 0) {
+                    Node n = new Node(Integer.parseInt(lines[0]), new Point(Float.parseFloat(lines[1]), Float.parseFloat(lines[2])));
+                    // check to see if line contains key-value pairs
+                    if (lines.length > 3) {
+                        Poi p = new Poi(n);
+                        SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
+                        // iterate over remaining key value pairs of line
+                        for (int i = 3; i < lines.length - 1; i+=2) {
+                            if (lines[i].contains(":")) {
+                                lines[i] = lines[i].replace(':', '_');
+                            }
+                            tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
                         }
-                        tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
+                        p.setTags(tags);
+                        db.addPoi(p);
                     }
-                    p.setTags(tags);
-                    db.addPoi(p);
-                }
-                else {
-                    db.addNode(n);
+                    else {
+                        db.addNode(n);
+                    }
                 }
             }
-        }
-        in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            in.close();
+        }        
+        
     }
 
     /**
@@ -109,28 +120,34 @@ public class Upload {
         if (db == null) throw new IllegalArgumentException("argument to uploadWays() is null");
 
         In in = new In(waysPath);
-        in.readInt(); // discard number of ways
 
-        while (in.hasNextLine()) {
-            String []lines = in.readLine().split(",");
-            if (lines[0].length() > 0) {
-                Way w = new Way(Integer.parseInt(lines[0]), Integer.parseInt(lines[1]), Integer.parseInt(lines[2]), Double.parseDouble(lines[3]));
-                // check to see if line contains key-value pairs
-                if (lines.length > 3) {
-                    SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
-                    // iterate over remaining key value pairs of line
-                    for (int i = 4; i < lines.length - 1; i+=2) {
-                        if (lines[i].contains(":")) {
-                            lines[i] = lines[i].replace(':', '_');
+        try {
+            in.readInt(); // discard number of ways
+            while (in.hasNextLine()) {
+                String []lines = in.readLine().split(",");
+                if (lines[0].length() > 0) {
+                    Way w = new Way(Integer.parseInt(lines[0]), Integer.parseInt(lines[1]), Integer.parseInt(lines[2]), Double.parseDouble(lines[3]));
+                    // check to see if line contains key-value pairs
+                    if (lines.length > 3) {
+                        SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
+                        // iterate over remaining key value pairs of line
+                        for (int i = 4; i < lines.length - 1; i+=2) {
+                            if (lines[i].contains(":")) {
+                                lines[i] = lines[i].replace(':', '_');
+                            }
+                            tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
                         }
-                        tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
+                        w.setTags(tags);
                     }
-                    w.setTags(tags);
+                    db.addWay(w);
                 }
-                db.addWay(w);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            in.close();
         }
-        in.close();
+
     }
 
     /**
@@ -142,28 +159,34 @@ public class Upload {
         if (db == null) throw new IllegalArgumentException("argument to uploadWays() is null");
 
         In in = new In(new Scanner(input));
-        in.readInt(); // discard number of ways
 
-        while (in.hasNextLine()) {
-            String []lines = in.readLine().split(",");
-            if (lines[0].length() > 0) {
-                Way w = new Way(Integer.parseInt(lines[0]), Integer.parseInt(lines[1]), Integer.parseInt(lines[2]), Double.parseDouble(lines[3]));
-                // check to see if line contains key-value pairs
-                if (lines.length > 3) {
-                    SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
-                    // iterate over remaining key value pairs of line
-                    for (int i = 4; i < lines.length - 1; i+=2) {
-                        if (lines[i].contains(":")) {
-                            lines[i] = lines[i].replace(':', '_');
+        try {
+            in.readInt(); // discard number of ways
+            while (in.hasNextLine()) {
+                String []lines = in.readLine().split(",");
+                if (lines[0].length() > 0) {
+                    Way w = new Way(Integer.parseInt(lines[0]), Integer.parseInt(lines[1]), Integer.parseInt(lines[2]), Double.parseDouble(lines[3]));
+                    // check to see if line contains key-value pairs
+                    if (lines.length > 3) {
+                        SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
+                        // iterate over remaining key value pairs of line
+                        for (int i = 4; i < lines.length - 1; i+=2) {
+                            if (lines[i].contains(":")) {
+                                lines[i] = lines[i].replace(':', '_');
+                            }
+                            tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
                         }
-                        tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
+                        w.setTags(tags);
                     }
-                    w.setTags(tags);
+                    db.addWay(w);
                 }
-                db.addWay(w);
-            }
+            }   
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            in.close();
         }
-        in.close();
+        
     }
 
     /**

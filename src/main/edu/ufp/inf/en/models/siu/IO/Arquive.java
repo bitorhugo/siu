@@ -71,10 +71,16 @@ public class Arquive {
 
     public static void Nodes (DataBase db) {
         Out out = new Out(path_datasetNodes);
-        out.print(db.numberOfNodes() + NEWLINE);
-        for (var v : db.nodesKeys()) {
-            Node n = db.searchNode(v);
-            out.print(n + NEWLINE);
+        try {
+            out.print(db.numberOfNodes() + NEWLINE);
+            for (var v : db.nodesKeys()) {
+                Node n = db.searchNode(v);
+                out.print(n + NEWLINE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            out.close();
         }
     }
 
@@ -90,10 +96,16 @@ public class Arquive {
 
     public static void Pois (DataBase db) {
         Out out = new Out(path_datasetPois);
-        out.print(db.numberOfPois() + NEWLINE);
-        for (var v : db.poisKeys()) {
-            Poi u = db.searchPoi(v);
-            out.print(u + NEWLINE);
+        try {
+            out.print(db.numberOfPois() + NEWLINE);
+            for (var v : db.poisKeys()) {
+                Poi u = db.searchPoi(v);
+                out.print(u + NEWLINE);
+            }    
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            out.close();
         }
     }
 
@@ -109,10 +121,16 @@ public class Arquive {
     
     public static void Ways (DataBase db) {
         Out out = new Out(path_datasetWays);
-        out.print(db.numberOfWays() + NEWLINE);
-        for (var v : db.waysKeys()) {
-            Way u = db.searchWay(v);
-            out.print(u + NEWLINE);
+        try {
+            out.print(db.numberOfWays() + NEWLINE);
+            for (var v : db.waysKeys()) {
+                Way u = db.searchWay(v);
+                out.print(u + NEWLINE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            out.close();
         }
     }
 

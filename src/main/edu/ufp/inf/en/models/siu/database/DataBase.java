@@ -2,6 +2,7 @@ package main.edu.ufp.inf.en.models.siu.database;
 
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import edu.princeton.cs.algs4.RedBlackBST;
@@ -10,14 +11,23 @@ import edu.princeton.cs.algs4.StdRandom;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.IO.Arquive;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
-import main.edu.ufp.inf.en.models.siu.database.node.NodeNotFoundException;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
+import main.edu.ufp.inf.en.models.siu.database.poi.PoiAlreadyExistsException;
+import main.edu.ufp.inf.en.models.siu.database.poi.PoiNotFoundException;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
+import main.edu.ufp.inf.en.models.siu.database.way.WayAlreadyExistsException;
+import main.edu.ufp.inf.en.models.siu.database.way.WayNotFoundException;
 import main.edu.ufp.inf.en.models.siu.user.User;
-import main.edu.ufp.inf.en.models.siu.user.UserNotFoundException;
 
-// TODO: create exceptions for when a entity is not on database (e.g. removePoi(p) throws PoiNotFoundException)
+import main.edu.ufp.inf.en.models.siu.user.UserAlreadyExistsException;
+import main.edu.ufp.inf.en.models.siu.user.UserNotFoundException;
+import main.edu.ufp.inf.en.models.siu.database.node.NodeAlreadyExistsException;
+import main.edu.ufp.inf.en.models.siu.database.node.NodeNotFoundException;
+
+/**
+ * @author Vitor Hugo
+ */
 public class DataBase {
   
   private RedBlackBST<String, User> userST = new RedBlackBST<>();
@@ -59,10 +69,13 @@ public class DataBase {
    * @param u user to add
    * @author Vitor Hugo
    */
-  public void addUser(User u) {
-    this.userST.put(u.getIdNumber(), u);
-    // Associate this db to user
-    u.setDb(this);
+  public void addUser(User u) throws UserAlreadyExistsException{
+    if (!this.containsUser(u.getIdNumber())) {
+      this.userST.put(u.getIdNumber(), u);
+      // Associate this db to user
+      u.setDb(this);
+    }
+    else throw new UserAlreadyExistsException("User already exists");
   }
     
   /**
@@ -70,28 +83,35 @@ public class DataBase {
    * @param u user to remove
    * @return removed user
    * @author Vitor Hugo
+   * @throws UserNotFoundException
    */
-  public User removeUser(User u) {
+  public User removeUser(User u) throws UserNotFoundException {
     if (u == null) throw new IllegalArgumentException("argument to removeUser() is null");
-    if (!this.userST.contains(u.getIdNumber())) {
-      System.out.println("User not present in DataBase");
-      return null;
+    if (this.containsUser(u.getIdNumber())) {
+      this.userST.delete(u.getIdNumber());
+      Arquive.User(u);
+      return u;
     }
-    this.userST.delete(u.getIdNumber());
-    Arquive.User(u);
-    return u;
+    else throw new UserNotFoundException("User not found");
   }
 
   /**
-   * edits a user from Database
-   * @param o old user to edit
-   * @param n new user to replace the old one
-   * @author Vitor Hugo
+   * edits a user from database
+   * @param id id of user to be edited
+   * @param name new name
+   * @param address new address
+   * @param birth new birth
+   * @throws UserNotFoundException if {@code userID} is not present in database
    */
-  public void editUser(User o, User n) {
-    if (o == null) throw new IllegalArgumentException("argument 'o' to editUser() is null");
-    if (n == null) throw new IllegalArgumentException("argument 'n' to editUser() is null");
-    if (removeUser(o) != null) addUser(n);
+  public void editUser(String userID, String name, String address, LocalDate birth) throws UserNotFoundException {
+    if (userID == null) throw new IllegalArgumentException("argument 'o' to editUser() is null");
+    if (name == null) throw new IllegalArgumentException("argument 'name' to editUser() is null");
+    if (address == null) throw new IllegalArgumentException("argument 'address' to editUser() is null");
+    if (birth == null) throw new IllegalArgumentException("argument 'birth' to editUser() is null");
+    User u = this.searchUser(userID);
+    u.setName(name);
+    u.setAddress(address);
+    u.setBirth(birth);
   }
 
   /**
@@ -102,7 +122,7 @@ public class DataBase {
    */
   public User searchUser(String id) throws UserNotFoundException{
     if (id == null) throw new IllegalArgumentException("argument to searchUser() is null");
-    if (this.contains(id)) {
+    if (this.containsUser(id)) {
       User u = this.userST.get(id);
       Arquive.searchedUser(u);
       return u;
@@ -117,8 +137,8 @@ public class DataBase {
    * @param u user to search for
    * @return true if found || false if not found
    */
-  public boolean contains(String userID) {
-    return this.userST.contains(userID);
+  public boolean containsUser(String id) {
+    return this.userST.contains(id);
   }
 
   /**
@@ -154,12 +174,11 @@ public class DataBase {
    * @param n node to add
    * @author Vitor Hugo
    */
-  public void addNode(Node n) {
+  public void addNode(Node n) throws NodeAlreadyExistsException {
     if (n == null) throw new IllegalArgumentException("argument to addNode() is null");
-    if (!containsNode(n))
+    if (!containsNode(n.getNodeId()))
       this.nodesST.put(n.getNodeId(), n);
-    else 
-      System.out.println("node already in database");
+    else throw new NodeAlreadyExistsException("Node already exists");
   }
 
   /**
@@ -171,7 +190,7 @@ public class DataBase {
    */
   public Node removeNode(Node n) throws NodeNotFoundException {
     if (n == null) throw new IllegalArgumentException("argument to removeNode() is null");
-    if (this.containsNode(n)) {
+    if (this.containsNode(n.getNodeId())) {
       this.nodesST.delete(n.getNodeId());
       Arquive.Node(n);
       System.gc();
@@ -187,30 +206,34 @@ public class DataBase {
    * @author Vitor Hugo
    * @throws NodeNotFoundException
    */
-  public void editNode(Node o, Node n) throws NodeNotFoundException {
-    if (o == null) throw new IllegalArgumentException("argument 'o' for editNode() is null");
-    if (n == null) throw new IllegalArgumentException("argument 'n' for editNode() is null");
-    if (removeNode(o) != null) addNode(n);
+  public void editNode(Integer nodeID, Point coordinates) throws NodeNotFoundException {
+    if (nodeID == null) throw new IllegalArgumentException("argument 'nodeID' for editNode() is null");
+    if (coordinates == null) throw new IllegalArgumentException("argument 'coordinates' for editNode() is null");
+    Node n = this.searchNode(nodeID);
+    n.setCoordinates(coordinates);
   }
 
   /**
    * searches for a node in database
-   * @param id id of node to search for
-   * @return node to search for || null if not found
-   * @author Vitor Hugo
+   * @param nodeID node id
+   * @return wanted node
+   * @throws NodeNotFoundException if {@code nodeID} not found in database
    */
-  public Node searchNode(Integer id) {
-    if (id == null) throw new IllegalArgumentException("argument for searchNode() is null");
-    return this.nodesST.get(id);
+  public Node searchNode(Integer nodeID) throws NodeNotFoundException {
+    if (nodeID == null) throw new IllegalArgumentException("argument for searchNode() is null");
+    if (this.containsNode(nodeID)) {
+      return this.nodesST.get(nodeID);
+    }
+    else throw new NodeNotFoundException();
   }
 
   /**
    * checks if node exists in database
-   * @param n node
-   * @return true if found || false if not
+   * @param nodeID node id
+   * @return true if found || false if not found
    */
-  public boolean containsNode(Node n) {
-    return this.nodesST.contains(n.getNodeId());
+  public boolean containsNode(Integer nodeID) {
+    return this.nodesST.contains(nodeID);
   }
 
   /**
@@ -248,10 +271,14 @@ public class DataBase {
    * adds a way to database
    * @param w way to add
    * @author Vitor Hugo
+   * @throws WayAlreadyExistsException
    */
-  public void addWay(Way w) {
+  public void addWay(Way w) throws WayAlreadyExistsException {
     if (w == null) throw new IllegalArgumentException("argument to addWay() is null");
-    this.waysST.put(w.getWayId(), w);
+    if (this.containsWay(w.getWayId())) {
+      this.waysST.put(w.getWayId(), w);
+    }
+    else throw new WayAlreadyExistsException();
   }
 
   /**
@@ -259,18 +286,16 @@ public class DataBase {
    * @param w way to remove
    * @return removed way || null if not found
    * @author Vitor Hugo
+   * @throws WayNotFoundException
    */
-  public Way removeWay(Way w) {
+  public Way removeWay(Way w) throws WayNotFoundException {
     if (w == null) throw new IllegalArgumentException("argument to removeWay() is null");
-    if (this.waysST.contains(w.getWayId())) {
+    if (this.containsWay(w.getWayId())) {
       this.waysST.delete(w.getWayId());
       Arquive.Way(w);
       return w;
     }
-    else {
-      System.out.println("Way not present in database");
-      return null;
-    }
+    else throw new WayNotFoundException("way not found");
   }
 
   /**
@@ -278,11 +303,14 @@ public class DataBase {
    * @param o old way
    * @param n new way
    * @author Vitor Hugo
+   * @throws WayNotFoundException
    */
-  public void editWay(Way o, Way n) {
-    if (o == null) throw new IllegalArgumentException("argument 'o' to editWay() is null");
-    if (n == null) throw new IllegalArgumentException("argument 'n' to editWay() is null");
-    if (removeWay(o) != null) addWay(n);
+  public void editWay(Integer wayID, Node origin, Node destination, double weight) throws WayNotFoundException {
+    if (wayID == null) throw new IllegalArgumentException("argument 'wayID' to editWay() is null");
+    if (origin == null) throw new IllegalArgumentException("argument 'origin' to editWay() is null");
+    if (destination == null) throw new IllegalArgumentException("argument 'destination' to editWay() is null");
+    Way w = this.searchWay(wayID);
+    // TODO: refactor way class
   }
 
   /**
@@ -290,10 +318,14 @@ public class DataBase {
    * @param id id of way to look for
    * @return way if found || null if not found
    * @author Vitor Hugo
+   * @throws WayNotFoundException
    */
-  public Way searchWay (Integer id) {
-    if (id == null) throw new IllegalArgumentException("argument to searchWay() is null");
-    return this.waysST.get(id);
+  public Way searchWay (Integer wayID) throws WayNotFoundException {
+    if (wayID == null) throw new IllegalArgumentException("argument to searchWay() is null");
+    if (this.containsWay(wayID)) {
+      return this.waysST.get(wayID);
+    }
+    else throw new WayNotFoundException("way not found");
   }
 
   /**
@@ -301,8 +333,8 @@ public class DataBase {
    * @param w way
    * @return true if found || false if not found
    */
-  public boolean containsWay(Way w) {
-    return this.waysST.contains(w.getWayId());
+  public boolean containsWay(Integer wayID) {
+    return this.waysST.contains(wayID);
   }
 
   /**
@@ -339,11 +371,15 @@ public class DataBase {
    * adds a poi to database
    * @param p poi
    * @author Vitor Hugo
+   * @throws PoiAlreadyExistsException
    */
-  public void addPoi (Poi p) {
+  public void addPoi (Poi p) throws PoiAlreadyExistsException {
     if (p == null) throw new IllegalArgumentException("argument to addPoi() is null");
-    this.nodesST.put(p.getNodeId(), p);
-    this.poiST.put(p.getNodeId(), p);
+    if (!this.containsPoi(p.getNodeId())) {
+      this.nodesST.put(p.getNodeId(), p);
+      this.poiST.put(p.getNodeId(), p);
+    }
+    else throw new PoiAlreadyExistsException("Poi already exists");
   }
 
   /**
@@ -351,19 +387,16 @@ public class DataBase {
    * @param p poi to remove
    * @return poi removed if found || null if not found
    * @author Vitor Hugo
+   * @throws PoiNotFoundException
    */
-  public Poi removePoi (Poi p) {
+  public Poi removePoi (Poi p) throws PoiNotFoundException {
     if (p == null) throw new IllegalArgumentException("argument to addPoi() is null");
-    if (this.nodesST.contains(p.getNodeId()) && this.poiST.contains(p.getNodeId())) {
-      this.nodesST.delete(p.getNodeId());
+    if (this.containsPoi(p.getNodeId())) {
       this.poiST.delete(p.getNodeId());
       Arquive.Poi(p);
       return p;
     }
-    else {
-      System.out.println("poi not present in database");
-      return null;
-    }
+    else throw new PoiNotFoundException("Poi not found");
   }
 
   /**
@@ -371,11 +404,13 @@ public class DataBase {
    * @param o old poi
    * @param n new poi
    * @author Vitor Hugo
+   * @throws PoiNotFoundException
    */
-  public void editPoi (Poi o, Poi n) {
-    if (o == null) throw new IllegalArgumentException("argument 'o' to addPoi() is null");
-    if (n == null) throw new IllegalArgumentException("argument 'n' to addPoi() is null");
-    if (removePoi(o) != null) addPoi(n);
+  public void editPoi (Integer poiID, Point coordinates) throws PoiNotFoundException {
+    if (poiID == null) throw new IllegalArgumentException("argument 'poiID' to addPoi() is null");
+    if (coordinates == null) throw new IllegalArgumentException("argument 'coordinates' to addPoi() is null");
+    Poi p = this.searchPoi(poiID);
+    p.setCoordinates(coordinates);
   }
 
   /**
@@ -383,10 +418,14 @@ public class DataBase {
    * @param p poi to search for
    * @return poi if found || null if not found
    * @author Vitor Hugo
+   * @throws PoiNotFoundException
    */
-  public Poi searchPoi (Integer id) {
-    if (id == null) throw new IllegalArgumentException("argument to searchPoi() is null");
-    return this.poiST.get(id);
+  public Poi searchPoi (Integer poiID) throws PoiNotFoundException {
+    if (poiID == null) throw new IllegalArgumentException("argument to searchPoi() is null");
+    if (this.containsPoi(poiID)) {
+      return this.poiST.get(poiID);
+    }
+    else throw new PoiNotFoundException("Poi not found");
   }
   
   /**
@@ -394,8 +433,8 @@ public class DataBase {
    * @param p poi
    * @return true if found || false if not found
    */
-  public boolean containsPoi(Poi p) {
-    return this.poiST.contains(p.getNodeId());
+  public boolean containsPoi(Integer poiID) {
+    return this.poiST.contains(poiID);
   }
 
   /**

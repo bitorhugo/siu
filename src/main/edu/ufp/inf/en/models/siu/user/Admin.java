@@ -3,11 +3,16 @@ package main.edu.ufp.inf.en.models.siu.user;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
+import main.edu.ufp.inf.en.models.siu.database.node.NodeAlreadyExistsException;
 import main.edu.ufp.inf.en.models.siu.database.node.NodeNotFoundException;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
+import main.edu.ufp.inf.en.models.siu.database.poi.PoiAlreadyExistsException;
 import main.edu.ufp.inf.en.models.siu.database.poi.PoiNotFoundException;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
+import main.edu.ufp.inf.en.models.siu.database.way.WayAlreadyExistsException;
+import main.edu.ufp.inf.en.models.siu.database.way.WayNotFoundException;
 
 /**
  * @author Vitor Hugo
@@ -33,7 +38,7 @@ public class Admin extends User {
    * adds a user
    * @param u user to add   
    */
-  public void addUser(User u) {
+  public void addUser(User u) throws UserAlreadyExistsException{
     this.getDb().addUser(u);
   }
 
@@ -42,30 +47,33 @@ public class Admin extends User {
    * @param u user to remove
    * @return removed user
    */
-  public User removeUser(User u) {
+  public User removeUser(User u) throws UserNotFoundException{
     return this.getDb().removeUser(u);
   }
     
   /**
-   * edits a user
-   * @param o old user to edit
-   * @param n new user to replace the old one
+   * edits a user from database
+   * @param id id of user to be edited
+   * @param name new name
+   * @param address new address
+   * @param birth new birth
+   * @throws UserNotFoundException if {@code userID} is not present in database
    */
-  public void editUser(User o, User n) {
-    this.getDb().editUser(o, n);
+  public void editUser(String userID, String name, String address, LocalDate birth) throws UserNotFoundException{
+    this.getDb().editUser(userID, name, address, birth);
   }
 
   /**
    * adds a node to database
    */
-  public void addNode (Node n) {
+  public void addNode (Node n) throws NodeAlreadyExistsException {
     this.getDb().addNode(n);
   }
 
   /**
    * removes a node from database
    * @param n node to be removed
-   * @return removed node if successful || null if not 
+   * @return removed node 
    * @throws NodeNotFoundException
    */
   public Node removeNode (Node n) throws NodeNotFoundException {
@@ -83,15 +91,16 @@ public class Admin extends User {
    * @param n new way
    * @throws NodeNotFoundException
    */
-  public void editNode(Node o, Node n) throws NodeNotFoundException {
-    this.getDb().editNode(o, n);
+  public void editNode(Integer nodeID, Point coordinates) throws NodeNotFoundException {
+    this.getDb().editNode(nodeID, coordinates);
   }
 
   /**
    * adds a poi to dabatase
    * @param p
+   * @throws PoiAlreadyExistsException
    */
-  public void addPoi(Poi p) {
+  public void addPoi(Poi p) throws PoiAlreadyExistsException {
     this.getDb().addPoi(p);
   }
 
@@ -122,14 +131,15 @@ public class Admin extends User {
    * @param n new poi
    * @throws PoiNotFoundException
    */
-  public void editPoi(Poi o, Poi n) throws PoiNotFoundException {
-    this.getDb().editPoi(o, n);
+  public void editPoi(Integer poiID, Point coordinates) throws PoiNotFoundException {
+    this.getDb().editPoi(poiID, coordinates);
   }
 
   /**
    * adds a way to database
+   * @throws WayAlreadyExistsException
    */
-  public void addWay(Way w) {
+  public void addWay(Way w) throws WayAlreadyExistsException {
     this.getDb().addWay(w);
   }
 
@@ -137,8 +147,9 @@ public class Admin extends User {
    * removes a way from database
    * @param w way to be removed
    * @return removed way
+   * @throws WayNotFoundException
    */
-  public Way removeWay(Way w) {
+  public Way removeWay(Way w) throws WayNotFoundException {
     this.getDb().removeWay(w);
     return w;
   }
@@ -147,9 +158,10 @@ public class Admin extends User {
    * edits a way from database
    * @param o old way
    * @param n new way
+   * @throws WayNotFoundException
    */
-  public void editWay(Way o, Way n) {
-    this.getDb().editWay(o, n);
+  public void editWay(Integer wayID, Node origin, Node destination, double weight) throws WayNotFoundException {
+    this.getDb().editWay(wayID, origin, destination, weight);
   }
 
   @Override

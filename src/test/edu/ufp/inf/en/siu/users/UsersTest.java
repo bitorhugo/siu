@@ -8,14 +8,16 @@ import java.time.Instant;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
+import main.edu.ufp.inf.en.models.siu.database.poi.PoiAlreadyExistsException;
 import main.edu.ufp.inf.en.models.siu.database.poi.PoiNotFoundException;
 import main.edu.ufp.inf.en.models.siu.user.Admin;
 import main.edu.ufp.inf.en.models.siu.user.User;
+import main.edu.ufp.inf.en.models.siu.user.UserAlreadyExistsException;
 
 public class UsersTest {
     
     @Test
-    public void addVisitedPoiTest() throws PoiNotFoundException {
+    public void addVisitedPoiTest() throws PoiNotFoundException, UserAlreadyExistsException, PoiAlreadyExistsException {
         DataBase db = new DataBase();
         User a = new Admin("Vitor, ", "porto", "1234", null, null, null);
         db.addUser(a);
@@ -35,7 +37,7 @@ public class UsersTest {
     }
 
     @Test
-    public void historyTest() throws PoiNotFoundException {
+    public void historyTest() throws PoiNotFoundException, UserAlreadyExistsException, PoiAlreadyExistsException {
         DataBase db = new DataBase();
         User a = new Admin("Vitor, ", "porto", "1234", null, null, null);
         db.addUser(a);

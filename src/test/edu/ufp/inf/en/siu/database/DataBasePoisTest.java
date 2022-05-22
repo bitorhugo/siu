@@ -6,14 +6,16 @@ import org.junit.Test;
 
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
+import main.edu.ufp.inf.en.models.siu.database.node.NodeNotFoundException;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
+import main.edu.ufp.inf.en.models.siu.database.poi.PoiAlreadyExistsException;
 import main.edu.ufp.inf.en.models.siu.database.poi.PoiNotFoundException;
 
 public class DataBasePoisTest {
     
 
     @Test
-    public void addPoiTest() {
+    public void addPoiTest() throws PoiAlreadyExistsException {
         DataBase db = new DataBase();
         Poi poi = new Poi(123, new Point(435.2f, 879f));
 
@@ -25,7 +27,7 @@ public class DataBasePoisTest {
     }
 
     @Test 
-    public void removePoiTest() throws PoiNotFoundException {
+    public void removePoiTest() throws PoiNotFoundException, PoiAlreadyExistsException {
         DataBase db = new DataBase();
         Poi poi = new Poi(123, new Point(435.2f, 879f));
 
@@ -43,7 +45,7 @@ public class DataBasePoisTest {
     }
 
     @Test
-    public void editPoiTest() throws PoiNotFoundException {
+    public void editPoiTest() throws PoiNotFoundException, PoiAlreadyExistsException {
         DataBase db = new DataBase();
         Poi o = new Poi(123, new Point(435.2f, 879f));
         Poi n = new Poi(321, new Point(65.2f, 12f));
@@ -51,16 +53,16 @@ public class DataBasePoisTest {
         db.addPoi(o);
         assertTrue(db.numberOfPois() == 1);
 
-        db.editPoi(o, n);
-        assertTrue(!db.containsNode(o));
-        assertTrue(db.containsNode(n));
+        //db.editPoi(o, n);
+        assertTrue(!db.containsNode(o.getNodeId()));
+        assertTrue(db.containsNode(n.getNodeId()));
 
-        assertTrue(!db.containsNode(o));
-        assertTrue(db.containsNode(n));
+        assertTrue(!db.containsNode(o.getNodeId()));
+        assertTrue(db.containsNode(n.getNodeId()));
     }
 
     @Test
-    public void searchPoiTest() {
+    public void searchPoiTest() throws NodeNotFoundException, PoiAlreadyExistsException, PoiNotFoundException {
         DataBase db = new DataBase();
         Poi p1 = new Poi(123, new Point(435.2f, 879f));
         Poi p2 = new Poi(321, new Point(345.2f, 123f));
@@ -80,7 +82,7 @@ public class DataBasePoisTest {
     }
 
     @Test
-    public void listPoiTest() {
+    public void listPoiTest() throws PoiAlreadyExistsException {
         DataBase db = new DataBase();
         Poi p1 = new Poi(123, new Point(435.2f, 879f));
         Poi p2 = new Poi(321, new Point(345.2f, 123f));
