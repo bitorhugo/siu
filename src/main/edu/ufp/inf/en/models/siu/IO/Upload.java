@@ -1,7 +1,6 @@
 package main.edu.ufp.inf.en.models.siu.IO;
 
 import java.time.LocalDate;
-import java.util.Scanner;
 
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.In;
