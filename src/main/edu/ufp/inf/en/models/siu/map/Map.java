@@ -75,13 +75,14 @@ public class Map {
                 if (!p.containsTag(tag)) {
                     indeces.add(mapIndex);
                     this.nodes.put(count, p);
+                    count ++;
                 }
             }
             else {
                 indeces.add(mapIndex);
                 this.nodes.put(count, n);
+                count ++;
             }
-            count ++;
         }
 
         // create graph with indeces size nodes (indeces are all nodes that don't have the specified tag)
@@ -97,8 +98,6 @@ public class Map {
                 }
             }
         }
-
-        System.out.println(this.graph);
     }
 
     /**

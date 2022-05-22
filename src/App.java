@@ -12,7 +12,10 @@ import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.StdRandom;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import main.edu.ufp.inf.en.controllers.LoginController;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
@@ -41,8 +44,10 @@ public class App extends Application {
         Upload.Nodes(db);
         Upload.Ways(db);
         
+        
         // load fxml file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main/edu/ufp/inf/en/resources/Login.fxml"));
+        
         
         // contructor injection
         loader.setControllerFactory(c -> {
@@ -56,6 +61,34 @@ public class App extends Application {
         primaryStage.setHeight(HEIGHT);
         primaryStage.setResizable(false);
         primaryStage.show();
+        
+        Group root = new Group(); 
+        
+        /*try {
+            for (var V : db.nodesKeys()) {
+                Node n = db.searchNode(V);
+                float x = n.getCoordinates().getX();
+                float y = n.getCoordinates().getY();
+                
+                x += 350;
+                y += 350;
+
+                root.getChildren().add(new Circle(x, y, 5f));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+ 
+        //Creating a scene object 
+        Scene scene = new Scene(root, WIDTH, HEIGHT);  
+        //Setting title to the Stage 
+        primaryStage.setTitle("Drawing a Circle"); 
+            
+        //Adding scene to the stage 
+        primaryStage.setScene(scene); 
+            
+        //Displaying the contents of the stage 
+        primaryStage.show();*/
 
     }
     
