@@ -105,6 +105,49 @@ public class Upload {
         
     }
 
+    public static void Nodes(String input, DataBase db) {
+        /**
+         * File Structure:
+         *  - number of nodes
+         *  - nodeId, x coordinate, y coordinate, tag key, tag values, tag key, ...
+         *   - ...
+         */
+        if (db == null) throw new IllegalAccessError("argument to uploadDB() is null");
+        In in = new In(input);
+
+        try {
+            in.readInt();
+            while (in.hasNextLine()) {
+                String []lines = in.readLine().split(",");
+                if (lines[0].length() > 0) {
+                    Node n = new Node(Integer.parseInt(lines[0]), new Point(Float.parseFloat(lines[1]), Float.parseFloat(lines[2])));
+                    // check to see if line contains key-value pairs
+                    if (lines.length > 3) {
+                        Poi p = new Poi(n);
+                        SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
+                        // iterate over remaining key value pairs of line
+                        for (int i = 3; i < lines.length - 1; i+=2) {
+                            if (lines[i].contains(":")) {
+                                lines[i] = lines[i].replace(':', '_');
+                            }
+                            tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
+                        }
+                        p.setTags(tags);
+                        db.addPoi(p);
+                    }
+                    else {
+                        db.addNode(n);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            in.close();
+        }        
+        
+    }
+
     /**
      * uploads ways from waysPath to database 
      * @param db database
@@ -158,7 +201,7 @@ public class Upload {
     public static void Ways(String input, DataBase db) {
         if (db == null) throw new IllegalArgumentException("argument to uploadWays() is null");
 
-        In in = new In(new Scanner(input));
+        In in = new In(input);
 
         try {
             in.readInt(); // discard number of ways

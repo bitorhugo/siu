@@ -65,6 +65,8 @@ public class Map {
         // first we must know how many nodes don't have specified tag(s)
         List<Integer> indeces = new ArrayList<>(); // set a list to denote which index to add to subgraph
         
+        int count = 0;
+
         // iterate over all indeces and find which ones to pick
         for (var mapIndex : map.nodes.keys()) {
             Node n = map.nodes.get(mapIndex);
@@ -72,11 +74,14 @@ public class Map {
                 Poi p = (Poi) n;
                 if (!p.containsTag(tag)) {
                     indeces.add(mapIndex);
+                    this.nodes.put(count, p);
                 }
             }
             else {
                 indeces.add(mapIndex);
+                this.nodes.put(count, n);
             }
+            count ++;
         }
 
         // create graph with indeces size nodes (indeces are all nodes that don't have the specified tag)
@@ -85,8 +90,10 @@ public class Map {
         // connect graph by adding the edges that connect indeces nodes
         for (int i = 0; i < indeces.size(); i++) {
             for (var v : map.graph.adj(indeces.get(i))) {
+                Way w = (Way) v;
                 if ((indeces.contains(v.from()) && indeces.contains(v.to()))) {
-                    this.graph.addEdge(v);
+                    // add way
+                    this.graph.addEdge(new Way(w.getWayId(), i, indeces.indexOf(v.to()), v.weight()));
                 }
             }
         }
