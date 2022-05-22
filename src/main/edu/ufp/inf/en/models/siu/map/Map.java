@@ -11,6 +11,7 @@ import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.RedBlackBST;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
+import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.database.transport.Transport;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
@@ -60,8 +61,41 @@ public class Map {
 
     }
 
+    public Map (Map map, Tag tag) {
+        // first we must know how many nodes don't have specified tag(s)
+        List<Integer> indeces = new ArrayList<>(); // set a list to denote which index to add to subgraph
+        
+        // iterate over all indeces and find which ones to pick
+        for (var mapIndex : map.nodes.keys()) {
+            Node n = map.nodes.get(mapIndex);
+            if (n instanceof Poi) {
+                Poi p = (Poi) n;
+                if (!p.containsTag(tag)) {
+                    indeces.add(mapIndex);
+                }
+            }
+            else {
+                indeces.add(mapIndex);
+            }
+        }
+
+        // create graph with indeces size nodes (indeces are all nodes that don't have the specified tag)
+        this.graph = new EdgeWeightedDigraph(indeces.size());
+
+        // connect graph by adding the edges that connect indeces nodes
+        for (int i = 0; i < indeces.size(); i++) {
+            for (var v : map.graph.adj(indeces.get(i))) {
+                if ((indeces.contains(v.from()) && indeces.contains(v.to()))) {
+                    this.graph.addEdge(v);
+                }
+            }
+        }
+
+        System.out.println(this.graph);
+    }
+
     /**
-     * Constructor by copy.
+     * Constructor by copy
      * Used to create subgraph without ways with specified tags
      * @param map map to use as foundation
      */
@@ -75,7 +109,6 @@ public class Map {
                 }
             }
         }
-        
     }
 
     public EdgeWeightedDigraph getGraph() {

@@ -275,7 +275,7 @@ public class DataBase {
    */
   public void addWay(Way w) throws WayAlreadyExistsException {
     if (w == null) throw new IllegalArgumentException("argument to addWay() is null");
-    if (this.containsWay(w.getWayId())) {
+    if (!this.containsWay(w.getWayId())) {
       this.waysST.put(w.getWayId(), w);
     }
     else throw new WayAlreadyExistsException();

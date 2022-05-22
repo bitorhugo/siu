@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import java.awt.Image;
@@ -25,7 +27,7 @@ import main.edu.ufp.inf.en.models.siu.user.Basic;
 import main.edu.ufp.inf.en.models.siu.user.User;
 
 @SuppressWarnings("unused")
-public class App extends Application{
+public class App extends Application {
 
     public final double WIDTH = 700;
     public final double HEIGHT = 700;
@@ -58,6 +60,7 @@ public class App extends Application{
     }
     
     public static void main(String[] args) throws Exception {   
+        
         //loading an image from a file
         final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
         final URL imageResource = App.class.getClassLoader().getResource("main/edu/ufp/inf/en/resources/icon.png");

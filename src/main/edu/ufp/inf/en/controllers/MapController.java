@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
+import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 import main.edu.ufp.inf.en.models.siu.user.Admin;
 import main.edu.ufp.inf.en.models.siu.user.User;
@@ -69,6 +70,7 @@ public class MapController implements Initializable{
      
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Map newMap = new Map(this.map, Tag.HIGHWAY);
         // set string values for menu options
         if (this.user instanceof Admin) menuChoiceBox.getItems().addAll(this.adminMenuChoices);
         else menuChoiceBox.getItems().addAll(basicMenuChoices);
