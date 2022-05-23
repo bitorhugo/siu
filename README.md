@@ -1,7 +1,8 @@
 ## Folder Structure
 
-The workspace contains four folders where:
+The workspace contains five (5) folders where:
 
+- `data`: the folder to store data
 - `src/main`: the folder to maintain source code
 - `src/test`: the folder to maintain code tests
 - `lib`: the folder to maintain dependencies
@@ -18,6 +19,9 @@ in-class built java-classes (LP2)
 
 
 javaFx library: see https://openjfx.io/openjfx-docs/ for more info
+
+
+jUnit framework
 
 
 ## Requisites:
