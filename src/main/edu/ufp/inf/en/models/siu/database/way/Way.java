@@ -7,21 +7,21 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.database.transport.Transport;
 
+/**
+ * @author Vitor Hugo
+ */
 public class Way extends DirectedEdge {
 
-  private final Integer wayId;
-  private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
-  // key:transport value:timeWeight (minutes)
-  private SeparateChainingHashST<Transport, Double> timeWeights = new SeparateChainingHashST<>();
-  private Double distanceWeight;
-  private double chosenWeight;
+  private final int wayId;
   
+  private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
+  
+  private SeparateChainingHashST<Transport, Double> timeWeights = new SeparateChainingHashST<>(); // key:transport value:timeWeight (minutes)
+    
   public Way(Integer wayId, int o, int t, double w) {
     // by default edge weight is the distanceWeight
     super(o, t, w);
     this.wayId = wayId;
-    this.distanceWeight = w;
-    this.chosenWeight = w;
     for (var v : Transport.values()) {
       double timeWeight = (w / v.speed);
       timeWeights.put(v, timeWeight);
@@ -37,32 +37,16 @@ public class Way extends DirectedEdge {
     return wayId;
   }
   
-  public SeparateChainingHashST<Tag, String> getTags() {
-    return tags;
-  } 
   public void setTags(SeparateChainingHashST<Tag, String> tags) {
     this.tags = tags;
-  }
-  
-  public double getChosenWeight() {
-    return chosenWeight;
-  }
-  public void setChosenWeight(String transportType) {
-    this.chosenWeight = timeWeights.get(Transport.valueOf(transportType.toUpperCase()));
   }
   
   public SeparateChainingHashST<Transport, Double> getTimeWeights() {
     return timeWeights;
   }
+  
   public void setTimeWeights(SeparateChainingHashST<Transport, Double> timeWeights) {
     this.timeWeights = timeWeights;
-  }
-  
-  public Double getDistanceWeight() {
-    return distanceWeight;
-  }
-  public void setDistanceWeight(Double distanceWeight) {
-    this.distanceWeight = distanceWeight;
   }
 
   /**
@@ -113,28 +97,30 @@ public class Way extends DirectedEdge {
   }
 
   /**
+   * 
+   * @return
+   */
+  public Iterable<Tag> tagKeys() {
+    return this.tags.keys();
+  }
+
+  /**
+   * returns the number of tags present
+   * @return number of tags
+   */
+  public int numberOfTags () {
+    return this.tags.size();
+  }
+
+  /**
    * lists all tags from way
    * @return a string with all tags
    */
-  public StringBuilder listTags() {
-    StringBuilder str = new StringBuilder();
-    if (!this.tags.isEmpty()) {
-      int i = 0;
-      for (var v : this.tags.keys()) {
-        if (i == this.tags.size() - 1) {
-          str.append(v);
-          str.append(",");
-          str.append(this.tags.get(v));
-        }
-        else {
-          str.append(v);
-          str.append(",");
-          str.append(this.tags.get(v));
-          str.append(",");
-        }
-        i ++;
-      }
-      System.out.println(str);
+  public String listTags() {
+    String str = new String();
+    for (var tag : this.tags.keys()) {
+      String tagValue = this.tags.get(tag);
+      str += "{" + tag + "," + tagValue + "}";
     }
     return str;
   }

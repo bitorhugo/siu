@@ -52,7 +52,7 @@ public class Map {
                 //Node o = db.getNodesST().get(w.from());
                 //Node t = db.getNodesST().get(w.to());
                 Node t = db.searchNode(w.to());
-                w = new Way(w.getWayId(), w.getTags(), o.getIndexMap(), t.getIndexMap(), w.weight());
+                w = new Way(w.getWayId(), o.getIndexMap(), t.getIndexMap(), w.weight());
                 this.graph.addEdge(w);
             }
         } catch (Exception e) {

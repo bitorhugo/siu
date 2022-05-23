@@ -17,8 +17,7 @@ public class WaysTest {
 
         w.addTag(t, "private");
 
-        assertTrue(!w.getTags().isEmpty());
-        assertTrue(w.getTags().size() == 1);
+        assertTrue(w.numberOfTags() == 1);
         assertTrue(w.containsTag(t));
     }
 
@@ -29,12 +28,11 @@ public class WaysTest {
         Tag t = Tag.ACCESS;
 
         w.addTag(t, "private");
-        assertTrue(!w.getTags().isEmpty());
-        assertTrue(w.getTags().size() == 1);
+        assertTrue(w.numberOfTags() == 1);
         assertTrue(w.containsTag(t));
 
         w.removeTag(t);
-        assertTrue(w.getTags().isEmpty());
+        assertTrue(w.numberOfTags() == 0);
         assertTrue(!w.containsTag(t));
     }   
 

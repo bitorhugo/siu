@@ -19,8 +19,6 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
-import main.edu.ufp.inf.en.models.siu.database.poi.PoiNotFoundException;
 import main.edu.ufp.inf.en.models.siu.database.transport.Transport;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 import main.edu.ufp.inf.en.models.siu.user.User;

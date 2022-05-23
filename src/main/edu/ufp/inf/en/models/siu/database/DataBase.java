@@ -286,7 +286,6 @@ public class DataBase {
    * removes a way from database
    * @param w way to remove
    * @return removed way || null if not found
-   * @author Vitor Hugo
    * @throws WayNotFoundException
    */
   public Way removeWay(Way w) throws WayNotFoundException {
@@ -303,7 +302,6 @@ public class DataBase {
    * edits a way from database
    * @param o old way
    * @param n new way
-   * @author Vitor Hugo
    * @throws WayNotFoundException
    */
   public void editWay(Integer wayID, Node origin, Node destination, double weight) throws WayNotFoundException {
@@ -311,7 +309,12 @@ public class DataBase {
     if (origin == null) throw new IllegalArgumentException("argument 'origin' to editWay() is null");
     if (destination == null) throw new IllegalArgumentException("argument 'destination' to editWay() is null");
     Way w = this.searchWay(wayID);
-    // TODO: refactor way class
+    try {
+      this.removeWay(w);
+      this.addWay(new Way(wayID, origin.getNodeId(), destination.getNodeId(), weight));
+    } catch (WayAlreadyExistsException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
