@@ -86,18 +86,21 @@ public abstract class User extends Person {
    * @param timestamp time user was in/on the pois
    * @throws PoiNotFoundException
    */
-  public void visitPoi (List<Integer> pois, List<Long> timestamps) throws PoiNotFoundException {
+  public void visitPoi (List<Integer> pois, List<Long> timestamps) {
     // check if for each poi we have a related timestamp
     if (pois.size() != timestamps.size())
       throw new IllegalArgumentException("lists must have the same size");
 
     // add to visitedPoi
     for (int i = 0; i < pois.size(); i++) {
-      Poi p = this.db.searchPoi(pois.get(i));
-      if (p != null) {
+      try {
+        Poi p = this.db.searchPoi(pois.get(i));
         p.addVisitor(this, timestamps.get(i));
         this.visitedPoi.put(timestamps.get(i), p); // add user to visitors in poi
+      } catch (Exception e){
+        System.out.println("skipping p since its a node not a poi");
       }
+      
     }
     
     this.history();
@@ -113,8 +116,8 @@ public abstract class User extends Person {
         Integer poiID = this.visitedPoi.get(timestamp).getNodeId();
         LocalDateTime date = LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.UTC);
         history += "Poi: " + poiID + " Date visited: " + date + ";";
-        System.out.println(history);
       }
+      System.out.println(history);
     }
     return history;
   }

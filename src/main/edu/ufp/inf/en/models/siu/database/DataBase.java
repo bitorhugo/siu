@@ -4,6 +4,7 @@ package main.edu.ufp.inf.en.models.siu.database;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
@@ -417,7 +418,6 @@ public class DataBase {
    * searches for a poi in database
    * @param p poi to search for
    * @return poi if found || null if not found
-   * @author Vitor Hugo
    * @throws PoiNotFoundException
    */
   public Poi searchPoi (Integer poiID) throws PoiNotFoundException {
@@ -656,13 +656,13 @@ public class DataBase {
    * @return arraylist containing all pois between start and end || null if not visited any poi
    * @author Vitor Hugo
    */
-  public ArrayList<Poi> getUserPoisVisited (User user, Long start, Long end) throws UserNotFoundException {
+  public List<Poi> getUserPoisVisited (User user, Long start, Long end) throws UserNotFoundException {
     if (user == null) throw new IllegalArgumentException("argument 'user' to getUserPoisVisited() is null");
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
     
     User u = this.searchUser(user.getIdNumber());
-    ArrayList<Poi> pois = new ArrayList<>();
+    List<Poi> pois = new ArrayList<>();
     for (Long l : u.getVisitedPoi().keys(start, end)) {
       pois.add(u.getVisitedPoi().get(l));
     }
@@ -677,15 +677,15 @@ public class DataBase {
    * @return arraylist containing all pois between start and end || null if not visited any poi
    * @author Vitor Hugo
    */
-  public ArrayList<Poi> getUserPoisNotVisited (User user, Long start, Long end) throws UserNotFoundException{
+  public List<Poi> getUserPoisNotVisited (User user, Long start, Long end) throws UserNotFoundException{
     if (user == null) throw new IllegalArgumentException("argument 'user' to getUserPoisVisited() is null");
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
 
-    ArrayList<Poi> poisNotVisited = new ArrayList<>();
+    List<Poi> poisNotVisited = new ArrayList<>();
     
     User u = this.searchUser(user.getIdNumber());
-    ArrayList<Poi> poisVisited = getUserPoisVisited(u, start, end);
+    List<Poi> poisVisited = getUserPoisVisited(u, start, end);
     for (Integer poiId : this.poiST.keys()) {
       Poi p = this.poiST.get(poiId);
       if (!poisVisited.contains(p)) {
@@ -703,14 +703,14 @@ public class DataBase {
    * @return arraylist containing all users that visited poi between start and end || null if not any
    * @author Vitor Hugo
    */
-  public ArrayList<User> getUsersThatVisitedPoi (Poi poi, Long start, Long end) {
+  public List<User> getUsersThatVisitedPoi (Poi poi, Long start, Long end) {
     if (poi == null) throw new IllegalArgumentException("argument 'user' to getUserPoisVisited() is null");
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
 
     if (this.poiST.contains(poi.getNodeId())) {
       Poi p = this.poiST.get(poi.getNodeId());
-      ArrayList<User> users = new ArrayList<>();
+      List<User> users = new ArrayList<>();
       for (Long l : p.getVisitorsEntrance().keys(start, end)) {
         for (User u : p.getVisitorsEntrance().get(l)) {
           users.add(u);
@@ -730,12 +730,12 @@ public class DataBase {
    * @param end last timestamp
    * @return arraylist containing all poi that weren't visited between specified time || null if all were visited
    */
-  public ArrayList<Poi> getPoiNotVisited (Long start, Long end) {
+  public List<Poi> getPoiNotVisited (Long start, Long end) {
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
 
     if (!this.poiST.isEmpty()) {
-      ArrayList<Poi> pois = new ArrayList<>();
+      List<Poi> pois = new ArrayList<>();
       for (Integer poiId : this.poiST.keys()) {
         Poi p = this.poiST.get(poiId);
         for (Long timestamp : p.getVisitorsEntrance().keys(start, end)) {
@@ -780,13 +780,13 @@ public class DataBase {
    * @param coordinates coordinates
    * @return semaphores found
    */
-  public ArrayList<Poi> closestSemaphore (Point coordinates) {
-    if (coordinates == null) throw new IllegalArgumentException("arguemnt to colsestSemaphore() is null");
+  public List<Poi> closestSemaphore (Point coordinates) {
+    if (coordinates == null) throw new IllegalArgumentException("arguemnt to closestSemaphore() is null");
 
     // random radius to search for sempahores (50-150 m)
-    double radius = StdRandom.uniform(50, 150);
+    double radius = StdRandom.uniform(50, 300);
 
-    ArrayList<Poi> semaphores = new ArrayList<>();
+    List<Poi> semaphores = new ArrayList<>();
     for (var v : this.poiST.keys()) {
       Poi p = this.poiST.get(v);
       if (p.getCoordinates().dist(coordinates) <= radius) {
@@ -796,6 +796,31 @@ public class DataBase {
       }
     }
     return semaphores;
+  }
+
+  /**
+   * searches for poi containing tag nearby coordinates
+   * @param tag tag to look for
+   * @param coordinates coordinates to search around
+   * @return list of poi containing {@code tag} nearby {@code coordinates}
+   * @throws PoiNotFoundException if no such poi is in database
+   */
+  public List<Poi> closestPois (Tag tag, Point coordinates) throws PoiNotFoundException {
+    if (tag == null) throw new IllegalArgumentException("argument 'tag' to closestPois() is null");
+    if (coordinates == null) throw new IllegalArgumentException("argument 'coordinates' to closestPois() is null");
+
+    double radius = StdRandom.uniform(50, 300);
+
+    List<Poi> pois = new ArrayList<>();
+    for (var poiID : this.poisKeys()) {
+      Poi p = searchPoi(poiID);
+      if (p.getCoordinates().dist(coordinates) <= radius) {
+        if (p.containsTag(tag)) {
+          pois.add(p);
+        }
+      }
+    }
+    return pois;
   }
 
 }

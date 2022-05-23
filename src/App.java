@@ -9,6 +9,7 @@ import java.awt.Taskbar;
 import java.awt.Toolkit;
 
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
+import edu.princeton.cs.algs4.SeparateChainingHashST;
 import edu.princeton.cs.algs4.StdRandom;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,8 @@ import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
+import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
+import main.edu.ufp.inf.en.models.siu.database.way.Way;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 import main.edu.ufp.inf.en.models.siu.user.Admin;
 import main.edu.ufp.inf.en.models.siu.user.Basic;

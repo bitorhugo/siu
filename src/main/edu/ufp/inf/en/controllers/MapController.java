@@ -174,7 +174,7 @@ public class MapController implements Initializable{
             
         } catch (Exception e) {
             invalidText.setText("INVALID");
-            e.printStackTrace();
+            System.out.println("Invalid input for path");
         }
         
     }
