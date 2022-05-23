@@ -76,16 +76,22 @@ public class ArquiveBIN {
      * @param db database
      */
     public static void PoisBIN(DataBase db) {
-        // can't serialize algs4 dts..
-                // loop through dt and arquive content
-                /*
-                Poi p = (Poi) n;
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path_pois_bin))) {
+            int numberPois = db.numberOfPois();
+            oos.writeInt(numberPois);
+            for (var poiID : db.poisKeys()) {
+                Poi p = db.searchPoi(poiID);
+                oos.writeInt(p.getNodeId());
+                oos.writeObject(p.getCoordinates());
+                // algs4 dts aren't serializable
+                // arquive tags hash table manually
                 int tagsSize = p.getTags().size();
                 oos.writeInt(tagsSize); // save hash table size
                 for (var tags : p.getTags().keys()) {
                     oos.writeObject(tags); // save key
                     oos.writeObject(p.getTags().get(tags)); // save value
                 }
+                // arquive visitor entrances
                 int visitorsEntranceSize = p.getVisitorsEntrance().size(); // save bst size
                 oos.writeInt(visitorsEntranceSize);
                 for (var entrance : p.getVisitorsEntrance().keys()) {
@@ -95,7 +101,11 @@ public class ArquiveBIN {
                     for (var userID : visitors) {
                         oos.writeObject(userID); // save value
                     }
-                }*/
+                }
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
 
     /**

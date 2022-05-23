@@ -28,4 +28,18 @@ public class ArquiveTest {
         dbb.listNodes();
 
     }
+
+    @Test
+    public void arquivePoisBinTest() {
+        DataBase db = new DataBase();
+        DataBase dbb = new DataBase();
+        Upload.Nodes(db);
+
+        ArquiveBIN.PoisBIN(db);
+
+        UploadBIN.PoisBIN(dbb);
+
+        assertTrue(dbb.numberOfPois() == 7);
+        dbb.listPoi();
+    }
 }
