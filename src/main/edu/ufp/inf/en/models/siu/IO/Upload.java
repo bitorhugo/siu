@@ -20,7 +20,7 @@ public class Upload {
     private Upload(){}
 
     private static final String usersPath = "data/in/txt/users/users.txt";
-    private static final String nodesPath = "data/in/txt/nodes/nodes.txt";
+    private static final String nodesPath = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/nodes/nodes.txt";
     private static final String waysPath = "data/in/txt/ways/ways.txt";
     private static final String graphPath = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/graph_in.txt";
 

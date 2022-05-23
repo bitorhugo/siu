@@ -702,12 +702,13 @@ public class DataBase {
    * @param end last timestamp
    * @return arraylist containing all users that visited poi between start and end || null if not any
    * @author Vitor Hugo
-   */
+   * TODO: refactor
+   */ 
   public List<User> getUsersThatVisitedPoi (Poi poi, Long start, Long end) {
     if (poi == null) throw new IllegalArgumentException("argument 'user' to getUserPoisVisited() is null");
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
-
+/*  
     if (this.poiST.contains(poi.getNodeId())) {
       Poi p = this.poiST.get(poi.getNodeId());
       List<User> users = new ArrayList<>();
@@ -717,11 +718,12 @@ public class DataBase {
         }
       }
       return users;
-    }
+    }*/
     else {
       System.out.println("poi doesn't have visitors between this time period");
       return null;
     }
+    
   }
   
   /**

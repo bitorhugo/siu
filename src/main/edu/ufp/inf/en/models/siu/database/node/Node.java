@@ -1,17 +1,18 @@
 package main.edu.ufp.inf.en.models.siu.database.node;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 
 
-public class Node {
+public class Node implements Serializable {
 
-  private Integer nodeId; 
+  private int nodeId; 
   
   private Point coordinates;
   
-  private Integer indexMap;
+  private int indexMap;
 
   public Node () {}
 
@@ -40,11 +41,10 @@ public class Node {
   public Integer getIndexMap() {
     return indexMap;
   }
+  
   public void setIndexMap(Integer indexMap) {
     this.indexMap = indexMap;
   }
-
-  
 
   @Override
   public boolean equals(Object obj) {

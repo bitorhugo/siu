@@ -1,5 +1,6 @@
 package main.edu.ufp.inf.en.models.siu.database.poi;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import edu.princeton.cs.algs4.RedBlackBST;
@@ -11,13 +12,13 @@ import main.edu.ufp.inf.en.models.siu.user.User;
 
 // extends node
 @SuppressWarnings("unused")
-public class Poi extends Node{
+public class Poi extends Node {
 
   private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
   
-  private RedBlackBST<Long, ArrayList<User>> visitorsEntrance = new RedBlackBST<>();
+  private RedBlackBST<Long, ArrayList<String>> visitorsEntrance = new RedBlackBST<>();
   
-  private RedBlackBST<Long, ArrayList<User>> visitorsExit = new RedBlackBST<>();
+  //private RedBlackBST<Long, ArrayList<User>> visitorsExit = new RedBlackBST<>();
   
   public Poi(Integer nodeId, Point coordinates) {
     super(nodeId, coordinates);
@@ -35,11 +36,11 @@ public class Poi extends Node{
     this.tags = tags;
   }
 
-  public RedBlackBST<Long, ArrayList<User>> getVisitorsEntrance() {
+  public RedBlackBST<Long, ArrayList<String>> getVisitorsEntrance() {
     return visitorsEntrance;
   }
 
-  public void setVisitorsEntrance(RedBlackBST<Long, ArrayList<User>> visitorsEntrance) {
+  public void setVisitorsEntrance(RedBlackBST<Long, ArrayList<String>> visitorsEntrance) {
     this.visitorsEntrance = visitorsEntrance;
   }
 
@@ -118,18 +119,18 @@ public class Poi extends Node{
     return str;
   }
 
-  public void addVisitor (User u, Long entrance) {
-    if (u == null) throw new IllegalArgumentException("argument 'u' to addVisitor() is null");
+  public void addVisitor (String userID, Long entrance) {
+    if (userID == null) throw new IllegalArgumentException("argument 'u' to addVisitor() is null");
     if (entrance == null) throw new IllegalArgumentException("argument 'entrance' to addVisitor() is null");
     
-    ArrayList<User> visitors;
+    ArrayList<String> visitors;
     if (this.visitorsEntrance.contains(entrance)) {
       visitors = this.visitorsEntrance.get(entrance);
-      visitors.add(u);
+      visitors.add(userID);
     }
     else {
       visitors = new ArrayList<>();
-      visitors.add(u);
+      visitors.add(userID);
       this.visitorsEntrance.put(entrance, visitors);
     }
   }

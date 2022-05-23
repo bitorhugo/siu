@@ -1,11 +1,16 @@
 package main.edu.ufp.inf.en.models.siu.IO;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.util.List;
+
 import edu.princeton.cs.algs4.BinaryOut;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 import main.edu.ufp.inf.en.models.siu.map.Map;
+import main.edu.ufp.inf.en.models.siu.user.User;
 
 @SuppressWarnings("unused")
 public class ArquiveBIN {
@@ -32,7 +37,20 @@ public class ArquiveBIN {
      * @param db database
      */
     public static void NodesBIN(DataBase db) {
-       
+        // try with resources automatically closes file :)
+       try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path_nodes_bin))) {
+           Integer numNodes = db.numberOfNodes();
+           oos.writeObject(numNodes);
+           for (Integer nodeID : db.nodesKeys()) {
+               Node n = db.searchNode(nodeID);
+               if (!(n instanceof Poi)) {
+                   oos.writeObject(n);
+               }
+           }
+           oos.flush();
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
     }
 
     /**
@@ -58,7 +76,26 @@ public class ArquiveBIN {
      * @param db database
      */
     public static void PoisBIN(DataBase db) {
-    
+        // can't serialize algs4 dts..
+                // loop through dt and arquive content
+                /*
+                Poi p = (Poi) n;
+                int tagsSize = p.getTags().size();
+                oos.writeInt(tagsSize); // save hash table size
+                for (var tags : p.getTags().keys()) {
+                    oos.writeObject(tags); // save key
+                    oos.writeObject(p.getTags().get(tags)); // save value
+                }
+                int visitorsEntranceSize = p.getVisitorsEntrance().size(); // save bst size
+                oos.writeInt(visitorsEntranceSize);
+                for (var entrance : p.getVisitorsEntrance().keys()) {
+                    oos.writeLong(entrance); // save key
+                    List<String> visitors = p.getVisitorsEntrance().get(entrance); // get value
+                    oos.writeInt(visitors.size()); // save value size
+                    for (var userID : visitors) {
+                        oos.writeObject(userID); // save value
+                    }
+                }*/
     }
 
     /**
@@ -66,16 +103,6 @@ public class ArquiveBIN {
      * @param map map
      */
     public static void GraphBIN (Map map) {
-        BinaryOut out = new BinaryOut(path_graph_bin);
-        out.write(String.valueOf(map.getGraph().V()));
-        out.write(NEWLINE);
-        out.write(String.valueOf(map.getGraph().E()));
-        out.write(NEWLINE);
-
-        for (var v : map.getGraph().edges()) {
-            out.write(v.toString());
-            out.write(NEWLINE);
-        }
-        out.close();
+        
     }
 }

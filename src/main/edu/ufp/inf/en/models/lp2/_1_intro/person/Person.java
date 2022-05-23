@@ -1,8 +1,9 @@
 package main.edu.ufp.inf.en.models.lp2._1_intro.person;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
-public class Person {
+public class Person implements Serializable{
 
   private String idNumber;
   private String name;

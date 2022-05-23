@@ -74,7 +74,7 @@ public abstract class User extends Person {
     if (this.db.containsPoi(poi.getNodeId())) {
       Poi p = this.db.searchPoi(poi.getNodeId());
       // update visitors of p
-      this.db.searchPoi(p.getNodeId()).addVisitor(this, entrance);
+      this.db.searchPoi(p.getNodeId()).addVisitor(this.getIdNumber(), entrance);
       // add poi to visitedPoi
       this.visitedPoi.put(entrance, p);
     }
@@ -95,7 +95,7 @@ public abstract class User extends Person {
     for (int i = 0; i < pois.size(); i++) {
       try {
         Poi p = this.db.searchPoi(pois.get(i));
-        p.addVisitor(this, timestamps.get(i));
+        p.addVisitor(this.getIdNumber(), timestamps.get(i));
         this.visitedPoi.put(timestamps.get(i), p); // add user to visitors in poi
       } catch (Exception e){
         System.out.println("skipping p since its a node not a poi");

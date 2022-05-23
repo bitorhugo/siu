@@ -1,6 +1,8 @@
 package main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures;
 
-public class Point {
+import java.io.Serializable;
+
+public class Point implements Serializable {
     private float x;
     private float y;
 
