@@ -704,30 +704,31 @@ public class DataBase {
    * @param start initial timestamp
    * @param end last timestamp
    * @return arraylist containing all users that visited poi between start and end || null if not any
-   * @author Vitor Hugo
-   * TODO: refactor
    */ 
   public List<User> getUsersThatVisitedPoi (Poi poi, Long start, Long end) {
     if (poi == null) throw new IllegalArgumentException("argument 'user' to getUserPoisVisited() is null");
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
-/*  
-    if (this.poiST.contains(poi.getNodeId())) {
-      Poi p = this.poiST.get(poi.getNodeId());
+    if (this.containsPoi(poi.getNodeId())) {
       List<User> users = new ArrayList<>();
-      for (Long l : p.getVisitorsEntrance().keys(start, end)) {
-        for (User u : p.getVisitorsEntrance().get(l)) {
-          users.add(u);
+      try {
+        Poi p = this.searchPoi(poi.getNodeId());
+        for (Long l : p.getVisitorsEntrance().keys(start, end)) {
+          for (String userID : p.getVisitorsEntrance().get(l)) {
+            users.add(this.searchUser(userID));
+          }
         }
+        return users;
+      } catch (PoiNotFoundException e) {
+        e.printStackTrace();
+      } catch (UserNotFoundException e) {
+        e.printStackTrace();
       }
-      return users;
-    }*/
-    else {
-      System.out.println("poi doesn't have visitors between this time period");
+
+    }
       return null;
     }
     
-  }
   
   /**
    * searches for pois that weren't visited by any users between a certain time
