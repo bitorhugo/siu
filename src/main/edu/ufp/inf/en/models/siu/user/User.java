@@ -115,7 +115,7 @@ public abstract class User extends Person {
       for (Long timestamp : this.visitedPoi.keys()) {
         Integer poiID = this.visitedPoi.get(timestamp).getNodeId();
         LocalDateTime date = LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.UTC);
-        history += "Poi: " + poiID + " Date visited: " + date + ";";
+        history += "Poi:" + poiID + " Date visited:" + date + ";";
       }
       System.out.println(history);
     }
