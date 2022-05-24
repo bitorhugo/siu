@@ -19,10 +19,10 @@ public class Upload {
     // private constructor
     private Upload(){}
 
-    private static final String usersPath = "data/in/txt/users/users.txt";
-    private static final String nodesPath = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/nodes/nodes.txt";
-    private static final String waysPath = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/ways/ways.txt";
-    private static final String graphPath = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/graph_in.txt";
+    private static final String USERSPATH = "data/in/txt/users/users.txt";
+    private static final String NODESPATH = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/nodes/nodes.txt";
+    private static final String WAYSPATH = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/ways/ways.txt";
+    private static final String GRAPHPATH = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/graph_in.txt";
 
     /**
      * file format:
@@ -32,7 +32,7 @@ public class Upload {
      */
     public static void Users(DataBase db) {
         
-        In in = new In(usersPath);
+        In in = new In(USERSPATH);
         try {
             in.readInt();
             while (in.hasNextLine()) {
@@ -69,7 +69,7 @@ public class Upload {
          *   - ...
          */
         if (db == null) throw new IllegalAccessError("argument to uploadDB() is null");
-        In in = new In(nodesPath);
+        In in = new In(NODESPATH);
 
         try {
             in.readInt();
@@ -161,7 +161,7 @@ public class Upload {
          */
         if (db == null) throw new IllegalArgumentException("argument to uploadWays() is null");
 
-        In in = new In(waysPath);
+        In in = new In(WAYSPATH);
 
         try {
             in.readInt(); // discard number of ways
@@ -236,7 +236,7 @@ public class Upload {
      * @param map
      */
     public static void Graph (Map map) {
-        In in = new In(graphPath);
+        In in = new In(GRAPHPATH);
         map.setGraph(new EdgeWeightedDigraph(in));
         in.close();
     }

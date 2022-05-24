@@ -4,16 +4,17 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
-import edu.princeton.cs.algs4.BinaryOut;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 import main.edu.ufp.inf.en.models.siu.map.Map;
-import main.edu.ufp.inf.en.models.siu.user.User;
 
-@SuppressWarnings("unused")
+
+/**
+ * @author Vitor Hugo
+ */
 public class ArquiveBIN {
     
     /**
@@ -21,12 +22,10 @@ public class ArquiveBIN {
      */
     private ArquiveBIN() {}
 
-    private static final String NEWLINE = "\n";
-
-    private final static String path_nodes_bin = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/nodesBIN.bin";
-    private final static String path_ways_bin = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/waysBIN.bin";
-    private final static String path_pois_bin = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/poisBIN.bin";
-    private final static String path_graph_bin = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/graphBIN.bin";
+    private final static String NODESPATH = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/nodesBIN.bin";
+    private final static String WAYSPATH = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/waysBIN.bin";
+    private final static String POISPATH = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/poisBIN.bin";
+    private final static String GRAPHPATH = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/graphBIN.bin";
 
     /**
      * arquives nodes st from datase in binary format
@@ -39,7 +38,7 @@ public class ArquiveBIN {
      */
     public static void NodesBIN(DataBase db) {
         // try with resources automatically closes file :)
-       try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path_nodes_bin))) {
+       try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(NODESPATH))) {
            int numNodes = db.numberOfNodes();
            oos.writeInt(numNodes);
            for (Integer nodeID : db.nodesKeys()) {
@@ -64,7 +63,7 @@ public class ArquiveBIN {
      * @param db database
      */
     public static void WaysBIN(DataBase db) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path_ways_bin))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(WAYSPATH))) {
             int numWays = db.numberOfWays();
             oos.writeInt(numWays);
             for (var wayID : db.waysKeys()) {
@@ -98,7 +97,7 @@ public class ArquiveBIN {
      * @param db database
      */
     public static void PoisBIN(DataBase db) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path_pois_bin))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(POISPATH))) {
             int numberPois = db.numberOfPois();
             oos.writeInt(numberPois);
             for (var poiID : db.poisKeys()) {
