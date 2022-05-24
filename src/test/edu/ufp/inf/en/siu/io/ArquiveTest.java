@@ -51,7 +51,11 @@ public class ArquiveTest {
 
         ArquiveBIN.WaysBIN(db);
 
+        assertTrue(db.numberOfWays() == 48);
+
         UploadBIN.WaysBIN(dbb);
+
+        assertTrue(dbb.numberOfWays() == 48);
 
         dbb.listWays();
     }
