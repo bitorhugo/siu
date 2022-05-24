@@ -40,8 +40,8 @@ public class ArquiveBIN {
     public static void NodesBIN(DataBase db) {
         // try with resources automatically closes file :)
        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path_nodes_bin))) {
-           Integer numNodes = db.numberOfNodes();
-           oos.writeObject(numNodes);
+           int numNodes = db.numberOfNodes();
+           oos.writeInt(numNodes);
            for (Integer nodeID : db.nodesKeys()) {
                Node n = db.searchNode(nodeID);
                if (!(n instanceof Poi)) {

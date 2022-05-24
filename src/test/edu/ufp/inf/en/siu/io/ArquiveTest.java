@@ -12,7 +12,7 @@ import main.edu.ufp.inf.en.models.siu.database.DataBase;
 public class ArquiveTest {
     
     @Test
-    public void arquiveNodesBinTest() {
+    public void NodesBinTest() {
         DataBase db = new DataBase();
         DataBase dbb = new DataBase();
         Upload.Nodes(db);
@@ -30,7 +30,7 @@ public class ArquiveTest {
     }
 
     @Test
-    public void arquivePoisBinTest() {
+    public void PoisBinTest() {
         DataBase db = new DataBase();
         DataBase dbb = new DataBase();
         Upload.Nodes(db);
@@ -44,7 +44,7 @@ public class ArquiveTest {
     }
 
     @Test
-    public void arquiveWaysBinTest() {
+    public void WaysBinTest() {
         DataBase db = new DataBase();
         DataBase dbb = new DataBase();
         Upload.Ways(db);
@@ -59,4 +59,5 @@ public class ArquiveTest {
 
         dbb.listWays();
     }
+
 }
