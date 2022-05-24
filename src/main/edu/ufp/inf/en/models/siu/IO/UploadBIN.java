@@ -3,9 +3,8 @@ package main.edu.ufp.inf.en.models.siu.IO;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.List;
 
-import edu.princeton.cs.algs4.BinaryIn;
+
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
@@ -15,12 +14,14 @@ import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 
-@SuppressWarnings("unused")
+/**
+ * @author Vitor Hugo
+ */
 public class UploadBIN {
     
-    private static final String path_nodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/nodesBIN.bin";
-    private static final String path_ways = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/waysBIN.bin";
-    private static final String path_pois = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/poisBIN.bin";
+    private static final String NODESPATH = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/nodesBIN.bin";
+    private static final String WAYSPATH = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/waysBIN.bin";
+    private static final String POISPATH = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/poisBIN.bin";
 
     private UploadBIN () {}
 
@@ -29,7 +30,7 @@ public class UploadBIN {
      * @param db
      */
     public static void NodesBIN (DataBase db) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path_nodes))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(NODESPATH))) {
             // We must read in the same order the object were saved
             int numNodes = ois.readInt();
             for (int i = 0; i < numNodes; i++) {
@@ -46,7 +47,7 @@ public class UploadBIN {
      * @param db database
      */
     public static void WaysBIN (DataBase db) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path_ways))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(WAYSPATH))) {
             int numWays = ois.readInt();
             for (int i = 0; i < numWays; i++) {
                 int wayID = ois.readInt();
@@ -68,9 +69,12 @@ public class UploadBIN {
         }
     }
 
-    public static void PoisBIN (DataBase db) {
-        
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path_pois))) {
+    /**
+     * uploads pois from binary format file in database
+     * @param db database
+     */
+    public static void PoisBIN (DataBase db) { 
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(POISPATH))) {
             int numberPois = ois.readInt();
             for (int i = 0; i < numberPois; i++) {
                 Poi p = new Poi(ois.readInt(), (Point)ois.readObject());
@@ -100,7 +104,6 @@ public class UploadBIN {
         } catch (Exception e) {
             e.getMessage();
         }
-        
     }
 
 }
