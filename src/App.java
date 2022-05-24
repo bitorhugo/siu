@@ -51,7 +51,7 @@ public class App extends Application {
         // load fxml file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main/edu/ufp/inf/en/resources/Login.fxml"));
         
-        
+
         // contructor injection
         loader.setControllerFactory(c -> {
             return new LoginController(db);

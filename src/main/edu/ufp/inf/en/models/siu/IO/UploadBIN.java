@@ -13,6 +13,7 @@ import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
+import main.edu.ufp.inf.en.models.siu.database.way.Way;
 
 @SuppressWarnings("unused")
 public class UploadBIN {
@@ -45,7 +46,26 @@ public class UploadBIN {
      * @param db database
      */
     public static void WaysBIN (DataBase db) {
-        
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path_ways))) {
+            int numWays = ois.readInt();
+            for (int i = 0; i < numWays; i++) {
+                int wayID = ois.readInt();
+                int origin = ois.readInt();
+                int destination = ois.readInt();
+                double weight = ois.readDouble();
+                Way w = new Way(wayID, origin, destination, weight);
+                int tagsSize = ois.readInt();
+                
+                for (int j = 0; j < tagsSize; j++) {
+                    Tag t = (Tag) ois.readObject();
+                    String tagValue = (String) ois.readObject();
+                    w.addTag(t, tagValue);
+                }
+                db.addWay(w);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void PoisBIN (DataBase db) {

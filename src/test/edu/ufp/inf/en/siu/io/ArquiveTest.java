@@ -42,4 +42,17 @@ public class ArquiveTest {
         assertTrue(dbb.numberOfPois() == 7);
         dbb.listPoi();
     }
+
+    @Test
+    public void arquiveWaysBinTest() {
+        DataBase db = new DataBase();
+        DataBase dbb = new DataBase();
+        Upload.Ways(db);
+
+        ArquiveBIN.WaysBIN(db);
+
+        UploadBIN.WaysBIN(dbb);
+
+        dbb.listWays();
+    }
 }

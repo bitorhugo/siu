@@ -8,6 +8,7 @@ import edu.princeton.cs.algs4.BinaryOut;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
+import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 import main.edu.ufp.inf.en.models.siu.user.User;
@@ -63,7 +64,28 @@ public class ArquiveBIN {
      * @param db database
      */
     public static void WaysBIN(DataBase db) {
-        
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path_ways_bin))) {
+            int numWays = db.numberOfWays();
+            oos.writeInt(numWays);
+            for (var wayID : db.waysKeys()) {
+                Way w = db.searchWay(wayID);
+                oos.writeInt(w.getWayId()); // way id
+                oos.writeInt(w.from()); // origin node
+                oos.writeInt(w.to()); // destination node
+                oos.writeDouble(w.weight()); // way weight
+
+                int tagsSize = w.numberOfTags();
+                oos.writeInt(tagsSize);
+                for (var tag : w.tagKeys()) {
+                    Tag t = tag;
+                    oos.writeObject(t); // tag
+                    String tagValue = w.getTagValue(t);
+                    oos.writeObject(tagValue); // tag value
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     /**

@@ -1,5 +1,6 @@
 package main.edu.ufp.inf.en.models.siu.database.way;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import edu.princeton.cs.algs4.DirectedEdge;
@@ -10,7 +11,7 @@ import main.edu.ufp.inf.en.models.siu.database.transport.Transport;
 /**
  * @author Vitor Hugo
  */
-public class Way extends DirectedEdge {
+public class Way extends DirectedEdge implements Serializable{
 
   private final int wayId;
   
@@ -110,6 +111,10 @@ public class Way extends DirectedEdge {
    */
   public int numberOfTags () {
     return this.tags.size();
+  }
+
+  public String getTagValue (Tag t) {
+    return this.tags.get(t);
   }
 
   /**

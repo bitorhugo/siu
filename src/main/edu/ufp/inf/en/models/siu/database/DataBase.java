@@ -770,13 +770,17 @@ public class DataBase {
     Long start = timestamp - timespent;
     Long end = timestamp + timespent;
     if (!this.poiST.isEmpty()) {
-      for (Integer poiId : this.poiST.keys()) {
-        Poi p = this.poiST.get(poiId);
-        System.out.println(p);
-        System.out.println(timespent);
-        for (Long ts : p.getVisitorsEntrance().keys(start, end)) {
-          System.out.println(p.getVisitorsEntrance().get(ts));
+      try {
+        for (Integer poiID : this.poisKeys()) {
+          Poi p = this.searchPoi(poiID);
+          System.out.println(p);
+          System.out.println(timespent);
+          for (Long ts : p.getVisitorsEntrance().keys(start, end)) {
+            System.out.println(p.getVisitorsEntrance().get(ts));
+          }
         }
+      } catch (Exception e) {
+        e.printStackTrace();
       }
     }
   }
