@@ -28,7 +28,9 @@ public enum Tag {
     LEISURE("default"),
     OPENING_HOURS("default"),
     MAXSPEED("default"),
-    SEMAPHORE("default");
+    TRAFFIC("default"),
+    TRAFFICJAM("deafault"),
+    TRAFFICLIGHTS("default");
 
     private String []value;
     
@@ -38,10 +40,6 @@ public enum Tag {
      */
     Tag (String... value) {
         this.value = value;
-    }
-    
-    Tag (String value, String volume) {
-
     }
 
     public String[] getValue() {

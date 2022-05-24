@@ -30,6 +30,8 @@ import main.edu.ufp.inf.en.models.siu.database.node.NodeNotFoundException;
  * @author Vitor Hugo
  */
 public class DataBase {
+
+  private static final int MAXTRAFFIC = 5;
   
   private RedBlackBST<String, User> userST = new RedBlackBST<>();
   
@@ -765,24 +767,52 @@ public class DataBase {
    */
   public void now() {
     long timestamp = Instant.now().getEpochSecond();
-    // calculate random number of seconds (15min max)
-    Long timespent = StdRandom.uniform(((15*60l)));
+    // calculate timespent in seconds (around 10min)
+    Long timespent = (10 * 60l);
     Long start = timestamp - timespent;
     Long end = timestamp + timespent;
+
     if (!this.poiST.isEmpty()) {
       try {
         for (Integer poiID : this.poisKeys()) {
           Poi p = this.searchPoi(poiID);
           System.out.println(p);
           System.out.println(timespent);
-          for (Long ts : p.getVisitorsEntrance().keys(start, end)) {
+          ArrayList<Long> visitorsBetweenStartEnd = (ArrayList<Long>) p.getVisitorsEntrance().keys(start, end);
+          for (Long ts : visitorsBetweenStartEnd) {
             System.out.println(p.getVisitorsEntrance().get(ts));
           }
+          if (p.containsTag(Tag.TRAFFICLIGHTS))  {
+            // update traffic
+            updateTraffic(p, visitorsBetweenStartEnd.size());
+          }
         }
-      } catch (Exception e) {
-        e.printStackTrace();
+      } catch (PoiNotFoundException e) {
+        e.getMessage();
       }
     }
+  }
+
+  /**
+   * updates traffic 
+   * if poi has more than {@code MAXTRAFFIC} people consider as traffic jam
+   * @param p poi
+   * @param traffic traffic number
+   */
+  private void updateTraffic (Poi p, int traffic) {
+    if (p == null) throw new IllegalArgumentException("argument 'p' to updateTraffic() is null");
+
+    if (!p.containsTag(Tag.TRAFFIC)) { // check if poi has traffic tag
+      p.addTag(Tag.TRAFFIC, String.valueOf(traffic));
+    }
+
+    if (traffic > MAXTRAFFIC) {
+      p.addTag(Tag.TRAFFICJAM, "yes");
+    }
+    else {
+      p.removeTag(Tag.TRAFFICJAM);
+    }
+
   }
   
   /**
@@ -790,22 +820,22 @@ public class DataBase {
    * @param coordinates coordinates
    * @return semaphores found
    */
-  public List<Poi> closestSemaphore (Point coordinates) {
+  public List<Poi> closestTrafficLights (Point coordinates) {
     if (coordinates == null) throw new IllegalArgumentException("arguemnt to closestSemaphore() is null");
 
     // random radius to search for sempahores (50-150 m)
     double radius = StdRandom.uniform(50, 300);
 
-    List<Poi> semaphores = new ArrayList<>();
+    List<Poi> trafficLights = new ArrayList<>();
     for (var v : this.poiST.keys()) {
       Poi p = this.poiST.get(v);
       if (p.getCoordinates().dist(coordinates) <= radius) {
-        if (p.containsTag(Tag.SEMAPHORE)) {
-          semaphores.add(p);
+        if (p.containsTag(Tag.TRAFFICLIGHTS)) {
+          trafficLights.add(p);
         }
       }
     }
-    return semaphores;
+    return trafficLights;
   }
 
   /**

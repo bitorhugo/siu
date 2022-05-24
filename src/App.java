@@ -50,7 +50,6 @@ public class App extends Application {
         
         // load fxml file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main/edu/ufp/inf/en/resources/Login.fxml"));
-        
 
         // contructor injection
         loader.setControllerFactory(c -> {
@@ -64,17 +63,17 @@ public class App extends Application {
         primaryStage.setHeight(HEIGHT);
         primaryStage.setResizable(false);
         primaryStage.show();
-        
+        /*
         Group root = new Group(); 
         
-        /*try {
+        try {
             for (var V : db.nodesKeys()) {
                 Node n = db.searchNode(V);
                 float x = n.getCoordinates().getX();
                 float y = n.getCoordinates().getY();
                 
-                x += 350;
-                y += 350;
+                x = (x - 0) * (350 - 0) / (350 - 0) + 0;
+                y = (y - 0) * (350 - 0) / (350 - 0) + 0;
 
                 root.getChildren().add(new Circle(x, y, 5f));
             }
@@ -91,10 +90,10 @@ public class App extends Application {
         primaryStage.setScene(scene); 
             
         //Displaying the contents of the stage 
-        primaryStage.show();*/
-
+        primaryStage.show();
+        */
     }
-    
+
     public static void main(String[] args) throws Exception {   
         
         //loading an image from a file

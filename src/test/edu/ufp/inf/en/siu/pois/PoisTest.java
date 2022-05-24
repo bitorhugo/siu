@@ -47,7 +47,7 @@ public class PoisTest {
         assertTrue(!p.getTags().isEmpty());
         assertTrue(p.getTags().size() == 1);
 
-        p.editTag(o, n, "porto");
+        
         assertTrue(!p.containsTag(o));
         assertTrue(p.containsTag(n));
     }

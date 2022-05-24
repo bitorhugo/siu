@@ -135,5 +135,5 @@ public class ArquiveBIN {
      */
     public static void GraphBIN (Map map) {
         
-    }
+    }   
 }

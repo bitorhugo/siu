@@ -73,15 +73,16 @@ public class Poi extends Node {
   }
 
   /**
-   * edits a tag from node
-   * @param o old tag to remove
-   * @param n new tag to insert
-   * @param nValue value of new tag (e.g. BUILDING=TRUE)
+   * edits tag from poi
+   * @param tag tag to be edited
+   * @param newTagValue new value associated with tag
    */
-  public void editTag(Tag o, Tag n, String nValue) {
-    if (o == null) throw new IllegalArgumentException("argument 'o' to editTag() is null");
-    if (n == null) throw new IllegalArgumentException("argument 'n' to editTag() is null");
-    if (removeTag(o) != null) addTag(n, nValue);
+  public void editTag(Tag tag, String newTagValue) {
+    if (tag == null) throw new IllegalArgumentException("argument 'o' to editTag() is null");
+    if (newTagValue == null) throw new IllegalArgumentException("argument 'n' to editTag() is null");
+    if (this.containsTag(tag)) {
+      tag.setValue(newTagValue);
+    }
   }
 
   /**
