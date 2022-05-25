@@ -8,6 +8,9 @@ import edu.princeton.cs.algs4.DijkstraSP;
 import edu.princeton.cs.algs4.DirectedDFS;
 import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
+import edu.princeton.cs.algs4.FlowNetwork;
+import edu.princeton.cs.algs4.FordFulkerson;
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.RedBlackBST;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
@@ -137,6 +140,14 @@ public class Map {
         return this.nodes.get(index);
     }
 
+    public Node searchNode (int nodeID) {
+        for (var index : this.indeces()) {
+            Node n = getNodeFromIndex(index);
+            if (n.getNodeId() == nodeID) return n;
+        }
+        return null;
+    }
+
     public Iterable<Integer> indeces() {
         return this.nodes.keys();
     }
@@ -241,6 +252,15 @@ public class Map {
             times.add(time);
         });
         return times;
+    }
+
+    public void fulkersonFlux (Node origin, Node destination) {
+        FlowNetwork fn = new FlowNetwork(new In (""));
+        
+        int source = searchNode(origin.getNodeId()).getNodeId();
+        int sink = searchNode(destination.getNodeId()).getNodeId();
+        FordFulkerson ff = new FordFulkerson(fn, source, sink);
+        ff.value();
     }
 
 }

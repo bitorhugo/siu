@@ -31,17 +31,9 @@
          </Button>
       </children>
    </HBox>
-   <StackPane GridPane.columnIndex="1" GridPane.rowIndex="9">
+   <StackPane prefHeight="400.0" prefWidth="553.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
       <children>
-         <ScatterChart fx:id="nodesGraph" alternativeRowFillVisible="false" animated="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" legendVisible="false" minHeight="-Infinity" minWidth="-Infinity" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
-           <xAxis>
-             <NumberAxis fx:id="SxAxis" side="BOTTOM" />
-           </xAxis>
-           <yAxis>
-             <NumberAxis fx:id="SyAxis" side="LEFT" />
-           </yAxis>
-         </ScatterChart>
-         <LineChart fx:id="pathGraph" alternativeRowFillVisible="false" animated="false" createSymbols="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" legendVisible="false" stylesheets="@css/chart.css" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
+         <LineChart fx:id="pathGraph" alternativeRowFillVisible="false" animated="false" createSymbols="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" stylesheets="@css/lineChart.css" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
            <xAxis>
              <NumberAxis fx:id="LxAxis" side="BOTTOM" />
            </xAxis>
@@ -49,6 +41,14 @@
              <NumberAxis fx:id="LyAxis" side="LEFT" />
            </yAxis>
          </LineChart>
+         <ScatterChart fx:id="nodesGraph" alternativeRowFillVisible="false" animated="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" minHeight="-Infinity" minWidth="-Infinity" prefWidth="476.0" stylesheets="@css/scatterChart.css" verticalGridLinesVisible="false" verticalZeroLineVisible="false">
+           <xAxis>
+             <NumberAxis fx:id="SxAxis" side="BOTTOM" />
+           </xAxis>
+           <yAxis>
+             <NumberAxis fx:id="SyAxis" side="LEFT" />
+           </yAxis>
+         </ScatterChart>
       </children>
    </StackPane>
    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="5">

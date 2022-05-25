@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
+import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.transport.Transport;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 import main.edu.ufp.inf.en.models.siu.user.User;
@@ -109,14 +110,29 @@ public class PathController implements Initializable {
         }
         
         XYChart.Series<Number, Number> nodeSeries = new XYChart.Series<>();
+        XYChart.Series<Number, Number> poiSeries = new XYChart.Series<>();
+        
         for (var v : this.map.indeces()) { // draw nodes
             Point point = this.map.getNodes().get(v).getCoordinates();
-            nodeSeries.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
+            if (this.map.getNodes().get(v) instanceof Poi) {
+                poiSeries.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
+            }
+            else {
+                nodeSeries.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
+            }
         }
         // set bounds for line and scatter charts
         this.setChartBounds();
+
+        // add data to charts
         nodesGraph.getData().add(nodeSeries);
+        nodesGraph.getData().add(poiSeries);
         pathGraph.getData().addAll(pathSeries);
+
+        // set label names
+        nodeSeries.setName("Nodes");
+        poiSeries.setName("Point of Interest");
+        
     }
 
     public void handleBackButton (ActionEvent event) throws IOException {
@@ -173,7 +189,7 @@ public class PathController implements Initializable {
         double ymin = 0; 
         double ymax = 0;
 
-        // iterate over nodes and find upper and lower bounds
+        // iterate over coordinates to find upper and lower bounds
         for (var index : this.map.indeces()) {
             Point coordinates = this.map.getNodeFromIndex(index).getCoordinates();
             if (coordinates.getX() > xmax) xmax = coordinates.getX();
@@ -182,21 +198,24 @@ public class PathController implements Initializable {
             if (coordinates.getY() < ymin) ymin = coordinates.getY();
         }
 
+        // set a padding for chart
+        double padding = 50;
+
         SxAxis.setAutoRanging(false);
-        SxAxis.setLowerBound(xmin - 50);
-        SxAxis.setUpperBound(xmax + 50);
+        SxAxis.setLowerBound(xmin - padding);
+        SxAxis.setUpperBound(xmax + padding);
 
         SyAxis.setAutoRanging(false);
-        SyAxis.setLowerBound(ymin - 50);
-        SyAxis.setUpperBound(ymax + 50);
+        SyAxis.setLowerBound(ymin - padding);
+        SyAxis.setUpperBound(ymax + padding);
 
         LxAxis.setAutoRanging(false);
-        LxAxis.setLowerBound(xmin - 50);
-        LxAxis.setUpperBound(xmax + 50);
+        LxAxis.setLowerBound(xmin - padding);
+        LxAxis.setUpperBound(xmax + padding);
 
         LyAxis.setAutoRanging(false);
-        LyAxis.setLowerBound(ymin - 50);
-        LyAxis.setUpperBound(ymax + 50);
+        LyAxis.setLowerBound(ymin - padding);
+        LyAxis.setUpperBound(ymax + padding);
     }
 
 }
