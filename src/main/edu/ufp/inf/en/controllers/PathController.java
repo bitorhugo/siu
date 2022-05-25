@@ -15,10 +15,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.database.transport.Transport;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 import main.edu.ufp.inf.en.models.siu.user.User;
@@ -37,6 +40,21 @@ public class PathController implements Initializable {
     @FXML
     private LineChart<Number,Number> pathGraph;
 
+    @FXML
+    private NumberAxis LxAxis;
+
+    @FXML
+    private NumberAxis LyAxis;
+
+    @FXML
+    private ScatterChart<Number, Number> nodesGraph;
+
+    @FXML
+    private NumberAxis SxAxis;
+
+    @FXML
+    private NumberAxis SyAxis;
+
     private Map map;
     private User user;
     private Integer from; // node index
@@ -49,6 +67,7 @@ public class PathController implements Initializable {
 
     public PathController (Map map, User user, Integer from, Integer to) {
         this.map = map;
+        this.nodesGraph = nodesGraph;
         this.user = user;
         this.from = from;
         this.to = to;
@@ -67,30 +86,38 @@ public class PathController implements Initializable {
         // calculate time it takes to travel each edge
         this.time = this.map.shortestPathTime(path, Transport.BUS);
 
-        path.forEach(System.out::println);
+        this.path.forEach(System.out::println);
 
-        // create an array of series
-        ArrayList<XYChart.Series<Number, Number>> seriesArr = new ArrayList<>();
+        // create pathSeries containing all the edges to connect in chart
+        ArrayList<XYChart.Series<Number, Number>> pathSeries = new ArrayList<>();
 
         int i = 0;
-        for (var v : path) {
-            seriesArr.add(new XYChart.Series<>());
+        for (var v : this.path) { // draw path
+            pathSeries.add(new XYChart.Series<>());
             
             Integer indexFrom = v.from();
             float xFrom = this.map.getNodes().get(indexFrom).getCoordinates().getX();
             float yFrom = this.map.getNodes().get(indexFrom).getCoordinates().getY();
             System.out.println("xFrom:" + xFrom + "yFrom:" + yFrom);
-            seriesArr.get(i).getData().add(new XYChart.Data<>(xFrom, yFrom));
+            pathSeries.get(i).getData().add(new XYChart.Data<>(xFrom, yFrom));
             
             Integer indexTo = v.to();
             float xTo = this.map.getNodes().get(indexTo).getCoordinates().getX();
             float yTo = this.map.getNodes().get(indexTo).getCoordinates().getY();
             System.out.println("xTo:" + xTo + "yTo:" + yTo);
-            seriesArr.get(i).getData().add(new XYChart.Data<>(xTo, yTo));
+            pathSeries.get(i).getData().add(new XYChart.Data<>(xTo, yTo));
             i++;
         }
-    
-        pathGraph.getData().addAll(seriesArr);
+        
+        XYChart.Series<Number, Number> nodeSeries = new XYChart.Series<>();
+        for (var v : this.map.indeces()) { // draw nodes
+            Point point = this.map.getNodes().get(v).getCoordinates();
+            nodeSeries.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
+        }
+        // set bounds for line and scatter charts
+        this.setChartBounds();
+        nodesGraph.getData().add(nodeSeries);
+        pathGraph.getData().addAll(pathSeries);
     }
 
     public void handleBackButton (ActionEvent event) throws IOException {
@@ -138,6 +165,24 @@ public class PathController implements Initializable {
     
         user.visitPoi(poisID, timestamps);
         
+    }
+
+    private void setChartBounds () {
+        SxAxis.setAutoRanging(false);
+        SxAxis.setLowerBound(-200);
+        SxAxis.setUpperBound(500);
+
+        SyAxis.setAutoRanging(false);
+        SyAxis.setLowerBound(-700);
+        SyAxis.setUpperBound(700);
+
+        LxAxis.setAutoRanging(false);
+        LxAxis.setLowerBound(-200);
+        LxAxis.setUpperBound(500);
+
+        LyAxis.setAutoRanging(false);
+        LyAxis.setLowerBound(-700);
+        LyAxis.setUpperBound(700);
     }
 
 }
