@@ -67,7 +67,6 @@ public class PathController implements Initializable {
 
     public PathController (Map map, User user, Integer from, Integer to) {
         this.map = map;
-        this.nodesGraph = nodesGraph;
         this.user = user;
         this.from = from;
         this.to = to;
@@ -168,21 +167,36 @@ public class PathController implements Initializable {
     }
 
     private void setChartBounds () {
+
+        double xmin = 0;
+        double xmax = 0;
+        double ymin = 0; 
+        double ymax = 0;
+
+        // iterate over nodes and find upper and lower bounds
+        for (var index : this.map.indeces()) {
+            Point coordinates = this.map.getNodeFromIndex(index).getCoordinates();
+            if (coordinates.getX() > xmax) xmax = coordinates.getX();
+            if (coordinates.getX() < xmin) xmin = coordinates.getX();
+            if (coordinates.getY() > ymax) ymax = coordinates.getY();
+            if (coordinates.getY() < ymin) ymin = coordinates.getY();
+        }
+
         SxAxis.setAutoRanging(false);
-        SxAxis.setLowerBound(-200);
-        SxAxis.setUpperBound(500);
+        SxAxis.setLowerBound(xmin - 50);
+        SxAxis.setUpperBound(xmax + 50);
 
         SyAxis.setAutoRanging(false);
-        SyAxis.setLowerBound(-700);
-        SyAxis.setUpperBound(700);
+        SyAxis.setLowerBound(ymin - 50);
+        SyAxis.setUpperBound(ymax + 50);
 
         LxAxis.setAutoRanging(false);
-        LxAxis.setLowerBound(-200);
-        LxAxis.setUpperBound(500);
+        LxAxis.setLowerBound(xmin - 50);
+        LxAxis.setUpperBound(xmax + 50);
 
         LyAxis.setAutoRanging(false);
-        LyAxis.setLowerBound(-700);
-        LyAxis.setUpperBound(700);
+        LyAxis.setLowerBound(ymin - 50);
+        LyAxis.setUpperBound(ymax + 50);
     }
 
 }

@@ -3,7 +3,6 @@ package main.edu.ufp.inf.en.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import edu.princeton.cs.algs4.StdRandom;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
