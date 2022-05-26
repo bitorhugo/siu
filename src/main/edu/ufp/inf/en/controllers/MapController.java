@@ -2,22 +2,33 @@ package main.edu.ufp.inf.en.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.Node;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.ScatterChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
+import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 import main.edu.ufp.inf.en.models.siu.user.Admin;
 import main.edu.ufp.inf.en.models.siu.user.User;
@@ -27,11 +38,8 @@ public class MapController implements Initializable{
     public final double WIDTH = 700;
     public final double HEIGHT = 700;
 
-    @FXML
-    private ChoiceBox<String> menuChoiceBox;
-
-    private String[] adminMenuChoices = {"EDIT", "HISTORY", "EXPORT", "LOGOUT"};
-    private String[] basicMenuChoices = {"HISTORY", "EXPORT", "LOGOUT"};
+    @FXML 
+    private Button backButton;
 
     @FXML
     private TextField fromTextField;
@@ -41,9 +49,13 @@ public class MapController implements Initializable{
 
     @FXML
     private Text invalidText;
-
+    
     @FXML
-    private ScatterChart<Number, Number> nodesMap;
+    private LineChart<Number, Number> lineChart;
+    
+    @FXML
+    private ScatterChart<Number, Number> scatterChart;
+
 
     private Stage stage;
     private Scene scene;
@@ -69,100 +81,46 @@ public class MapController implements Initializable{
      
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // set string values for menu options
-        if (this.user instanceof Admin) menuChoiceBox.getItems().addAll(this.adminMenuChoices);
-        else menuChoiceBox.getItems().addAll(basicMenuChoices);
 
-        menuChoiceBox.setOnAction(choice -> {
-            try {
-                getMenuOption(choice);
-            } catch (IOException e) {
-                System.out.println("Not able to select choice from menu");
-                e.printStackTrace();
-            }
-        });
+        drawMap();
+    }
 
-        XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
-        for (var v : this.map.indeces()) {
-            Point point = this.map.getNodes().get(v).getCoordinates();
-            series1.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
+    @FXML
+    public void handleBackButton (ActionEvent event) throws IOException {
+        FXMLLoader loader;
+
+        if (this.user instanceof Admin) {
+            loader = new FXMLLoader(getClass().getResource("../resources/AdminGUI.fxml"));
+            loader.setControllerFactory(c -> {
+                return new AdminController(this.user);
+            });
         }
-        nodesMap.getData().add(series1);
-    }
-
-    public void getMenuOption (ActionEvent event) throws IOException {
-        String selectedOption = menuChoiceBox.getValue();
-
-        switch(selectedOption) {
-            case "EDIT": handleEditChoice(event);
-                break;
-            case "HISTORY": handleHistoryChoice(event);
-                break;
-            case "EXPORT": handleExportChoice(event);
-                break;
-            case "LOGOUT": handleLogoutChoice(event);
-                break;
-            default:
-                break;
+        else {
+            loader = new FXMLLoader(getClass().getResource("../resources/BasicGUI.fxml"));
+            loader.setControllerFactory(c -> {
+                return new BasicController(this.user);
+            });
         }
-
-    }
-
-    public void handleEditChoice (ActionEvent event) throws IOException {
-        // load fxml
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Edit.fxml"));
-        // inject constructor into controller
-        loader.setControllerFactory(c -> {
-            return new EditController(this.user);
-        });
+        
         // set stage and scene
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(loader.load());
-        stage.setScene(scene);
-        stage.show();
+        this.stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        this.scene = new Scene(loader.load());
+        this.stage.setScene(scene);
+        this.stage.show();
     }
 
-    public void handleHistoryChoice (ActionEvent event) throws IOException {
-    // load fxml
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/History.fxml"));
-    // inject constructor into controller
-    loader.setControllerFactory(c -> {
-        return new HistoryController(this.user);
-    });
-    // set stage and scene
-    stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-    scene = new Scene(loader.load());
-    stage.setScene(scene);
-    stage.show();
-    }
-
-    public void handleExportChoice (ActionEvent event) {
-
-    }
-
-    public void handleLogoutChoice (ActionEvent event) throws IOException {
-        // load fxml
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../resources/Login.fxml"));
-        // inject constructor into controller
-        loader.setControllerFactory(c -> {
-            return new LoginController(user.getDb());
-        });
-        // set stage and scene
-        stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(loader.load());
-        stage.setScene(scene);
-        stage.show();
-    }
-
+    @FXML
     public Integer handleFromTextField (ActionEvent event) {
         return Integer.parseInt(fromTextField.getText()); 
         
     }
 
+    @FXML
     public Integer handleToTextField (ActionEvent event) {
         return Integer.parseInt(toTextField.getText()); 
     }
 
+    @FXML
     public void handlePathButton(ActionEvent event) {
         try {
             invalidText.setText("");
@@ -191,6 +149,70 @@ public class MapController implements Initializable{
         scene = new Scene(loader.load());
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void drawMap() {
+        Series<Number, Number> nodeSeries = new Series<>(createData().get(0));
+        Series<Number, Number> poiSeries = new Series<>(createData().get(1));
+        
+        nodeSeries.setName("Node");
+        poiSeries.setName("Point of Interest");
+        
+        scatterChart.getData().add(nodeSeries);
+        scatterChart.getData().add(poiSeries);
+    }
+
+    private List<ObservableList<Data<Number, Number>>> createData() {
+        List<ObservableList<Data<Number, Number>>> returnList = new ArrayList<>();
+        
+        var nodeList = FXCollections.<Data<Number, Number>>observableArrayList();
+        var poiList = FXCollections.<Data<Number, Number>>observableArrayList();
+
+        // iterate over this map indeces and spilt nodes from poi
+        for (var v : this.map.indeces()) {
+            Point point = this.map.getNodes().get(v).getCoordinates();
+            var data = new Data<Number, Number>(point.getX(), point.getY());
+            if (this.map.getNodes().get(v) instanceof Poi) { // collect nodes
+                nodeList.add(data);
+                data.setNode(createDataNodeSymbol(v));
+            } 
+            else {
+                poiList.add(data); // collect pois
+                data.setNode(createDataPoiSymbol(v));
+            } 
+        }
+
+        // add nodeList and poiList to list to return
+        returnList.add(nodeList);
+        returnList.add(poiList);
+
+        return returnList;
+    }
+
+    private Node createDataNodeSymbol(int id) {
+        var label = new Label();
+        label.textProperty().set(String.valueOf(id));
+
+        var pane = new Pane(label);
+        pane.setShape(new Circle(4.0));
+        pane.setScaleShape(false);
+
+        label.translateYProperty().bind(label.heightProperty().divide(-1.5));
+
+        return pane;
+    }
+
+    private Node createDataPoiSymbol(int id) {
+        var label = new Label();
+        label.textProperty().set(String.valueOf(id));
+
+        var pane = new Pane(label);
+        pane.setShape(new Rectangle(8.0, 8.0));
+        pane.setScaleShape(false);
+
+        label.translateYProperty().bind(label.heightProperty().divide(-1.5));
+
+        return pane;
     }
 
 }
