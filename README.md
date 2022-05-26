@@ -23,6 +23,14 @@ javaFx library: see https://openjfx.io/openjfx-docs/ for more info
 
 jUnit framework
 
+## Design Patterns
+
+MVC : first time implementing mvc.. 
+    `Model`: where data is pulled from
+    `View` : what the client sees (GUI)
+    `Controller` : bridge between the data and client | handles the business logic
+
+Facade : masks the complexity of the code, improving its readability
 
 ## Requisites:
 

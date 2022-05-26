@@ -134,6 +134,7 @@ public class Poi extends Node {
       visitors.add(userID);
       this.visitorsEntrance.put(entrance, visitors);
     }
+    
   }
 
   public void listVisitors() {

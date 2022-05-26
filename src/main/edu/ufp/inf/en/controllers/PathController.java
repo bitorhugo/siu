@@ -75,64 +75,18 @@ public class PathController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // calculate total distance
-        DecimalFormat df = new DecimalFormat("#.##");
-        double dist = this.map.shortestDistance(this.map.getNodeFromIndex(from), this.map.getNodeFromIndex(to));
-        this.distanceText.setText(df.format(dist) + "m");
         
-        // calculate shortest path
-        this.path = this.map.shortestPath(this.map.getNodes().get(from),this.map.getNodes().get(to));
-
-        // calculate time it takes to travel each edge
-        this.time = this.map.shortestPathTime(path, Transport.BUS);
-
-        this.path.forEach(System.out::println);
-
-        // create pathSeries containing all the edges to connect in chart
-        ArrayList<XYChart.Series<Number, Number>> pathSeries = new ArrayList<>();
-
-        int i = 0;
-        for (var v : this.path) { // draw path
-            pathSeries.add(new XYChart.Series<>());
+        displayDistanceToDestination();
             
-            Integer indexFrom = v.from();
-            float xFrom = this.map.getNodes().get(indexFrom).getCoordinates().getX();
-            float yFrom = this.map.getNodes().get(indexFrom).getCoordinates().getY();
-            System.out.println("xFrom:" + xFrom + "yFrom:" + yFrom);
-            pathSeries.get(i).getData().add(new XYChart.Data<>(xFrom, yFrom));
+        calculatePathDistance();
+    
+        drawScatterChart();
+    
+        drawLineChart();
             
-            Integer indexTo = v.to();
-            float xTo = this.map.getNodes().get(indexTo).getCoordinates().getX();
-            float yTo = this.map.getNodes().get(indexTo).getCoordinates().getY();
-            System.out.println("xTo:" + xTo + "yTo:" + yTo);
-            pathSeries.get(i).getData().add(new XYChart.Data<>(xTo, yTo));
-            i++;
-        }
-        
-        XYChart.Series<Number, Number> nodeSeries = new XYChart.Series<>();
-        XYChart.Series<Number, Number> poiSeries = new XYChart.Series<>();
-        
-        for (var v : this.map.indeces()) { // draw nodes
-            Point point = this.map.getNodes().get(v).getCoordinates();
-            if (this.map.getNodes().get(v) instanceof Poi) {
-                poiSeries.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
-            }
-            else {
-                nodeSeries.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
-            }
-        }
-        // set bounds for line and scatter charts
         this.setChartBounds();
-
-        // add data to charts
-        nodesGraph.getData().add(nodeSeries);
-        nodesGraph.getData().add(poiSeries);
-        pathGraph.getData().addAll(pathSeries);
-
-        // set label names
-        nodeSeries.setName("Nodes");
-        poiSeries.setName("Point of Interest");
         
+    
     }
 
     public void handleBackButton (ActionEvent event) throws IOException {
@@ -149,6 +103,7 @@ public class PathController implements Initializable {
     }
 
     public void handleGoButton (ActionEvent event) {
+
         Long ts = (System.currentTimeMillis() / 1000L); // convert milliseconds to seconds
         
         List<Long> timestamps = new ArrayList<>();
@@ -180,6 +135,23 @@ public class PathController implements Initializable {
     
         user.visitPoi(poisID, timestamps);
         
+    }
+
+    private void displayDistanceToDestination () {
+        // calculate total distance
+        DecimalFormat df = new DecimalFormat("#.##");
+        double dist = this.map.shortestDistance(this.map.getNodeFromIndex(from), this.map.getNodeFromIndex(to));
+        this.distanceText.setText(df.format(dist) + "m");
+    }
+
+    private void calculatePathDistance () {
+        // calculate shortest path
+        this.path = this.map.shortestPath(this.map.getNodes().get(from),this.map.getNodes().get(to));
+
+        // calculate time it takes to travel each edge
+        this.time = this.map.shortestPathTime(path, Transport.BUS);
+
+        this.path.forEach(System.out::println); // debug purposes
     }
 
     private void setChartBounds () {
@@ -217,5 +189,51 @@ public class PathController implements Initializable {
         LyAxis.setLowerBound(ymin - padding);
         LyAxis.setUpperBound(ymax + padding);
     }
+
+    private void drawScatterChart () {
+        XYChart.Series<Number, Number> nodeSeries = new XYChart.Series<>();
+        XYChart.Series<Number, Number> poiSeries = new XYChart.Series<>();
+        for (var v : this.map.indeces()) { // get nodes
+            Point point = this.map.getNodes().get(v).getCoordinates();
+            if (this.map.getNodes().get(v) instanceof Poi) {
+                poiSeries.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
+            }
+            else {
+                nodeSeries.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
+            }
+        }
+        nodesGraph.getData().add(nodeSeries);
+        nodesGraph.getData().add(poiSeries);
+        // set label names
+        nodeSeries.setName("Nodes");
+        poiSeries.setName("Point of Interest");
+    }
+
+    private void drawLineChart () {
+        // create pathSeries containing all the edges to connect in chart
+        ArrayList<XYChart.Series<Number, Number>> pathSeries = new ArrayList<>();
+
+        int i = 0;
+        for (var v : this.path) { // get path
+            pathSeries.add(new XYChart.Series<>());
+            
+            Integer indexFrom = v.from();
+            float xFrom = this.map.getNodes().get(indexFrom).getCoordinates().getX();
+            float yFrom = this.map.getNodes().get(indexFrom).getCoordinates().getY();
+            System.out.println("xFrom:" + xFrom + "yFrom:" + yFrom);
+            pathSeries.get(i).getData().add(new XYChart.Data<>(xFrom, yFrom));
+            
+            Integer indexTo = v.to();
+            float xTo = this.map.getNodes().get(indexTo).getCoordinates().getX();
+            float yTo = this.map.getNodes().get(indexTo).getCoordinates().getY();
+            System.out.println("xTo:" + xTo + "yTo:" + yTo);
+            pathSeries.get(i).getData().add(new XYChart.Data<>(xTo, yTo));
+            i++;
+        }
+        
+        // add data to chart        
+        pathGraph.getData().addAll(pathSeries);
+    }
+
 
 }

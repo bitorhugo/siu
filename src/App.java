@@ -48,12 +48,6 @@ public class App extends Application {
         Upload.Nodes(db);
         Upload.Ways(db);
         
-        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("main/edu/ufp/inf/en/resources/stacked.fxml"));
-
-        loader.setControllerFactory(c -> {
-            return new stackedController();
-        });*/
-        
         // load fxml file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main/edu/ufp/inf/en/resources/Login.fxml"));
 
