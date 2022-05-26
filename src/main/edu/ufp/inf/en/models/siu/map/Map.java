@@ -148,6 +148,26 @@ public class Map {
         return null;
     }
 
+    /**
+     * returns number of vertices in graph
+     * @return number of nodes
+     */
+    public int numberOfNodes () {
+        return this.graph.V();
+    }
+
+    /**
+     * return number of ways in graph
+     * @return number of edges
+     */
+    public int numberOfWays () {
+        return this.graph.E();
+    }
+
+    /**
+     * return all map indeces
+     * @returnmap indeces
+     */
     public Iterable<Integer> indeces() {
         return this.nodes.keys();
     }

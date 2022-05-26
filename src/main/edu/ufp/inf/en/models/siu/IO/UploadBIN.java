@@ -4,7 +4,8 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
-
+import edu.princeton.cs.algs4.DirectedEdge;
+import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
@@ -13,6 +14,7 @@ import main.edu.ufp.inf.en.models.siu.database.node.Node;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
+import main.edu.ufp.inf.en.models.siu.map.Map;
 
 /**
  * @author Vitor Hugo
@@ -22,6 +24,7 @@ public class UploadBIN {
     private static final String NODESPATH = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/nodesBIN.bin";
     private static final String WAYSPATH = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/waysBIN.bin";
     private static final String POISPATH = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/poisBIN.bin";
+    private static final String GRAPHPATH = "/Users/VitorHugo/dev/java/projects/siu/data/out/bin/graphBIN.bin";
 
     private UploadBIN () {}
 
@@ -70,7 +73,7 @@ public class UploadBIN {
     }
 
     /**
-     * uploads pois from binary format file in database
+     * uploads pois from binary format file to database
      * @param db database
      */
     public static void PoisBIN (DataBase db) { 
@@ -106,4 +109,25 @@ public class UploadBIN {
         }
     }
 
+    /**
+     * iploads graph from binary format file to map
+     * @param map
+     */
+    public static void GraphBIN (Map map) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(GRAPHPATH))) {
+            int numberNodes = ois.readInt();
+            int numberWays = ois.readInt();
+            EdgeWeightedDigraph graph = new EdgeWeightedDigraph(numberNodes);
+
+            for (int i = 0; i < numberWays; i++) {
+                int source = ois.readInt();
+                int sink = ois.readInt();
+                double weight = ois.readDouble();
+                graph.addEdge(new DirectedEdge(source, sink, weight));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

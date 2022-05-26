@@ -134,6 +134,23 @@ public class ArquiveBIN {
      * @param map map
      */
     public static void GraphBIN (Map map) {
-        
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(GRAPHPATH))) {
+            int numberNodes = map.numberOfNodes();
+            int numberWays = map.numberOfWays();
+            oos.writeInt(numberNodes);
+            oos.writeInt(numberWays);
+
+            int i = 0;
+            // loop through each node adjency list
+            for (var edge : map.getGraph().adj(i)) {
+                oos.writeInt(edge.from()); // source 
+                oos.writeInt(edge.to()); // sink
+                oos.writeDouble(edge.weight()); // weigth
+                i++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }   
+
 }
