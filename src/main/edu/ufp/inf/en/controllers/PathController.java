@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import edu.princeton.cs.algs4.DirectedEdge;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,9 +21,16 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.transport.Transport;
@@ -171,19 +181,19 @@ public class PathController implements Initializable {
         }
 
         // set a padding for chart
-        double padding = 50;
+        double padding = 150;
 
         SxAxis.setAutoRanging(false);
-        SxAxis.setLowerBound(xmin - padding);
-        SxAxis.setUpperBound(xmax + padding);
+        SxAxis.setLowerBound(xmin - padding/2);
+        SxAxis.setUpperBound(xmax + padding/2);
 
         SyAxis.setAutoRanging(false);
         SyAxis.setLowerBound(ymin - padding);
         SyAxis.setUpperBound(ymax + padding);
 
         LxAxis.setAutoRanging(false);
-        LxAxis.setLowerBound(xmin - padding);
-        LxAxis.setUpperBound(xmax + padding);
+        LxAxis.setLowerBound(xmin - padding/2);
+        LxAxis.setUpperBound(xmax + padding/2);
 
         LyAxis.setAutoRanging(false);
         LyAxis.setLowerBound(ymin - padding);
@@ -191,22 +201,16 @@ public class PathController implements Initializable {
     }
 
     private void drawScatterChart () {
-        XYChart.Series<Number, Number> nodeSeries = new XYChart.Series<>();
-        XYChart.Series<Number, Number> poiSeries = new XYChart.Series<>();
-        for (var v : this.map.indeces()) { // get nodes
-            Point point = this.map.getNodes().get(v).getCoordinates();
-            if (this.map.getNodes().get(v) instanceof Poi) {
-                poiSeries.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
-            }
-            else {
-                nodeSeries.getData().add(new XYChart.Data<>(point.getX(), point.getY()));
-            }
-        }
+
+        Series<Number, Number> nodeSeries = new Series<>(createData().get(0));
+        Series<Number, Number> poiSeries = new Series<>(createData().get(1));
+        
+        nodeSeries.setName("Node");
+        poiSeries.setName("Point of Interest");
+        
         nodesGraph.getData().add(nodeSeries);
         nodesGraph.getData().add(poiSeries);
-        // set label names
-        nodeSeries.setName("Nodes");
-        poiSeries.setName("Point of Interest");
+
     }
 
     private void drawLineChart () {
@@ -235,5 +239,57 @@ public class PathController implements Initializable {
         pathGraph.getData().addAll(pathSeries);
     }
 
+    private List<ObservableList<Data<Number, Number>>> createData() {
+        List<ObservableList<Data<Number, Number>>> returnList = new ArrayList<>();
+        
+        var nodeList = FXCollections.<Data<Number, Number>>observableArrayList();
+        var poiList = FXCollections.<Data<Number, Number>>observableArrayList();
+
+        // iterate over this map indeces and spilt nodes from poi
+        for (var v : this.map.indeces()) {
+            Point point = this.map.getNodes().get(v).getCoordinates();
+            var data = new Data<Number, Number>(point.getX(), point.getY());
+            if (this.map.getNodes().get(v) instanceof Poi) { // collect nodes
+                nodeList.add(data);
+                data.setNode(createDataNodeSymbol(v));
+            } 
+            else {
+                poiList.add(data); // collect pois
+                data.setNode(createDataPoiSymbol(v));
+            } 
+        }
+
+        // add nodeList and poiList to list to return
+        returnList.add(nodeList);
+        returnList.add(poiList);
+
+        return returnList;
+    }
+
+    private Node createDataNodeSymbol(int id) {
+        var label = new Label();
+        label.textProperty().set(String.valueOf(id));
+
+        var pane = new Pane(label);
+        pane.setShape(new Circle(4.0));
+        pane.setScaleShape(false);
+
+        label.translateYProperty().bind(label.heightProperty().divide(-1.5));
+
+        return pane;
+    }
+
+    private Node createDataPoiSymbol(int id) {
+        var label = new Label();
+        label.textProperty().set(String.valueOf(id));
+
+        var pane = new Pane(label);
+        pane.setShape(new Rectangle(8.0, 8.0));
+        pane.setScaleShape(false);
+
+        label.translateYProperty().bind(label.heightProperty().divide(-1.5));
+
+        return pane;
+    }
 
 }

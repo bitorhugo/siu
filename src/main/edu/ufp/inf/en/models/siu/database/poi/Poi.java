@@ -95,27 +95,14 @@ public class Poi extends Node {
   }
 
   /**
-   * lists all tags in node
+   * lists all tags in from way
+   * @return a string containing all tags
    */
-  public StringBuilder listTags() {
-    StringBuilder str = new StringBuilder();
-    if (!this.tags.isEmpty()) {
-      int i = 0;
-      for (var v : this.tags.keys()) {
-        if (i == this.tags.size() - 1) {
-          str.append(v);
-          str.append(",");
-          str.append(this.tags.get(v));
-        }
-        else {
-          str.append(v);
-          str.append(",");
-          str.append(this.tags.get(v));
-          str.append(",");
-        }
-        i ++;
-      }
-      System.out.println(str);
+  public String listTags() {
+    String str = new String();
+    for (var tag : this.tags.keys()) {
+      String tagValue = this.tags.get(tag);
+      str += "{" + tag + "," + tagValue + "}";
     }
     return str;
   }

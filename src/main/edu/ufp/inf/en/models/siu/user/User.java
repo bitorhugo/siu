@@ -98,7 +98,7 @@ public abstract class User extends Person {
         p.addVisitor(this.getIdNumber(), timestamps.get(i));
         this.visitedPoi.put(timestamps.get(i), p); // add user to visitors in poi
       } catch (Exception e){
-        System.out.println("skipping p since its a node not a poi");
+        e.getMessage();
       }
       
     }
