@@ -178,12 +178,12 @@ public class MapController implements Initializable{
             Point point = this.map.getNodes().get(v).getCoordinates();
             var data = new Data<Number, Number>(point.getX(), point.getY());
             if (this.map.getNodes().get(v) instanceof Poi) { // collect nodes
-                nodeList.add(data);
-                data.setNode(createDataNodeSymbol(v));
+                poiList.add(data);
+                data.setNode(createDataPoiSymbol(v));
             } 
             else {
-                poiList.add(data); // collect pois
-                data.setNode(createDataPoiSymbol(v));
+                nodeList.add(data); // collect pois
+                data.setNode(createDataNodeSymbol(v));
             } 
         }
 

@@ -51,22 +51,72 @@
          </ScatterChart>
       </children>
    </StackPane>
-   <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="203.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+   <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="203.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
       <children>
          <Text fx:id="distanceText" strokeType="OUTSIDE" strokeWidth="0.0" text="..." wrappingWidth="50.21875">
             <font>
-               <Font name="Iosevka Bold" size="12.0" />
+               <Font name="Iosevka Bold" size="14.0" />
             </font>
          </Text>
-         <Button fx:id="goButton" alignment="CENTER" contentDisplay="CENTER" minWidth="38.0" mnemonicParsing="false" onAction="#handleGoButton" prefHeight="38.0" prefWidth="38.0" text="GO">
+         <Button fx:id="goFootButton" alignment="CENTER" contentDisplay="TOP" layoutX="61.0" layoutY="11.0" minWidth="38.0" mnemonicParsing="false" onAction="#handleGoFootButton" prefHeight="38.0" prefWidth="41.0" text="POOR">
+            <padding>
+               <Insets left="10.0" />
+            </padding>
+            <font>
+               <Font name="Iosevka" size="14.0" />
+            </font>
+         </Button>
+         <Text fx:id="footTimeText" layoutX="115.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="time" wrappingWidth="50.98307228088379">
+            <font>
+               <Font name="Iosevka" size="12.0" />
+            </font>
+         </Text>
+         <Button fx:id="goCarButton" alignment="CENTER" contentDisplay="TOP" minWidth="38.0" mnemonicParsing="false" onAction="#handleGoCarButton" prefHeight="38.0" prefWidth="41.0" text="CAR">
+            <padding>
+               <Insets left="10.0" />
+            </padding>
+            <font>
+               <Font name="Iosevka" size="14.0" />
+            </font>
+         </Button>
+         <Text fx:id="carTimeText" strokeType="OUTSIDE" strokeWidth="0.0" text="time" wrappingWidth="50.98307228088379">
+            <font>
+               <Font name="Iosevka" size="12.0" />
+            </font>
+         </Text>
+         <Button fx:id="goBusButton" alignment="CENTER" contentDisplay="CENTER" layoutX="61.0" layoutY="11.0" minWidth="38.0" mnemonicParsing="false" onAction="#handleGoBusButton" prefHeight="38.0" prefWidth="38.0" text="BUS">
             <padding>
                <Insets left="10.0" />
             </padding>
          </Button>
+         <Text fx:id="busTimeText" layoutX="115.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="time" wrappingWidth="50.98307228088379">
+            <font>
+               <Font name="Iosevka" size="12.0" />
+            </font>
+         </Text>
+         <Button fx:id="goBikeButton" alignment="CENTER" contentDisplay="TOP" layoutX="61.0" layoutY="11.0" minWidth="38.0" mnemonicParsing="false" onAction="#handleGoBikeButton" prefHeight="38.0" prefWidth="41.0" text="BIKE">
+            <padding>
+               <Insets left="10.0" />
+            </padding>
+            <font>
+               <Font name="Iosevka" size="14.0" />
+            </font>
+         </Button>
+         <Text fx:id="bikeTimeText" layoutX="115.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="time" wrappingWidth="50.98307228088379">
+            <font>
+               <Font name="Iosevka" size="12.0" />
+            </font>
+         </Text>
       </children>
       <opaqueInsets>
          <Insets right="10.0" />
       </opaqueInsets>
+      <padding>
+         <Insets left="20.0" />
+      </padding>
+      <GridPane.margin>
+         <Insets />
+      </GridPane.margin>
    </HBox>
 
     <columnConstraints>

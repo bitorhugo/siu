@@ -29,7 +29,7 @@ public enum Tag {
     OPENING_HOURS("default"),
     MAXSPEED("default"),
     TRAFFIC("default"),
-    TRAFFICJAM("deafault"),
+    TRAFFICJAM("default"),
     TRAFFICLIGHTS("default");
 
     private String []value;

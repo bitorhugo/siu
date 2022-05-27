@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import edu.princeton.cs.algs4.DirectedEdge;
 
@@ -39,15 +40,38 @@ import main.edu.ufp.inf.en.models.siu.user.User;
 
 public class PathController implements Initializable {
 
+    private static final int TWOMINUTES = 90;
+
     @FXML
     private Button backButton;
-
-    @FXML
-    private Button goButton;
-
+    
     @FXML
     private Text distanceText;
     
+    @FXML
+    private Button goFootButton;
+
+    @FXML
+    private Text footTimeText;
+
+    @FXML
+    private Button goCarButton;
+
+    @FXML
+    private Text carTimeText;
+    
+    @FXML
+    private Button goBusButton;
+
+    @FXML
+    private Text busTimeText;
+
+    @FXML
+    private Button goBikeButton;
+
+    @FXML
+    private Text bikeTimeText;
+
     @FXML
     private LineChart<Number,Number> pathGraph;
 
@@ -71,8 +95,11 @@ public class PathController implements Initializable {
     private Integer from; // node index
     private Integer to; // node index
     private Iterable<DirectedEdge> path;
-    private Iterable<Long>time;
-
+    private Iterable<Long>timePathPoor;
+    private Iterable<Long>timePathCar;
+    private Iterable<Long>timePathBus;
+    private Iterable<Long>timePathBike;
+    
     Stage stage;
     Scene scene;
 
@@ -86,16 +113,99 @@ public class PathController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
+        calculatePath(); // calculates the shortest path to take
+
+        calculateTimePaths(); // calculates the time it takes to travel
+        
         displayDistanceToDestination();
+    
+        displayTimeByFootToDestination();
+    
+        displayTimeByCarToDestination();
+
+        displayTimeByBusToDestination();
+
+        displayTimeByBikeToDestination();
             
-        calculatePathDistance();
-    
-        drawScatterChart();
-    
         drawLineChart();
+        
+        drawScatterChart();
             
         setChartBounds();
         
+    }
+
+    private void calculatePath () {
+        // calculate shortest path
+        this.path = this.map.shortestPath(this.map.getNodeFromIndex(from),this.map.getNodeFromIndex(to));
+
+        this.path.forEach(System.out::println); // debug purposes
+    }
+
+    private void calculateTimePaths () {
+        // calculate time it takes to travel each edge
+        this.timePathPoor = this.map.shortestPathTime(path, Transport.WALKING);
+        this.timePathBus = this.map.shortestPathTime(path, Transport.BUS);
+        this.timePathCar = this.map.shortestPathTime(path, Transport.CITYVEHICLE);
+        this.timePathBike = this.map.shortestPathTime(path, Transport.CYCLING);
+    }
+
+    public void handleGoFootButton (ActionEvent event) {
+
+        Long ts = (System.currentTimeMillis() / 1000L); // convert milliseconds to seconds
+        
+        List<Long> timestamps = new ArrayList<>();
+        timestamps.add(ts);
+        
+        this.timePathPoor.forEach(t -> {
+            long timestamp = t += ts;
+            timestamps.add(timestamp);
+        });
+            
+        user.visitPoi(getPathPois(), timestamps);
+        
+    }
+
+    public void handleGoCarButton (ActionEvent event) {
+        Long ts = (System.currentTimeMillis() / 1000L); // convert milliseconds to seconds
+        
+        List<Long> timestamps = new ArrayList<>();
+        timestamps.add(ts);
+        
+        this.timePathCar.forEach(t -> {
+            long timestamp = t += ts;
+            timestamps.add(timestamp);
+        });
+    
+        user.visitPoi(getPathPois(), timestamps);
+    } 
+
+    public void handleGoBusButton (ActionEvent event) {
+        Long ts = (System.currentTimeMillis() / 1000L); // convert milliseconds to seconds
+        
+        List<Long> timestamps = new ArrayList<>();
+        timestamps.add(ts);
+        
+        this.timePathBus.forEach(t -> {
+            long timestamp = t += ts;
+            timestamps.add(timestamp);
+        });
+    
+        user.visitPoi(getPathPois(), timestamps);
+    }
+
+    public void handleGoBikeButton (ActionEvent event) {
+        Long ts = (System.currentTimeMillis() / 1000L); // convert milliseconds to seconds
+        
+        List<Long> timestamps = new ArrayList<>();
+        timestamps.add(ts);
+        
+        this.timePathBike.forEach(t -> {
+            long timestamp = t += ts;
+            timestamps.add(timestamp);
+        });
+    
+        user.visitPoi(getPathPois(), timestamps);
     }
 
     public void handleBackButton (ActionEvent event) throws IOException {
@@ -111,23 +221,12 @@ public class PathController implements Initializable {
         stage.show();
     }
 
-    public void handleGoButton (ActionEvent event) {
-
-        Long ts = (System.currentTimeMillis() / 1000L); // convert milliseconds to seconds
-        
-        List<Long> timestamps = new ArrayList<>();
-        timestamps.add(ts);
-        
-        this.time.forEach(t -> {
-            long timestamp = t += ts;
-            timestamps.add(timestamp);
-        });
-        
+    private List<Integer> getPathPois () {
         // must copy iterable values to arraylist to know list size
         ArrayList<DirectedEdge> arr = new ArrayList<>();
         this.path.forEach(arr::add);
-
-        // save each route node to poisID
+        
+        // save each poi that exists in path
         ArrayList<Integer> poisID = new ArrayList<>();
         int i = 0; 
         for (var v : arr) {
@@ -141,9 +240,7 @@ public class PathController implements Initializable {
             }
             i++;
         }
-    
-        user.visitPoi(poisID, timestamps);
-        
+        return poisID;
     }
 
     private void displayDistanceToDestination () {
@@ -153,14 +250,47 @@ public class PathController implements Initializable {
         this.distanceText.setText(df.format(dist) + "m");
     }
 
-    private void calculatePathDistance () {
-        // calculate shortest path
-        this.path = this.map.shortestPath(this.map.getNodes().get(from),this.map.getNodes().get(to));
+    private void displayTimeByFootToDestination () {
+        // calculate total distance
+        DecimalFormat df = new DecimalFormat("#.##");
+        double time = this.map.shortestDistance(Transport.WALKING, this.map.getNodeFromIndex(from), this.map.getNodeFromIndex(to));
+        if (time > TWOMINUTES) { // set time as minutes if greater than 90 seconds 
+            time = TimeUnit.SECONDS.toMinutes((long)time);
+            this.footTimeText.setText("~" + time + "min");
+        }
+        else {
+            this.footTimeText.setText("~" + df.format(time) + "s");
+        }
+    }
 
-        // calculate time it takes to travel each edge
-        this.time = this.map.shortestPathTime(path, Transport.BUS);
+    private void displayTimeByCarToDestination () {
+        DecimalFormat df = new DecimalFormat("#.##");
+        double time = this.map.shortestDistance(Transport.CITYVEHICLE, this.map.getNodeFromIndex(from), this.map.getNodeFromIndex(to));
+        if (time > TWOMINUTES) {
+            time = TimeUnit.SECONDS.toMinutes((long)time);
+            this.carTimeText.setText("~" + time + "min");
+        }
+        else this.carTimeText.setText("~" + df.format(time) + "s");
+    }
 
-        this.path.forEach(System.out::println); // debug purposes
+    private void displayTimeByBusToDestination () {
+        DecimalFormat df = new DecimalFormat("#.##");
+        double time = this.map.shortestDistance(Transport.BUS, this.map.getNodeFromIndex(from), this.map.getNodeFromIndex(to));
+        if (time > TWOMINUTES) {
+            time = TimeUnit.SECONDS.toMinutes((long)time);
+            this.busTimeText.setText("~" + time + "min");
+        }
+        else this.busTimeText.setText("~" + df.format(time) + "s");
+    }
+
+    private void displayTimeByBikeToDestination () {
+        DecimalFormat df = new DecimalFormat("#.##");
+        double time = this.map.shortestDistance(Transport.CYCLING, this.map.getNodeFromIndex(from), this.map.getNodeFromIndex(to));
+        if (time > TWOMINUTES) {
+            time = TimeUnit.SECONDS.toMinutes((long)time);
+            this.bikeTimeText.setText("~" + time + "min");
+        }
+        else this.bikeTimeText.setText("~" + df.format(time) + "s");
     }
 
     private void setChartBounds () {
@@ -209,7 +339,7 @@ public class PathController implements Initializable {
         
         nodesGraph.getData().add(nodeSeries);
         nodesGraph.getData().add(poiSeries);
-
+        
     }
 
     private void drawLineChart () {
@@ -249,12 +379,12 @@ public class PathController implements Initializable {
             Point point = this.map.getNodes().get(v).getCoordinates();
             var data = new Data<Number, Number>(point.getX(), point.getY());
             if (this.map.getNodes().get(v) instanceof Poi) { // collect nodes
-                nodeList.add(data);
-                data.setNode(createDataNodeSymbol(v));
+                poiList.add(data);
+                data.setNode(createDataPoiSymbol(v));
             } 
             else {
-                poiList.add(data); // collect pois
-                data.setNode(createDataPoiSymbol(v));
+                nodeList.add(data); // collect pois
+                data.setNode(createDataNodeSymbol(v));
             } 
         }
 

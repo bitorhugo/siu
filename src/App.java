@@ -66,10 +66,7 @@ public class App extends Application {
     }
     
     public static void main(String[] args) throws Exception {
-        ArrayList<Integer> array = new ArrayList<>();
-        array.add(1);
-        array.add(2);
-        System.out.println(array);
+        
         //loading an image from a file
         final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
         final URL imageResource = App.class.getClassLoader().getResource("main/edu/ufp/inf/en/resources/icon.png");
