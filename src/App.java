@@ -39,7 +39,6 @@ public class App extends Application {
     public final double WIDTH = 700;
     public final double HEIGHT = 700;
 
-    
     @Override
     public void start(Stage primaryStage) throws IOException {
 
@@ -66,7 +65,7 @@ public class App extends Application {
         
     }
     
-    public static void main(String[] args) throws Exception {   
+    public static void main(String[] args) throws Exception {
         
         //loading an image from a file
         final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();

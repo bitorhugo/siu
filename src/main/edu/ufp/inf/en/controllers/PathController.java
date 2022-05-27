@@ -94,9 +94,8 @@ public class PathController implements Initializable {
     
         drawLineChart();
             
-        this.setChartBounds();
+        setChartBounds();
         
-    
     }
 
     public void handleBackButton (ActionEvent event) throws IOException {

@@ -15,7 +15,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
@@ -49,12 +51,15 @@ public class MapController implements Initializable{
 
     @FXML
     private Text invalidText;
-    
-    @FXML
-    private LineChart<Number, Number> lineChart;
-    
+
     @FXML
     private ScatterChart<Number, Number> scatterChart;
+
+    @FXML
+    private NumberAxis SxAxis;
+
+    @FXML
+    private NumberAxis SyAxis;
 
 
     private Stage stage;
@@ -82,7 +87,10 @@ public class MapController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        drawMap();
+        drawScatter();
+
+        setChartBounds();
+
     }
 
     @FXML
@@ -133,7 +141,6 @@ public class MapController implements Initializable{
         } catch (Exception e) {
             invalidText.setText("INVALID");
             System.out.println("Invalid input for path");
-            e.printStackTrace();
         }
         
     }
@@ -151,7 +158,7 @@ public class MapController implements Initializable{
         stage.show();
     }
 
-    private void drawMap() {
+    private void drawScatter() {
         Series<Number, Number> nodeSeries = new Series<>(createData().get(0));
         Series<Number, Number> poiSeries = new Series<>(createData().get(1));
         
@@ -213,6 +220,34 @@ public class MapController implements Initializable{
         label.translateYProperty().bind(label.heightProperty().divide(-1.5));
 
         return pane;
+    }
+
+    private void setChartBounds () {
+
+        double xmin = 0;
+        double xmax = 0;
+        double ymin = 0; 
+        double ymax = 0;
+
+        // iterate over coordinates to find upper and lower bounds
+        for (var index : this.map.indeces()) {
+            Point coordinates = this.map.getNodeFromIndex(index).getCoordinates();
+            if (coordinates.getX() > xmax) xmax = coordinates.getX();
+            if (coordinates.getX() < xmin) xmin = coordinates.getX();
+            if (coordinates.getY() > ymax) ymax = coordinates.getY();
+            if (coordinates.getY() < ymin) ymin = coordinates.getY();
+        }
+
+        // set a padding for chart
+        double padding = 150;
+
+        SxAxis.setAutoRanging(false);
+        SxAxis.setLowerBound(xmin - padding/2);
+        SxAxis.setUpperBound(xmax + padding/2);
+
+        SyAxis.setAutoRanging(false);
+        SyAxis.setLowerBound(ymin - padding);
+        SyAxis.setUpperBound(ymax + padding);
     }
 
 }
