@@ -40,7 +40,7 @@ Facade : masks the complexity of the code, improving its readability
 # R4: DONE
 # R5: 2/3 DONE
 # R6: DONE
-# R7: DONE FOR CURRENT CLASSES
+# R7: DONE
 # R8: DONE
 # R9: DONE
 # R10: DONE

@@ -30,8 +30,6 @@ import main.edu.ufp.inf.en.models.siu.database.node.NodeNotFoundException;
  * @author Vitor Hugo
  */
 public class DataBase {
-
-  private static final int MAXTRAFFIC = 5;
   
   private RedBlackBST<String, User> userST = new RedBlackBST<>();
   
