@@ -88,8 +88,11 @@ public class Upload {
                             }
                             tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
                         }
-                        p.setTags(tags);
+                        //p.setTags(tags);
                         db.addPoi(p);
+                        for (Tag tag : tags.keys()) { // update database tags 
+                            db.addPoiTag(p, tag, tags.get(tag));
+                        }
                     }
                     else {
                         db.addNode(n);
@@ -179,9 +182,12 @@ public class Upload {
                             }
                             tags.put(Tag.valueOf(lines[i].toUpperCase()), lines[i + 1]);
                         }
-                        w.setTags(tags);
+                        //w.setTags(tags);
+                        db.addWay(w);
+                        for (Tag t : tags.keys()) { // update database tags
+                            db.addWayTag(w, t, tags.get(t));
+                        }
                     }
-                    db.addWay(w);
                 }
             }
         } catch (Exception e) {

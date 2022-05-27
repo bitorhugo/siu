@@ -484,9 +484,9 @@ public class DataBase {
     ArrayList<Object> al = new ArrayList<>();
 
     if (!this.poiST.isEmpty()) {
-      // iterate over nodes
-      for (var i : this.poiST.keys()) {
-        Poi p = this.poiST.get(i);
+      // iterate over pois
+      for (var poiID : this.poiST.keys()) {
+        Poi p = this.poiST.get(poiID);
         if (p.containsTag(t)) {
           al.add(p);
         }
@@ -494,8 +494,8 @@ public class DataBase {
     }
     if (!this.waysST.isEmpty()) {
       // iterate over ways
-      for (var i : this.waysST.keys()) {
-        Way w = this.waysST.get(i);
+      for (var wayID : this.waysST.keys()) {
+        Way w = this.waysST.get(wayID);
         if (w.containsTag(t)) {
           al.add(w);
         }
@@ -512,7 +512,7 @@ public class DataBase {
    * @author Vitor Hugo
    */
   public void addPoiTag (Poi p, Tag t, String value) {
-    if (t == null) throw new IllegalArgumentException("argument to addNodeTag() is null");
+    if (t == null) throw new IllegalArgumentException("argument to addPoiTag() is null");
     if (this.poiST.contains(p.getNodeId())) {
       this.poiST.get(p.getNodeId()).addTag(t, value);
       addTag(t);
@@ -730,7 +730,6 @@ public class DataBase {
     }
       return null;
     }
-    
   
   /**
    * searches for pois that weren't visited by any users between a certain time
@@ -767,19 +766,23 @@ public class DataBase {
    */
   public void now() {
     long timestamp = Instant.now().getEpochSecond();
-    // calculate timespent in seconds (around 10min)
-    Long timespent = (10 * 60l);
-    Long start = timestamp - timespent;
-    Long end = timestamp + timespent;
-
+    
     if (!this.poiST.isEmpty()) {
       try {
         for (Integer poiID : this.poisKeys()) {
           Poi p = this.searchPoi(poiID);
           System.out.println(p);
-          System.out.println(timespent);
+          
+          // calculate random timespent in/on poi (expressed in seconds)
+          Long timespent = (StdRandom.uniform(1, 15) * 60l);
+          Long start = timestamp - timespent;
+          Long end = timestamp + timespent;
+
+          System.out.println("Average timespent in/on poi: " + timespent);
+
           ArrayList<Long> visitorsBetweenStartEnd = (ArrayList<Long>) p.getVisitorsEntrance().keys(start, end);
           for (Long ts : visitorsBetweenStartEnd) {
+            System.out.print("Users: ");
             System.out.println(p.getVisitorsEntrance().get(ts));
           }
           if (p.containsTag(Tag.TRAFFICLIGHTS))  {

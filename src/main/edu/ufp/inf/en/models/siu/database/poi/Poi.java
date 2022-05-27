@@ -132,7 +132,7 @@ public class Poi extends Node {
   
   @Override
   public String toString() {
-      return super.toString();
+      return "Poi{" + super.toString() + "}";
   }
 
 }
