@@ -1,8 +1,8 @@
 21
-0,84.1740298,708.6132806,crossing,uncontrolled,highway,crossing
-1,-99.1722618,628.6126820,highway,traffic_signals
-2,75.1710753,559.6128402,highway,traffic_signals
-3,73.1703690,445.6129333
+0,84.1740298,708.6132806,crossing,uncontrolled,highway,crossing,trafficlights,yes
+1,-99.1722618,628.6126820,highway,traffic_signals,trafficlights,yes
+2,75.1710753,559.6128402,highway,traffic_signals,trafficlights,yes
+3,73.1703690,445.6129333,
 4,142.1699072,396.6129174
 5,274.1696617,331.6128633
 6,377.1670140,377.6117522,highway,traffic_signals

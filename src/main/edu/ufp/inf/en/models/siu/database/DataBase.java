@@ -612,7 +612,7 @@ public class DataBase {
    * @param t tag to look for
    * @author Vitor Hugo
    */
-  public void listTagValues (Tag t) {
+  public void listDataWithTag (Tag t) {
     if (t == null) throw new IllegalArgumentException("argument to lisTagValues() is null");
     if (this.tagsST.contains(t)) {
       for (Object object : this.tagsST.get(t)) {
@@ -626,7 +626,7 @@ public class DataBase {
    * @param t tag to look for
    * @author Vitor Hugo
    */
-  public void listTagValuesForNodes (Tag t) {
+  public void listNodesWithTag (Tag t) {
     if (t == null) throw new IllegalArgumentException("argument to lisTagValues() is null");
     if (this.tagsST.contains(t)) {
       for (Object object : this.tagsST.get(t)) {
@@ -642,7 +642,7 @@ public class DataBase {
    * @param t tag to look for
    * @author Vitor Hugo
    */
-  public void listTagValuesForWays (Tag t) {
+  public void listWaysWithTag (Tag t) {
     if (t == null) throw new IllegalArgumentException("argument to lisTagValues() is null");
     if (this.tagsST.contains(t)) {
       for (Object object : this.tagsST.get(t)) {
@@ -827,11 +827,12 @@ public class DataBase {
     if (coordinates == null) throw new IllegalArgumentException("arguemnt to closestSemaphore() is null");
 
     // random radius to search for sempahores (50-150 m)
-    double radius = StdRandom.uniform(50, 300);
+    double radius = 250;
 
     List<Poi> trafficLights = new ArrayList<>();
     for (var v : this.poiST.keys()) {
       Poi p = this.poiST.get(v);
+      float distTo = p.getCoordinates().dist(coordinates);
       if (p.getCoordinates().dist(coordinates) <= radius) {
         if (p.containsTag(Tag.TRAFFICLIGHTS)) {
           trafficLights.add(p);
