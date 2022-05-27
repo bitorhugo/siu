@@ -2,6 +2,8 @@ package main.edu.ufp.inf.en.models.siu.database.poi;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
@@ -13,6 +15,9 @@ import main.edu.ufp.inf.en.models.siu.user.User;
 // extends node
 @SuppressWarnings("unused")
 public class Poi extends Node {
+
+  private static final int TIME_PERIOD = 5;
+  private static final int MAX_TRAFFIC = 5;
 
   private SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
   
@@ -83,6 +88,9 @@ public class Poi extends Node {
     if (this.containsTag(tag)) {
       tag.setValue(newTagValue);
     }
+    else {
+      this.addTag(tag, newTagValue);
+    }
   }
 
   /**
@@ -107,23 +115,63 @@ public class Poi extends Node {
     return str;
   }
 
+  /**
+   * adds a visitor to poi
+   * @param userID user id to add as visitor
+   * @param entrance time (seconds) of day user visited poi
+   */
   public void addVisitor (String userID, Long entrance) {
     if (userID == null) throw new IllegalArgumentException("argument 'u' to addVisitor() is null");
     if (entrance == null) throw new IllegalArgumentException("argument 'entrance' to addVisitor() is null");
     
+    // since {@code visitorEntrances} value is an array,
+    // check beforehand if there's already an entrance with that timestamp
     ArrayList<String> visitors;
     if (this.visitorsEntrance.contains(entrance)) {
+      // if so, just add another user to that entrance
       visitors = this.visitorsEntrance.get(entrance);
       visitors.add(userID);
     }
     else {
+      // otherwise create a new array and add user to it
       visitors = new ArrayList<>();
       visitors.add(userID);
       this.visitorsEntrance.put(entrance, visitors);
     }
     
+    // after user is inserted, update traffic
+    updateTraffic(entrance);
   }
 
+  /**
+   * updates the traffic of poi
+   * @param timestamp time (seconds) of day
+   */
+  private void updateTraffic (Long timestamp) {
+    if (timestamp == null) throw new IllegalArgumentException("argument to updateTraffic() is null");
+    
+    // set a time period to look for traffic 
+    Long start = timestamp - TimeUnit.MINUTES.toSeconds(TIME_PERIOD);
+    Long end = timestamp + TimeUnit.MINUTES.toSeconds(TIME_PERIOD);
+
+    for (var entrance : this.visitorsEntrance.keys(start, end)) {
+      int traffic = this.visitorsEntrance.get(entrance).size();
+      if (traffic > MAX_TRAFFIC) {
+        this.editTag(Tag.TRAFFICJAM, "yes");
+        this.editTag(Tag.TRAFFIC, String.valueOf(traffic));
+        break;
+      }
+      else {
+        this.removeTag(Tag.TRAFFICJAM);
+        this.editTag(Tag.TRAFFIC, String.valueOf(traffic));
+      }
+    }
+
+  }
+
+  /**
+   * lists all visitors of poi
+   */
   public void listVisitors() {
     for (var v : this.visitorsEntrance.keys()) {
       System.out.println(this.visitorsEntrance.get(v));
@@ -132,7 +180,7 @@ public class Poi extends Node {
   
   @Override
   public String toString() {
-      return "Poi{" + super.toString() + "}";
+    return "Poi{" + super.toString() + "}";
   }
 
 }

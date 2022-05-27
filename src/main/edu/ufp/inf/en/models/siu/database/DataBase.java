@@ -785,10 +785,7 @@ public class DataBase {
             System.out.print("Users: ");
             System.out.println(p.getVisitorsEntrance().get(ts));
           }
-          if (p.containsTag(Tag.TRAFFICLIGHTS))  {
-            // update traffic
-            updateTraffic(p, visitorsBetweenStartEnd.size());
-          }
+          
         }
       } catch (PoiNotFoundException e) {
         e.getMessage();
@@ -796,27 +793,6 @@ public class DataBase {
     }
   }
 
-  /**
-   * updates traffic 
-   * if poi has more than {@code MAXTRAFFIC} people consider as traffic jam
-   * @param p poi
-   * @param traffic traffic number
-   */
-  private void updateTraffic (Poi p, int traffic) {
-    if (p == null) throw new IllegalArgumentException("argument 'p' to updateTraffic() is null");
-
-    if (!p.containsTag(Tag.TRAFFIC)) { // check if poi has traffic tag
-      p.addTag(Tag.TRAFFIC, String.valueOf(traffic));
-    }
-
-    if (traffic > MAXTRAFFIC) {
-      p.addTag(Tag.TRAFFICJAM, "yes");
-    }
-    else {
-      p.removeTag(Tag.TRAFFICJAM);
-    }
-
-  }
   
   /**
    * searches for semaphores nearby coordinates
