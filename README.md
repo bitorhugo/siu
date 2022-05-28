@@ -47,7 +47,7 @@ Facade : masks the complexity of the code, improving its readability
 # R11: DONE
 # R12: DONE
 # R13: DONE
-# R14: 2/3 DONE
+# R14: DONE
 # R15: DONE
 # R16: DONE
 # R17: 
