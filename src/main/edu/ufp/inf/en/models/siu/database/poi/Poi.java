@@ -142,6 +142,10 @@ public class Poi extends Node {
     updateTraffic(entrance);
   }
 
+  public Iterable<Long> visitorEntrancesKeys(Long lo, Long hi) {
+    return this.visitorsEntrance.keys(lo, hi);
+  }
+
   /**
    * updates the traffic of poi
    * @param timestamp time (seconds) of day

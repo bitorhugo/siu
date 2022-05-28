@@ -10,6 +10,7 @@ import main.edu.ufp.inf.en.models.siu.database.node.NodeNotFoundException;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.poi.PoiAlreadyExistsException;
 import main.edu.ufp.inf.en.models.siu.database.poi.PoiNotFoundException;
+import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 import main.edu.ufp.inf.en.models.siu.database.way.WayAlreadyExistsException;
 import main.edu.ufp.inf.en.models.siu.database.way.WayNotFoundException;
@@ -110,6 +111,9 @@ public class Admin extends User {
    */
   public void addPoi(Poi p) throws PoiAlreadyExistsException {
     this.getDb().addPoi(p);
+    for (Tag tag : p.getTags().keys()) {
+      this.getDb().addPoiTag(p, tag, p.getTags().get(tag));
+    }
   }
 
   /**
@@ -149,6 +153,9 @@ public class Admin extends User {
    */
   public void addWay(Way w) throws WayAlreadyExistsException {
     this.getDb().addWay(w);
+    for (Tag tag : w.tagKeys()) {
+      this.getDb().addWayTag(w, tag, w.getTagValue(tag));
+    }
   }
 
   /**

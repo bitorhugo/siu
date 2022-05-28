@@ -215,7 +215,7 @@ public class Upload {
                 if (lines[0].length() > 0) {
                     Way w = new Way(Integer.parseInt(lines[0]), Integer.parseInt(lines[1]), Integer.parseInt(lines[2]), Double.parseDouble(lines[3]));
                     // check to see if line contains key-value pairs
-                    if (lines.length > 3) {
+                    if (lines.length > 4) {
                         SeparateChainingHashST<Tag, String> tags = new SeparateChainingHashST<>();
                         // iterate over remaining key value pairs of line
                         for (int i = 4; i < lines.length - 1; i+=2) {

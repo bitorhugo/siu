@@ -759,6 +759,12 @@ public class DataBase {
     
   }
 
+  /**
+   * lists top 5 users that visited the most poi during a time period
+   * @param start inital timestamp
+   * @param end last timestamp
+   * @return list containing the top 5 users
+   */
   public List<User> top5Users(Long start, Long end) {
     if (start == null) throw new IllegalArgumentException("argument 'start' to top5Users() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to top5Users() is null");
@@ -790,6 +796,45 @@ public class DataBase {
           
     return top5;
   }
+  
+  /**
+   * lists top 5 pois visited during a time period
+   * @param start initial timestamp
+   * @param end last timestamp
+   * @return list containing top 5 pois
+   */
+  public List<Poi> top5Poi (Long start, Long end) {
+    if (start == null) throw new IllegalArgumentException("argument 'start' to top5Poi() is null");
+    if (end == null) throw new IllegalArgumentException("argument 'end' to top5Poi() is null");
+
+    RedBlackBST<Long, ArrayList<Poi>> numVisits = new RedBlackBST<>();
+    
+    
+    for (var poiID: this.poisKeys()) {
+      Poi p = this.poiST.get(poiID);
+      long count = StreamSupport.stream(p.visitorEntrancesKeys(start, end).spliterator(), false).count();
+      if (numVisits.contains(count)) {
+        numVisits.get(count).add(p);
+      }
+      else {
+        numVisits.put(count, new ArrayList<>());
+        numVisits.get(count).add(p);
+      }
+    }
+    
+    var top5 = numVisits.get(numVisits.max());
+    while (top5.size() < 5) {
+      numVisits.deleteMax();
+      var tmp = numVisits.get(numVisits.max());
+      for (var user : tmp) {
+        top5.add(user);
+        if (top5.size() == 5) break;
+      }
+    }
+          
+    return top5;
+
+    }
 
   /**
    * takes a snapshot of the current state of the aplication
@@ -824,7 +869,6 @@ public class DataBase {
     }
   }
 
-  
   /**
    * searches for semaphores nearby coordinates
    * @param coordinates coordinates
