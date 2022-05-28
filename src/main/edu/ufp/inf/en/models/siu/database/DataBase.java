@@ -8,6 +8,11 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -767,26 +772,32 @@ public class DataBase {
     if (start == null) throw new IllegalArgumentException("argument 'start' to top5Users() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to top5Users() is null");
     
-    List<User> users = new ArrayList<>();
-    List<Long> numberPoisVisited = new ArrayList<>();
+    RedBlackBST<Long, ArrayList<User>> numVisits = new RedBlackBST<>();
     
     for (var userID : usersKeys()) {
       User u = this.userST.get(userID);
       // get size of iterator using streams!
       long count = StreamSupport.stream(u.visitedPoiKeys(start, end).spliterator(), false).count();
-      users.add(u);
-      numberPoisVisited.add(count);
+      if (numVisits.contains(count)) {
+        numVisits.get(count).add(u);
+      }
+      else {
+        numVisits.put(count, new ArrayList<User>());
+        numVisits.get(count).add(u);
+      }
     }
 
-    // use java streams
-    List<Long> top5visits = numberPoisVisited.stream()
-                                              .sorted(Comparator.reverseOrder())
-                                              .limit(5)
-                                              .collect(Collectors.toList());
-    
-    
-
-    return null;
+    var top5 = numVisits.get(numVisits.max());
+    while (top5.size() < 5) {
+      numVisits.deleteMax();
+      var tmp = numVisits.get(numVisits.max());
+      for (var user : tmp) {
+        top5.add(user);
+        if (top5.size() == 5) break;
+      }
+    }
+          
+    return top5;
   }
 
   /**
