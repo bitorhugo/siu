@@ -65,6 +65,8 @@ public class Admin extends User {
 
   /**
    * adds a node to database
+   * @param n node to add
+   * @throws NodeAlreadyExistsException if database already contains {@code n}
    */
   public void addNode (Node n) throws NodeAlreadyExistsException {
     this.getDb().addNode(n);
@@ -81,6 +83,12 @@ public class Admin extends User {
     return n;
   }
 
+  /**
+   * removes a node from database
+   * @param id id of node to remove
+   * @return removed node
+   * @throws NodeNotFoundException if {@code n} is not found
+   */
   public Node removeNode (Integer id) throws NodeNotFoundException {
     return removeNode(new Node (id, null));
   }

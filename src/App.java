@@ -1,39 +1,21 @@
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.ImageIcon;
+import java.net.URL;
+
 import java.awt.Image;
 import java.awt.Taskbar;
 import java.awt.Toolkit;
 
-import edu.princeton.cs.algs4.EdgeWeightedDigraph;
-import edu.princeton.cs.algs4.SeparateChainingHashST;
-import edu.princeton.cs.algs4.StdRandom;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+
 import main.edu.ufp.inf.en.controllers.LoginController;
-import main.edu.ufp.inf.en.controllers.stackedController;
-import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
-import main.edu.ufp.inf.en.models.siu.IO.Arquive;
 import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
-import main.edu.ufp.inf.en.models.siu.database.node.Node;
-import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
-import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
-import main.edu.ufp.inf.en.models.siu.database.way.Way;
-import main.edu.ufp.inf.en.models.siu.map.Map;
-import main.edu.ufp.inf.en.models.siu.user.Admin;
-import main.edu.ufp.inf.en.models.siu.user.Basic;
-import main.edu.ufp.inf.en.models.siu.user.User;
 
-@SuppressWarnings("unused")
+
 public class App extends Application {
 
     public final double WIDTH = 700;

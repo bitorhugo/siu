@@ -60,7 +60,11 @@ public abstract class User extends Person {
   public void setVisitedPoi(RedBlackBST<Long, Poi> visitedPoi) {
     this.visitedPoi = visitedPoi;
   }
-  
+
+  public Iterable<Long> visitedPoiKeys(Long lo, Long hi) {
+    return this.visitedPoi.keys(lo, hi);
+  }
+
   /**
    * visits a point of interest
    * @param poi point of interest

@@ -4,7 +4,12 @@ package main.edu.ufp.inf.en.models.siu.database;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
@@ -659,7 +664,7 @@ public class DataBase {
    * @return arraylist containing all pois between start and end || null if not visited any poi
    * @author Vitor Hugo
    */
-  public List<Poi> getUserPoisVisited (User user, Long start, Long end) throws UserNotFoundException {
+  public List<Poi> getPoisVisitedByUser (User user, Long start, Long end) throws UserNotFoundException {
     if (user == null) throw new IllegalArgumentException("argument 'user' to getUserPoisVisited() is null");
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
@@ -680,7 +685,7 @@ public class DataBase {
    * @return arraylist containing all pois between start and end || null if not visited any poi
    * @author Vitor Hugo
    */
-  public List<Poi> getUserPoisNotVisited (User user, Long start, Long end) throws UserNotFoundException{
+  public List<Poi> getPoisNotVisitedByUser (User user, Long start, Long end) throws UserNotFoundException{
     if (user == null) throw new IllegalArgumentException("argument 'user' to getUserPoisVisited() is null");
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
@@ -688,7 +693,7 @@ public class DataBase {
     List<Poi> poisNotVisited = new ArrayList<>();
     
     User u = this.searchUser(user.getIdNumber());
-    List<Poi> poisVisited = getUserPoisVisited(u, start, end);
+    List<Poi> poisVisited = getPoisVisitedByUser(u, start, end);
     for (Integer poiId : this.poiST.keys()) {
       Poi p = this.poiST.get(poiId);
       if (!poisVisited.contains(p)) {
@@ -735,7 +740,7 @@ public class DataBase {
    * @param end last timestamp
    * @return arraylist containing all poi that weren't visited between specified time || null if all were visited
    */
-  public List<Poi> getPoiNotVisited (Long start, Long end) {
+  public List<Poi> getPoisNotVisited (Long start, Long end) {
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
 
@@ -756,6 +761,32 @@ public class DataBase {
       return null;
     }
     
+  }
+
+  public List<User> top5Users(Long start, Long end) {
+    if (start == null) throw new IllegalArgumentException("argument 'start' to top5Users() is null");
+    if (end == null) throw new IllegalArgumentException("argument 'end' to top5Users() is null");
+    
+    List<User> users = new ArrayList<>();
+    List<Long> numberPoisVisited = new ArrayList<>();
+    
+    for (var userID : usersKeys()) {
+      User u = this.userST.get(userID);
+      // get size of iterator using streams!
+      long count = StreamSupport.stream(u.visitedPoiKeys(start, end).spliterator(), false).count();
+      users.add(u);
+      numberPoisVisited.add(count);
+    }
+
+    // use java streams
+    List<Long> top5visits = numberPoisVisited.stream()
+                                              .sorted(Comparator.reverseOrder())
+                                              .limit(5)
+                                              .collect(Collectors.toList());
+    
+    
+
+    return null;
   }
 
   /**

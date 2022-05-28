@@ -1,19 +1,18 @@
 package main.edu.ufp.inf.en.models.siu.database.poi;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
+
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
-import main.edu.ufp.inf.en.models.siu.user.User;
 
-// extends node
-@SuppressWarnings("unused")
+/**
+ * @author Vitor Hugo
+ */
 public class Poi extends Node {
 
   private static final int TIME_PERIOD = 5;
