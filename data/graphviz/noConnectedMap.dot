@@ -1,0 +1,23 @@
+digraph G {
+  graph [fontsize=24]
+  edge [fontsize=24]
+  node [fontsize=24]
+  ranksep = 1.5
+  nodesep = .25
+  edge [style="setlinewidth(3)"]
+    0->1
+    0->2
+    
+    1->2
+    
+    2->0
+    2->3
+    2->4
+    
+    3->5
+    
+    4->5
+    
+    5->3
+    5->4
+}   
