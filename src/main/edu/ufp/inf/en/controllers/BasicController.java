@@ -18,8 +18,7 @@ public class BasicController implements UserControllerI{
 
     @FXML
     private Button mapButton;
-    @FXML
-    private Button editButton;
+    
     @FXML
     private Button historyButton;
     @FXML
@@ -44,7 +43,6 @@ public class BasicController implements UserControllerI{
         this.user = user;
     }
 
-    
     @FXML
     public void handleMapButtonAction (ActionEvent event) throws IOException {
         // load fxml

@@ -9,7 +9,7 @@ import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.IO.UploadBIN;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 
-public class ArquiveTest {
+public class IOTest {
     
     @Test
     public void NodesBinTest() {

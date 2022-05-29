@@ -207,10 +207,10 @@ public class EditController implements Initializable {
             String type = data[0].toUpperCase();
             String name = data[1];
             String address = data[2];
-            String idNumber = data[4];
-            String birthday = data[5];
-            String email = data[6];
-            String password = data[7];
+            String idNumber = data[3];
+            String birthday = data[4];
+            String email = data[5];
+            String password = data[6];
             String []birthData = birthday.split("-");
             LocalDate birth = LocalDate.of(Integer.valueOf(birthData[2]), Integer.valueOf(birthData[1]), Integer.valueOf(birthData[0]));
             if (type.equals("ADMIN")) {
