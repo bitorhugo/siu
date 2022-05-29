@@ -247,7 +247,7 @@ public class EditController implements Initializable {
             String birthday = data[3];
             String []birthData = birthday.split("-");
             LocalDate birth = LocalDate.of(Integer.valueOf(birthData[2]), Integer.valueOf(birthData[1]), Integer.valueOf(birthData[0]));
-            this.user.editUser(data[0], name, address, birth);
+            this.user.editUser(userID, name, address, birth);
         } catch (Exception e) {
             e.getMessage();
             removeUser.setText(INVALID);

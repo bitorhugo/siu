@@ -12,6 +12,7 @@ import edu.princeton.cs.algs4.FlowNetwork;
 import edu.princeton.cs.algs4.FordFulkerson;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.RedBlackBST;
+
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
@@ -175,7 +176,6 @@ public class Map {
     /**
      * updates map graph 
      * @param db database to retrieve updated data from
-     * @author Vitor Hugo
      */
     public void update (DataBase db) {
         Map map = new Map(db);
@@ -186,18 +186,19 @@ public class Map {
     /**
      * checks wether graph is strongly connected
      * @return true if connected | false if disconnected
-     * @author Vitor Hugo
      */
     public boolean isConnected () {
         Digraph digraph = new Digraph(this.graph.V());
         for (DirectedEdge edge : this.graph.edges()) {
             digraph.addEdge(edge.to(), edge.from());
         }
-        DirectedDFS ddfs = new DirectedDFS(digraph, 0);
-        System.out.println(ddfs.count());
-        DirectedDFS dfs = new DirectedDFS(digraph, this.nodes.keys());
-        System.out.println(dfs.count());
-        return dfs.count() == this.graph.V() ? true : false;
+        for (int i = 0; i < digraph.V(); i++) {
+            DirectedDFS dfs = new DirectedDFS(digraph, i);
+            // count returns the number of vertices reachable from the source vertex
+            // if count != from V(), graph is not strongly connected
+            if (dfs.count() != this.graph.V()) return false;
+        }
+        return true;
     }
 
     /**
@@ -274,6 +275,11 @@ public class Map {
         return times;
     }
 
+    /**
+     * Max flux between two locations
+     * @param origin origin node
+     * @param destination destination node
+     */
     public void fulkersonFlux (Node origin, Node destination) {
         FlowNetwork fn = new FlowNetwork(new In (""));
         
