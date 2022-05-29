@@ -170,6 +170,16 @@ public class Admin extends User {
   }
 
   /**
+   * removes a way from database
+   * @param wayID way ID
+   * @return removed way
+   * @throws WayNotFoundException if {@code wayID} not a valid way ID
+   */
+  public Way removeWay (Integer wayID) throws WayNotFoundException {
+    return removeWay(this.getDb().searchWay(wayID));
+  }
+
+  /**
    * edits a way from database
    * @param o old way
    * @param n new way

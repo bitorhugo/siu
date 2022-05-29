@@ -314,7 +314,7 @@ public class DataBase {
       this.removeWay(w);
       this.addWay(new Way(wayID, origin.getNodeId(), destination.getNodeId(), weight));
     } catch (WayAlreadyExistsException e) {
-      e.printStackTrace();
+      e.getMessage();
     }
   }
 

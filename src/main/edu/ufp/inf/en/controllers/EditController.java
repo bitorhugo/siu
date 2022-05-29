@@ -2,6 +2,7 @@ package main.edu.ufp.inf.en.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import edu.princeton.cs.algs4.SeparateChainingHashST;
@@ -15,12 +16,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
-import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 import main.edu.ufp.inf.en.models.siu.user.Admin;
+import main.edu.ufp.inf.en.models.siu.user.Basic;
 import main.edu.ufp.inf.en.models.siu.user.User;
 
 
@@ -45,6 +46,15 @@ public class EditController implements Initializable{
 
     @FXML
     private TextField editWay;
+
+    @FXML
+    private TextField addUser;
+
+    @FXML
+    private TextField removeUser;
+
+    @FXML
+    private TextField editUser;
 
     private Stage stage;
 
@@ -75,7 +85,7 @@ public class EditController implements Initializable{
         this.stage.show();
     }
 
-    public void handleAddNodeAction(ActionEvent event) {    
+    public void handleAddNodeAction(ActionEvent event) {
         String data[] = this.addNode.getText().split(";");
         try {
             Node n = new Node(Integer.parseInt(data[0]), new Point(Float.parseFloat(data[1]), Float.parseFloat(data[2])));    
@@ -113,6 +123,8 @@ public class EditController implements Initializable{
             else {
                 this.user.removeNode(id);
             }
+            this.removeNode.setText("NODE REMOVED");
+            this.removeNode.selectAll();
         } catch (Exception e) {
             this.removeNode.setText("INVALID INPUT");
             this.removeNode.selectAll();
@@ -149,12 +161,51 @@ public class EditController implements Initializable{
     }
 
     public void handleRemoveWayAction(ActionEvent event) {
-        
+        String data[] = this.removeNode.getText().split(";");
+        Integer id = Integer.parseInt(data[0]);
+        try {
+            this.user.removeWay(id);
+            this.removeWay.setText("WAY REMOVED");
+            this.removeWay.selectAll();
+        } catch (Exception e) {
+            this.removeNode.setText("INVALID INPUT");
+            this.removeNode.selectAll();
+        }
     }
 
     public void handleEditWayAction(ActionEvent event) {
         
     }
 
+    public void handleAddUserAction(ActionEvent event) {
+        String []data = addUser.getText().split(";");
+        try {
+            String type = data[0];
+            String name = data[1];
+            String address = data[2];
+            String idNumber = data[4];
+            String birthday = data[5];
+            String email = data[6];
+            String password = data[7];
+            String []birthData = birthday.split("-");
+            LocalDate birth = LocalDate.of(Integer.valueOf(birthData[2]), Integer.valueOf(birthData[1]), Integer.valueOf(birthData[0]));
+            if (type.equals("Admin")) {
+                user.addUser(new Admin(name, address, idNumber, birth, email, password));
+            }
+            if (type.equals("Basic")) {
+                user.addUser(new Basic(name, address, idNumber, birth, email, password));
+            }
+        } catch (Exception e) {
+            addUser.setText("INVALID INPUT");
+            addUser.selectAll();
+        }
+    }
 
+    public void handleRemoveUserAction(ActionEvent event) {
+        
+    }
+
+    public void handleEditUserAction(ActionEvent event) {
+        
+    }
 }
