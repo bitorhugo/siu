@@ -917,4 +917,26 @@ public class DataBase {
     return pois;
   }
 
+  /**
+   * updates ways
+   * checks for incompatibilities between nodes and ways
+   * if node containing {@code nodeID} is removed,
+   *  all ways containing that node should be removed aswell 
+   * @param nodeID removed node ID
+   */
+  public void updateWays (int nodeID) {
+    try {
+      for (var wayID : this.waysKeys()) {
+        Way w = this.waysST.get(wayID);
+        int originID = w.from();
+        int destinationID = w.to();
+        if (originID == nodeID || destinationID == nodeID) {
+          this.removeWay(w);
+        }
+      }
+    } catch (WayNotFoundException e) {
+      e.getMessage();
+    }
+  }
+
 }

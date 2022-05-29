@@ -14,8 +14,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.Node;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
@@ -59,6 +61,14 @@ public class MapController implements Initializable{
     @FXML
     private NumberAxis SyAxis;
 
+    @FXML
+    private LineChart<Number,Number> lineChart;
+
+    @FXML
+    private NumberAxis LxAxis;
+
+    @FXML
+    private NumberAxis LyAxis;
 
     private Stage stage;
     private Scene scene;
@@ -86,6 +96,8 @@ public class MapController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
 
         drawScatter();
+
+        drawLine();
 
         setChartBounds();
 
@@ -220,6 +232,32 @@ public class MapController implements Initializable{
         return pane;
     }
 
+    private void drawLine() {
+        // create pathSeries containing all the edges to connect in chart
+        ArrayList<XYChart.Series<Number, Number>> pathSeries = new ArrayList<>();
+
+        int i = 0;
+        for (var edge : this.map.getGraph().edges()) {
+            pathSeries.add(new XYChart.Series<>());
+            Integer indexFrom = edge.from();
+            float xFrom = this.map.getNodes().get(indexFrom).getCoordinates().getX();
+            float yFrom = this.map.getNodes().get(indexFrom).getCoordinates().getY();
+            //System.out.println("xFrom:" + xFrom + "yFrom:" + yFrom);
+            pathSeries.get(i).getData().add(new XYChart.Data<>(xFrom, yFrom));
+            
+            Integer indexTo = edge.to();
+            float xTo = this.map.getNodes().get(indexTo).getCoordinates().getX();
+            float yTo = this.map.getNodes().get(indexTo).getCoordinates().getY();
+            //System.out.println("xTo:" + xTo + "yTo:" + yTo);
+            pathSeries.get(i).getData().add(new XYChart.Data<>(xTo, yTo));
+            i++;
+        }
+        
+        // add data to chart        
+        lineChart.getData().addAll(pathSeries);
+       
+    }
+
     private void setChartBounds () {
 
         double xmin = 0;
@@ -246,6 +284,14 @@ public class MapController implements Initializable{
         SyAxis.setAutoRanging(false);
         SyAxis.setLowerBound(ymin - padding);
         SyAxis.setUpperBound(ymax + padding);
+
+        LxAxis.setAutoRanging(false);
+        LxAxis.setLowerBound(xmin - padding/2);
+        LxAxis.setUpperBound(xmax + padding/2);
+
+        LyAxis.setAutoRanging(false);
+        LyAxis.setLowerBound(ymin - padding);
+        LyAxis.setUpperBound(ymax + padding);
     }
 
 }

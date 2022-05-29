@@ -45,8 +45,13 @@ public class stackedController implements Initializable{
             series1.getData().add(new XYChart.Data<>(i * 2, i * 2));
             series2.getData().add(new XYChart.Data<>(i * 5, i * 5));
         }
+        for (int i = 0; i < 10; i++) {    
+            series1.getData().add(new XYChart.Data<>(i * 2, i * 2));
+        }
 
         linechart.getData().add(series1);
+        
+        
         scatterchart.getData().add(series2);
     }
 

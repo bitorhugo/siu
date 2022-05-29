@@ -48,8 +48,18 @@ public class Admin extends User {
    * @param u user to remove
    * @return removed user
    */
-  public User removeUser(User u) throws UserNotFoundException{
+  public User removeUser(User u) throws UserNotFoundException {
     return this.getDb().removeUser(u);
+  }
+
+  /**
+   * removes user by its ID
+   * @param userID user ID
+   * @return removed user
+   * @throws UserNotFoundException if {@code userID} not valid
+   */
+  public User removeUser (String userID) throws UserNotFoundException {
+    return removeUser(new Admin(null, null, userID, null, null, null));
   }
     
   /**

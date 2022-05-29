@@ -7,8 +7,7 @@
 .default-color0.chart-line-symbol { 
     -fx-background-color: transparent;
 }
-.chart-legend {
-    -fx-background-color:  transparent;
-    -fx-text-fill: transparent;
-    -fx-stroke: transparent;
+.chart-series-line {    
+    -fx-stroke-width: 0.5px;
+    -fx-background-color: grey;
 }

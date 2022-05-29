@@ -30,7 +30,7 @@ public class App extends Application {
         Upload.Ways(db);
         
         // load fxml file
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("main/edu/ufp/inf/en/resources/Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("main/edu/ufp/inf/en/resources/login.fxml"));
 
         // contructor injection
         loader.setControllerFactory(c -> {

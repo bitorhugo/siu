@@ -25,7 +25,11 @@ import main.edu.ufp.inf.en.models.siu.user.Basic;
 import main.edu.ufp.inf.en.models.siu.user.User;
 
 
-public class EditController implements Initializable{
+public class EditController implements Initializable {
+
+    private static final String INVALID = "INVALID";
+    private static final String VALIDATED = "VALIDATED";
+
     @FXML
     private Button backButton;
 
@@ -68,7 +72,7 @@ public class EditController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    
+        
     }
 
     public void handleBackButton(ActionEvent event) throws IOException {
@@ -105,10 +109,10 @@ public class EditController implements Initializable{
             else {
                 this.user.addNode(n);
             }
-            this.addNode.setText("NODE ADDED");
+            this.addNode.setText(VALIDATED);
             this.addNode.selectAll();
         } catch (Exception e) {
-            this.addNode.setText("INVALID INPUT");
+            this.addNode.setText(INVALID);
             this.addNode.selectAll();
         }
     }
@@ -123,16 +127,25 @@ public class EditController implements Initializable{
             else {
                 this.user.removeNode(id);
             }
-            this.removeNode.setText("NODE REMOVED");
+            this.user.getDb().updateWays(id);
+            this.removeNode.setText(VALIDATED);
             this.removeNode.selectAll();
         } catch (Exception e) {
-            this.removeNode.setText("INVALID INPUT");
+            this.removeNode.setText(INVALID);
             this.removeNode.selectAll();
         }
     }
 
     public void handleEditNodeAction(ActionEvent event) {
-
+        String data[] = editNode.getText().split(";");
+       try {
+           Point p = new Point (Integer.valueOf(data[1]), Integer.valueOf(data[2]));
+           user.editNode(Integer.valueOf(data[0]), p);
+           editNode.setText(VALIDATED);
+       } catch (Exception e) {
+           editNode.setText(INVALID);
+           editNode.selectAll();
+       }
     }
 
     public void handleAddWayAction(ActionEvent event) {
@@ -152,11 +165,11 @@ public class EditController implements Initializable{
                         w.setTags(tags);
                     }
                     user.addWay(w);
-            this.addWay.setText("WAY ADDED");
+            this.addWay.setText(VALIDATED);
             this.addWay.selectAll();
         } catch (Exception e) {
-            this.addNode.setText("INVALID INPUT");
-            this.addNode.selectAll();
+            this.addWay.setText(INVALID);
+            this.addWay.selectAll();
         }      
     }
 
@@ -165,22 +178,33 @@ public class EditController implements Initializable{
         Integer id = Integer.parseInt(data[0]);
         try {
             this.user.removeWay(id);
-            this.removeWay.setText("WAY REMOVED");
+            this.removeWay.setText(VALIDATED);
             this.removeWay.selectAll();
         } catch (Exception e) {
-            this.removeNode.setText("INVALID INPUT");
-            this.removeNode.selectAll();
+            this.removeWay.setText(INVALID);
+            this.removeWay.selectAll();
         }
     }
 
     public void handleEditWayAction(ActionEvent event) {
-        
+        String data[] = editNode.getText().split(";");
+        try {
+            int wayID = Integer.valueOf(data[0]);
+            Node origin = this.user.getDb().searchNode(Integer.valueOf(data[1]));
+            Node destination = this.user.getDb().searchNode(Integer.valueOf(data[2]));
+            double weight = Double.valueOf(data[3]);
+            this.user.editWay(wayID, origin, destination, weight);
+        } catch (Exception e) {
+            e.getMessage();
+            editWay.setText(INVALID);
+            editWay.selectAll();
+        }
     }
 
     public void handleAddUserAction(ActionEvent event) {
         String []data = addUser.getText().split(";");
         try {
-            String type = data[0];
+            String type = data[0].toUpperCase();
             String name = data[1];
             String address = data[2];
             String idNumber = data[4];
@@ -189,23 +213,46 @@ public class EditController implements Initializable{
             String password = data[7];
             String []birthData = birthday.split("-");
             LocalDate birth = LocalDate.of(Integer.valueOf(birthData[2]), Integer.valueOf(birthData[1]), Integer.valueOf(birthData[0]));
-            if (type.equals("Admin")) {
+            if (type.equals("ADMIN")) {
                 user.addUser(new Admin(name, address, idNumber, birth, email, password));
             }
-            if (type.equals("Basic")) {
+            if (type.equals("BASIC")) {
                 user.addUser(new Basic(name, address, idNumber, birth, email, password));
             }
+            addUser.setText(VALIDATED);
+            addUser.selectAll();
         } catch (Exception e) {
-            addUser.setText("INVALID INPUT");
+            addUser.setText(INVALID);
             addUser.selectAll();
         }
     }
 
     public void handleRemoveUserAction(ActionEvent event) {
-        
+        String data[] = removeUser.getText().split(";");
+        try {
+            this.user.removeUser(data[0]);
+        } catch (Exception e) {
+            e.getMessage();
+            removeUser.setText(INVALID);
+            removeUser.selectAll();
+        }
     }
 
     public void handleEditUserAction(ActionEvent event) {
-        
+        String data[] = removeUser.getText().split(";");
+        try {
+            String userID = data[0];
+            String name = data[1];
+            String address = data[2];
+            String birthday = data[3];
+            String []birthData = birthday.split("-");
+            LocalDate birth = LocalDate.of(Integer.valueOf(birthData[2]), Integer.valueOf(birthData[1]), Integer.valueOf(birthData[0]));
+            this.user.editUser(data[0], name, address, birth);
+        } catch (Exception e) {
+            e.getMessage();
+            removeUser.setText(INVALID);
+            removeUser.selectAll();
+        }
     }
+
 }
