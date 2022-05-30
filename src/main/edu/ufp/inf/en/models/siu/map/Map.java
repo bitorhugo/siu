@@ -66,6 +66,12 @@ public class Map {
 
     }
 
+    /**
+     * constructor by copy
+     * used to create subgraphs without specified tag
+     * @param map map to use as foundation
+     * @param tag tag to not include
+     */
     public Map (Map map, Tag tag) {
         // first we must know how many nodes don't have specified tag(s)
         List<Integer> indeces = new ArrayList<>(); // set a list to denote which index to add to subgraph
