@@ -62,6 +62,6 @@ public class Node implements Serializable {
 
   @Override
   public String toString() {
-      return this.nodeId + "," + this.coordinates;
+    return this.nodeId + "," + this.coordinates;
   }
 }

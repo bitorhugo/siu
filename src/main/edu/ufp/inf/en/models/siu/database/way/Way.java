@@ -125,7 +125,7 @@ public class Way extends DirectedEdge implements Serializable{
     String str = new String();
     for (var tag : this.tags.keys()) {
       String tagValue = this.tags.get(tag);
-      str += "{" + tag + "," + tagValue + "}";
+      str += "," + tag + "," + tagValue;
     }
     return str;
   }
@@ -152,7 +152,7 @@ public class Way extends DirectedEdge implements Serializable{
 
   @Override
   public String toString() {
-    return "Way{" + this.wayId + "," + this.from() + "," + this.to() + "," + super.weight() + "}";
+    return this.wayId + "," + this.from() + "," + this.to() + "," + this.weight() + listTags();
   }
 
 }

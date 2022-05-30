@@ -4,13 +4,70 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import main.edu.ufp.inf.en.models.siu.IO.Arquive;
 import main.edu.ufp.inf.en.models.siu.IO.ArquiveBIN;
 import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.IO.UploadBIN;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
+import main.edu.ufp.inf.en.models.siu.map.Map;
 
 public class IOTest {
+
+    @Test
+    public void NodesTest() {
+        DataBase db = new DataBase();
+        DataBase dbb = new DataBase();
+        Upload.Nodes(db);
+
+        assertTrue(db.numberOfNodes() == 21);
+
+        Arquive.Nodes(db);
+
+        Upload.Nodes(dbb);
+
+        assertTrue(dbb.numberOfNodes() == 21);
+
+        dbb.listNodes();
+    }
+
+    @Test
+    public void PoisTest () {
+        DataBase db = new DataBase();
+        DataBase dbb = new DataBase();
+        Upload.Nodes(db);
+
+        assertTrue(db.numberOfPois() == 7);
+
+        Arquive.Nodes(db);
+
+        Upload.Nodes(dbb);
+
+        assertTrue(dbb.numberOfPois() == 7);
+    }
     
+    @Test
+    public void WaysTest() {
+        DataBase db = new DataBase();
+        DataBase dbb = new DataBase();
+
+        Upload.Ways(db);
+        assertTrue(db.numberOfWays() == 48);
+
+        Arquive.Ways(db);
+
+        Upload.Ways(dbb);
+        assertTrue(dbb.numberOfWays() == 48);
+    }
+
+    @Test
+    public void GraphTest() {
+        Map map = new Map();
+        Upload.Graph(map);
+
+        assertTrue(map.numberOfNodes() == 21);
+        assertTrue(map.numberOfWays() == 48);
+    }
+
     @Test
     public void NodesBinTest() {
         DataBase db = new DataBase();
@@ -60,4 +117,20 @@ public class IOTest {
         dbb.listWays();
     }
 
+    @Test
+    public void GraphBinTest() {
+        Map map = new Map();
+        Upload.Graph(map);
+
+        assertTrue(map.numberOfNodes() == 21);
+        assertTrue(map.numberOfWays() == 48);
+
+        ArquiveBIN.GraphBIN(map);
+
+        Map test = new Map();
+        UploadBIN.GraphBIN(test);
+
+        assertTrue(test.numberOfNodes() == map.numberOfNodes());
+        assertTrue(test.numberOfWays() == map.numberOfWays());
+    }
 }

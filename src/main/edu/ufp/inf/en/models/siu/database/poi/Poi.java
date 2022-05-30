@@ -108,7 +108,7 @@ public class Poi extends Node {
     String str = new String();
     for (var tag : this.tags.keys()) {
       String tagValue = this.tags.get(tag);
-      str += "{" + tag + "," + tagValue + "}";
+      str += "," + tag + "," + tagValue;
     }
     return str;
   }
@@ -188,7 +188,7 @@ public class Poi extends Node {
   
   @Override
   public String toString() {
-    return "Poi{" + super.toString() + "}";
+    return super.toString() + listTags();
   }
 
 }

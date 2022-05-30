@@ -12,8 +12,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import main.edu.ufp.inf.en.controllers.LoginController;
+import main.edu.ufp.inf.en.models.siu.IO.Arquive;
 import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
+import main.edu.ufp.inf.en.models.siu.map.Map;
 
 
 public class App extends Application {
@@ -28,7 +30,7 @@ public class App extends Application {
         Upload.Users(db);
         Upload.Nodes(db);
         Upload.Ways(db);
-        
+
         // load fxml file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main/edu/ufp/inf/en/resources/login.fxml"));
 

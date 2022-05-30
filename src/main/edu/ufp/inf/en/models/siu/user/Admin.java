@@ -207,15 +207,14 @@ public class Admin extends User {
     Admin u = (Admin) obj;
     return Objects.equals(this.getIdNumber(), u.getIdNumber());
   }
-
-  @Override
-  public String toString() {
-      return "Admin," + super.toString();
-  }
   
   @Override
   public int hashCode() {
       return Objects.hash(super.hashCode());
   }
 
+  @Override
+  public String toString() {
+    return "Admin," + super.toString();
+  }
 }

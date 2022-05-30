@@ -20,26 +20,26 @@ public class Arquive {
 
     private static final String NEWLINE = "\n";
     
-    private static final String path_users = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/users_out.txt";
-    private static final String path_searchedUsers = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/searched_users_out.txt";
-    private static final String path_datasetUsers = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/dataset_users_out.txt";
+    private static final String path_users = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/users/users_out.txt";
+    private static final String path_searchedUsers = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/users/searched_users_out.txt";
+    private static final String path_datasetUsers = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/users/dataset_users_out.txt";
 
-    private static final String path_nodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/nodes_out.txt";
-    private static final String path_searchedNodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/searched_nodes_out.txt";
-    private static final String path_datasetNodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/dataset_nodes_out.txt";
+    private static final String path_nodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/nodes/nodes_out.txt";
+    private static final String path_searchedNodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/nodes/searched_nodes_out.txt";
+    private static final String path_datasetNodes = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/nodes/dataset_nodes_out.txt";
     
-    private static final String path_ways = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/ways_out.txt";
+    private static final String path_ways = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/ways/ways_out.txt";
     private static final String path_searchedWays = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/searched-ways_out.txt";
-    private static final String path_datasetWays = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/dataset_ways_out.txt";
+    private static final String path_datasetWays = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/ways/dataset_ways_out.txt";
 
-    private static final String path_poi = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/poi_out.txt";
-    private static final String path_searchedPoi = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/searched_poi_out.txt";
-    private static final String path_datasetPois = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/dataset_pois_out.txt";
+    private static final String path_poi = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/pois/poi_out.txt";
+    private static final String path_searchedPoi = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/pois/searched_pois_out.txt";
+    private static final String path_datasetPois = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/pois/dataset_pois_out.txt";
 
     private static final String path_tags = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/tags_out.txt";
     private static final String path_searchedTags = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/searched_tags_out.txt";
 
-    private static final String path_graph = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/graph_out.txt";
+    private static final String path_graph = "/Users/VitorHugo/dev/java/projects/siu/data/out/txt/maps/graph_out.txt";
 
     public static void User (User u) {
         Out out = new Out(path_users);
@@ -262,7 +262,13 @@ public class Arquive {
     public static void graph (EdgeWeightedDigraph graph) {
         Out out = new Out(path_graph);
         try {
-            out.print(graph);
+            out.println(graph.V()); // vertices
+            out.println(graph.E()); // edges
+            for (int i = 0; i < graph.V(); i++) {
+                for (var edge : graph.adj(i)) {
+                    out.println(edge.from() + " " + edge.to() + " " + edge.weight());
+                }
+            }
         } catch (Exception e) {
             e.getMessage();
         } finally {

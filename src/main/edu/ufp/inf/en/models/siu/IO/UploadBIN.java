@@ -125,7 +125,7 @@ public class UploadBIN {
                 double weight = ois.readDouble();
                 graph.addEdge(new DirectedEdge(source, sink, weight));
             }
-
+            map.setGraph(graph);
         } catch (Exception e) {
             e.printStackTrace();
         }

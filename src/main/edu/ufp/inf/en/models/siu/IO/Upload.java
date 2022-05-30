@@ -22,7 +22,7 @@ public class Upload {
     private static final String USERSPATH = "data/in/txt/users/users.txt";
     private static final String NODESPATH = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/nodes/nodes.txt";
     private static final String WAYSPATH = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/ways/ways.txt";
-    private static final String GRAPHPATH = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/graph_in.txt";
+    private static final String GRAPHPATH = "/Users/VitorHugo/dev/java/projects/siu/data/in/txt/maps/graph_in.txt";
 
     /**
      * file format:
@@ -243,8 +243,14 @@ public class Upload {
      */
     public static void Graph (Map map) {
         In in = new In(GRAPHPATH);
-        map.setGraph(new EdgeWeightedDigraph(in));
-        in.close();
+        try {
+            map.setGraph(new EdgeWeightedDigraph(in));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            in.close();
+        }
     }
     
 }

@@ -1,7 +1,6 @@
 48
 13797641,0,1,132.7767121878866,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
 13797642,0,2,181.72650973602413,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
-
 13797643,6,0,425.68440614763163,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
 13797644,6,4,133.4843639722696,addr:city,Porto,addr:postcode,4249-004,addr:street,Praça Nove de Abril,alt_name,Arca d'Água,contact:website,https://ambiente.cm-porto.pt/parques-e-jardins/jardim-de-arca-d-agua-1,dog,yes,leisure,park,name,Jardim de Arca d'Água,opening_hours,24/7
 

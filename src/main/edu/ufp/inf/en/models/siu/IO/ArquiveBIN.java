@@ -140,13 +140,14 @@ public class ArquiveBIN {
             oos.writeInt(numberNodes);
             oos.writeInt(numberWays);
 
-            int i = 0;
             // loop through each node adjency list
-            for (var edge : map.getGraph().adj(i)) {
-                oos.writeInt(edge.from()); // source 
-                oos.writeInt(edge.to()); // sink
-                oos.writeDouble(edge.weight()); // weigth
-                i++;
+            for (int i = 0; i < numberNodes; i++) {
+                for (var edge : map.getGraph().adj(i)) {
+                    oos.writeInt(edge.from()); // source 
+                    oos.writeInt(edge.to()); // sink
+                    oos.writeDouble(edge.weight()); // weigth
+                    
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
