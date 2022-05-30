@@ -12,6 +12,7 @@ import main.edu.ufp.inf.en.models.siu.database.way.WayNotFoundException;
 
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("unused")
 public class DataBaseWaysTest {
 
     @Test
