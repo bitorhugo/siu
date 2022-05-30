@@ -43,7 +43,13 @@ public class Arquive {
 
     public static void User (User u) {
         Out out = new Out(path_users);
-        out.print(u);
+        try {
+            out.print(u);
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void Users (DataBase db) {
@@ -56,17 +62,31 @@ public class Arquive {
             }
         } catch (Exception e) {
             e.getMessage();
+        } finally {
+            out.close();
         }
     }
 
     public static void searchedUser (User u) {
         Out out = new Out(path_searchedUsers);
-        out.print(u);
+        try {
+            out.print(u);
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void Node (Node n) {
         Out out = new Out(path_nodes);
-        out.print(n);
+        try {
+            out.print(n);
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void Nodes (DataBase db) {
@@ -86,12 +106,24 @@ public class Arquive {
 
     public static void searchedNode (Node n) {
         Out out = new Out(path_searchedNodes);
-        out.print(n);
+        try {
+            out.print(n);
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void Poi(Poi p) {
         Out out = new Out(path_poi);
-        out.print(p);        
+        try {
+            out.print(p);        
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void Pois (DataBase db) {
@@ -111,12 +143,24 @@ public class Arquive {
 
     public static void searchedPoi(Poi p) {
         Out out = new Out(path_searchedPoi);
-        out.print(p);        
+        try {
+            out.print(p);        
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void Way(Way w) {
         Out out = new Out(path_ways);
-        out.print(w);
+        try {
+            out.print(w);
+        } catch (Exception e) {
+        e.getMessage();
+        } finally {
+            out.close();
+        }
     }
     
     public static void Ways (DataBase db) {
@@ -136,45 +180,93 @@ public class Arquive {
 
     public static void searchedWay(Way w) {
         Out out = new Out(path_searchedWays);
-        out.print(w);
+        try {
+            out.print(w);
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void Tag(Tag t) {
         Out out = new Out(path_tags);
-        out.print(t);
+        try {
+            out.print(t);
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void searchedTag(Tag t) {
         Out out = new Out(path_searchedTags);
-        out.print(t);
+        try {
+            out.print(t);
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void Tag(Node n, Tag t) {
         Out out = new Out(path_tags);
-        out.print(t);
+        try {
+            out.print(t);
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void searchedTag(Node n, Tag t) {
         Out out = new Out(path_searchedTags);
-        out.print(t);
+        try {
+            out.print(t);
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void Tag(Way w, Tag t) {
         Out out = new Out(path_tags);
-        out.print(w);
-        out.print(t);
-        out.println();
+        try {
+            out.print(w);
+            out.print(t);
+            out.println();
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void searchedTag(Way w, Tag t) {
         Out out = new Out(path_searchedTags);
-        out.print(w);
-        out.print(t);
-        out.println();
+        try {
+            out.print(w);
+            out.print(t);
+            out.println();
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 
     public static void graph (EdgeWeightedDigraph graph) {
         Out out = new Out(path_graph);
-        out.print(graph);
+        try {
+            out.print(graph);
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            out.close();
+        }
     }
 }

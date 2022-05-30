@@ -147,6 +147,22 @@ public class MapTest {
 
         Node origin = db.searchNode(0);
         Node destination = db.searchNode(3);
+
+        Iterable<DirectedEdge> path = main.shortestPath(origin, destination);
+
+        List<Long> timeControl = new ArrayList<>();
+        Transport foot = Transport.WALKING;
+        for (var p : main.shortestPath(origin, destination)) {
+            long time = (long) (p.weight() / foot.speed);
+            timeControl.add(time);
+        }
+        
+        List<Long> timeTest = new ArrayList<>();
+        
+        main.shortestPathTime(path, foot).forEach(t -> {timeTest.add(t);});
+
+        assertTrue(timeControl.equals(timeTest));
+
     }
 
 }
