@@ -2,7 +2,10 @@ package test.edu.ufp.inf.en.siu.database;
 
 import org.junit.Test;
 
+import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
+import main.edu.ufp.inf.en.models.siu.database.node.Node;
+import main.edu.ufp.inf.en.models.siu.database.node.NodeNotFoundException;
 import main.edu.ufp.inf.en.models.siu.database.way.Way;
 import main.edu.ufp.inf.en.models.siu.database.way.WayAlreadyExistsException;
 import main.edu.ufp.inf.en.models.siu.database.way.WayNotFoundException;
@@ -32,17 +35,26 @@ public class DataBaseWaysTest {
     }
 
     @Test
-    public void editWayTest() throws WayAlreadyExistsException {
+    public void editWayTest() throws WayAlreadyExistsException, NodeNotFoundException, WayNotFoundException {
         DataBase db = new DataBase();
-        Way o = new Way(123, 0, 1, 10);
-        Way n = new Way(321, 5, 1, 15);
+        Upload.Nodes(db);
+        
+        Node a = db.searchNode(10);
+        Node b = db.searchNode(11);
+        Node c = db.searchNode(12);
 
-        db.addWay(o);        
-        assertTrue(db.numberOfWays() == 1);
-        //db.editWay(o, n);
-        assertTrue(db.numberOfWays() == 1);
-        assertTrue(!db.containsWay(o.getWayId()));
-        assertTrue(db.containsWay(n.getWayId()));
+        Way w = new Way(0, 10, 11, 123);
+
+        db.addWay(w);
+        
+        db.editWay(0, b, c, 321);
+
+        Way ww = db.searchWay(0);
+        
+        assertTrue(ww.from() == b.getNodeId());
+        assertTrue(ww.to() == c.getNodeId());
+        assertTrue(ww.weight() == 321);
+        
     }
     
     @Test

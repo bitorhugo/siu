@@ -72,36 +72,45 @@ public class DataBaseUsersTest {
     }
 
     @Test
-    public void testEditUserAdmin() throws UserAlreadyExistsException {
+    public void testEditUserAdmin() throws UserAlreadyExistsException, UserNotFoundException {
         DataBase db = new DataBase();
-        Admin oldAdmin = new Admin("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
-        Admin newAdmin = new Admin("Hugo", "Porto", "1234", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
-        db.addUser(oldAdmin);
-        //db.editUser(oldAdmin, newAdmin);
-        assertTrue(!db.containsUser(oldAdmin.getIdNumber()));
-        assertTrue(db.containsUser(newAdmin.getIdNumber()));
+        Admin user = new Admin("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
+        db.addUser(user);
+        String name = "new";
+        String addr = "newaddr";
+        LocalDate birth = LocalDate.of(1999, 4, 2);
+        
+        db.editUser(user.getIdNumber(), name, addr, birth);
+        assertTrue(user.getName() == name);
+        assertTrue(user.getAddress() == addr);
+        assertTrue(user.getBirth() == birth);    
     }
 
     @Test
-    public void testEditUserBasic() throws UserAlreadyExistsException {
+    public void testEditUserBasic() throws UserAlreadyExistsException, UserNotFoundException {
         DataBase db = new DataBase();
-        Basic oldAdmin = new Basic("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
-        Basic newAdmin = new Basic("Hugo", "Porto", "1234", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
-        db.addUser(oldAdmin);
-        //db.editUser(oldAdmin, newAdmin);
-        assertTrue(!db.containsUser(oldAdmin.getIdNumber()));
-        assertTrue(db.containsUser(newAdmin.getIdNumber()));
+        Basic user = new Basic("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
+        db.addUser(user);
+        String name = "new";
+        String addr = "newaddr";
+        LocalDate birth = LocalDate.of(1999, 4, 2);
+        
+        db.editUser(user.getIdNumber(), name, addr, birth);
+        assertTrue(user.getName() == name);
+        assertTrue(user.getAddress() == addr);
+        assertTrue(user.getBirth() == birth);
     }
 
     @Test
-    public void testEditUserAdminAndBasic() throws UserAlreadyExistsException {
+    public void testEditUserAdminAndBasic() throws UserAlreadyExistsException, UserNotFoundException {
         DataBase db = new DataBase();
         Admin old = new Admin("Vitor", "Porto", "38132", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
-        Basic neww = new Basic("Hugo", "Porto", "1234", LocalDate.of(1998, 8, 21), "vhugosantos144@gmail.com", "hugo1998");
+        Basic neww = new Basic("Hugo", "Lisboa", "1234", LocalDate.of(1998, 9, 12), "asdadasd@gmail.com", "sddadwdwe");
         db.addUser(old);
-        //db.editUser(old, neww);
-        assertTrue(!db.containsUser(old.getIdNumber()));
-        assertTrue(db.containsUser(neww.getIdNumber()));
+        db.editUser(old.getIdNumber(), neww.getName(), neww.getAddress(), neww.getBirth());
+        assertTrue(old.getName() == neww.getName());
+        assertTrue(old.getAddress() == neww.getAddress());
+        assertTrue(old.getBirth() == neww.getBirth());
     }
 
     @Test

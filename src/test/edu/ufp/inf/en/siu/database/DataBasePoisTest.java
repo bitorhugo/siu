@@ -48,17 +48,12 @@ public class DataBasePoisTest {
     public void editPoiTest() throws PoiNotFoundException, PoiAlreadyExistsException {
         DataBase db = new DataBase();
         Poi o = new Poi(123, new Point(435.2f, 879f));
-        Poi n = new Poi(321, new Point(65.2f, 12f));
+        Point p = new Point(65.2f, 12f);
 
         db.addPoi(o);
-        assertTrue(db.numberOfPois() == 1);
+        db.editPoi(o.getNodeId(), p);
+        assertTrue(o.getCoordinates() == p);
 
-        //db.editPoi(o, n);
-        assertTrue(!db.containsNode(o.getNodeId()));
-        assertTrue(db.containsNode(n.getNodeId()));
-
-        assertTrue(!db.containsNode(o.getNodeId()));
-        assertTrue(db.containsNode(n.getNodeId()));
     }
 
     @Test

@@ -12,10 +12,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import main.edu.ufp.inf.en.controllers.LoginController;
-import main.edu.ufp.inf.en.models.siu.IO.Arquive;
 import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
-import main.edu.ufp.inf.en.models.siu.map.Map;
 
 
 public class App extends Application {

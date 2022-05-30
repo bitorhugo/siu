@@ -36,13 +36,12 @@ public class DataBaseNodesTest {
     public void editNodeTest() throws NodeNotFoundException, NodeAlreadyExistsException {
         DataBase db = new DataBase();
         Node o = new Node(1234, new Point(123, 321));
-        Node n = new Node(4567, new Point(123, 321));
+        Point p = new Point(123, 321);
 
-        db.addNode(n);
-        assertTrue(db.numberOfNodes() == 1);
-        //db.editNode(o, n);
-        assertTrue(!db.containsNode(o.getNodeId()));
-        assertTrue(db.containsNode(n.getNodeId()));
+        db.addNode(o);
+
+        db.editNode(o.getNodeId(), p);
+        assertTrue(db.searchNode(o.getNodeId()).getCoordinates() == p);
     }
 
     @Test
