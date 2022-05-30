@@ -8,6 +8,7 @@ import edu.princeton.cs.algs4.DijkstraSP;
 import edu.princeton.cs.algs4.DirectedDFS;
 import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
+import edu.princeton.cs.algs4.FlowEdge;
 import edu.princeton.cs.algs4.FlowNetwork;
 import edu.princeton.cs.algs4.FordFulkerson;
 import edu.princeton.cs.algs4.In;
@@ -285,8 +286,25 @@ public class Map {
         
         int source = searchNode(origin.getNodeId()).getNodeId();
         int sink = searchNode(destination.getNodeId()).getNodeId();
+
+        // compute maximum flow and minimum cut
         FordFulkerson ff = new FordFulkerson(fn, source, sink);
-        ff.value();
+        System.out.println("Max flow from " + source + " to " + sink);
+        for (int v = 0; v < fn.V(); v++) {
+            for (FlowEdge e : fn.adj(v)) {
+                if ((v == e.from()) && e.flow() > 0)
+                    System.out.println("   " + e);
+            }
+        }
+
+        // print min-cut
+        System.out.print("Min cut: ");
+        for (int v = 0; v < sink; v++) {
+            if (ff.inCut(v)) System.out.print(v + " ");
+        }
+        System.out.println();
+        System.out.println("Max flow: " + ff.value());
+        
     }
 
 }
