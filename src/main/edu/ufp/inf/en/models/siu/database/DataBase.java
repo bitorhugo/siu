@@ -195,7 +195,7 @@ public class DataBase {
     if (this.containsNode(n.getNodeId())) {
       this.nodesST.delete(n.getNodeId());
       Arquive.Node(n);
-      System.gc();
+      System.gc(); // call garbage collector
       return n;
     }
     else throw new NodeNotFoundException();

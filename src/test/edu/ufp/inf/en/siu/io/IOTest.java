@@ -4,14 +4,26 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.IO.Arquive;
 import main.edu.ufp.inf.en.models.siu.IO.ArquiveBIN;
 import main.edu.ufp.inf.en.models.siu.IO.Upload;
 import main.edu.ufp.inf.en.models.siu.IO.UploadBIN;
 import main.edu.ufp.inf.en.models.siu.database.DataBase;
+import main.edu.ufp.inf.en.models.siu.database.node.Node;
+import main.edu.ufp.inf.en.models.siu.database.node.NodeAlreadyExistsException;
+import main.edu.ufp.inf.en.models.siu.database.node.NodeNotFoundException;
+import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
+import main.edu.ufp.inf.en.models.siu.database.way.Way;
 import main.edu.ufp.inf.en.models.siu.map.Map;
 
 public class IOTest {
+
+    @Test
+    public void NodeTest() throws NodeAlreadyExistsException, NodeNotFoundException {
+        Node n = new Node(0, new Point(1, 2));
+        Arquive.Node(n);
+    }
 
     @Test
     public void NodesTest() {
@@ -31,6 +43,12 @@ public class IOTest {
     }
 
     @Test
+    public void PoiTest() {
+        Poi p = new Poi(1, new Point(2, 3));
+        Arquive.Poi(p);
+    }
+
+    @Test
     public void PoisTest () {
         DataBase db = new DataBase();
         DataBase dbb = new DataBase();
@@ -45,6 +63,12 @@ public class IOTest {
         assertTrue(dbb.numberOfPois() == 7);
     }
     
+    @Test
+    public void WayTest() {
+        Way w = new Way(0, 3, 4, 14);
+        Arquive.Way(w);
+    }
+
     @Test
     public void WaysTest() {
         DataBase db = new DataBase();
