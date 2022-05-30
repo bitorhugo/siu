@@ -7,6 +7,7 @@ import org.junit.Test;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
 import main.edu.ufp.inf.en.models.siu.database.poi.Poi;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
+import main.edu.ufp.inf.en.models.siu.database.tag.TagNotFoundException;
 
 public class PoisTest {
     
@@ -21,7 +22,7 @@ public class PoisTest {
     }
 
     @Test
-    public void removeTagTest() {
+    public void removeTagTest() throws TagNotFoundException {
         Node n = new Node();
         Poi p = new Poi(n);
         Tag t = Tag.ADDR_CITY;

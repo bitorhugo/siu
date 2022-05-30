@@ -247,7 +247,10 @@ public class PathController implements Initializable {
         // calculate total distance
         DecimalFormat df = new DecimalFormat("#.##");
         double dist = this.map.shortestDistance(this.map.getNodeFromIndex(from), this.map.getNodeFromIndex(to));
-        this.distanceText.setText(df.format(dist) + "m");
+        if (dist > 1000) {
+            this.distanceText.setText(df.format(dist/1000) + "km");
+        }
+        else this.distanceText.setText(df.format(dist) + "m");
     }
 
     private void displayTimeByFootToDestination () {

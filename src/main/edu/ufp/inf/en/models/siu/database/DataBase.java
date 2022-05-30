@@ -561,20 +561,20 @@ public class DataBase {
   }
 
   /**
-   * removes specified tag from node
-   * @param n node
-   * @param t tag
-   * @return tag removed if found || null if not found
-   * @author Vitor Hugo
+   * removes a tag from poi
+   * @param n poi to remove tag from
+   * @param t tag to remove
+   * @return removed tag
    */
   public Tag removePoiTag (Node n, Tag t) {
-    if (this.poiST.contains(n.getNodeId())){
+    try {
       this.poiST.get(n.getNodeId()).removeTag(t);
       removeTagsObject(n, t);
       Arquive.Tag(n, t);
-      return t;
+    } catch (Exception e) {
+      e.getMessage();
     }
-    return null;
+    return t;  
   }
 
   /**

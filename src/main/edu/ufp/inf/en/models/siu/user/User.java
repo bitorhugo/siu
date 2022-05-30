@@ -101,7 +101,7 @@ public abstract class User extends Person {
         Poi p = this.db.searchPoi(pois.get(i));
         p.addVisitor(this.getIdNumber(), timestamps.get(i));
         this.visitedPoi.put(timestamps.get(i), p); // add user to visitors in poi
-      } catch (Exception e){
+      } catch (PoiNotFoundException e){
         e.getMessage();
       }
       

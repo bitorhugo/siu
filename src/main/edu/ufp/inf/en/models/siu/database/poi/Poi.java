@@ -9,6 +9,7 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 import main.edu.ufp.inf.en.models.lp2._1_intro.geometric_figures.Point;
 import main.edu.ufp.inf.en.models.siu.database.node.Node;
 import main.edu.ufp.inf.en.models.siu.database.tag.Tag;
+import main.edu.ufp.inf.en.models.siu.database.tag.TagNotFoundException;
 
 /**
  * @author Vitor Hugo
@@ -62,18 +63,16 @@ public class Poi extends Node {
   /**
    * removes a tag from node
    * @param t tag to remove
-   * @return tag removed || null if not found
+   * @return tag removed 
+   * @throws TagNotFoundException if tag not found in poi
    */
-  public Tag removeTag(Tag t) {
+  public Tag removeTag(Tag t) throws TagNotFoundException {
     if (t == null) throw new IllegalArgumentException("argument to removeTag() is null");
     if (this.tags.contains(t)) {
       this.tags.delete(t);
       return t;
     }
-    else {
-      System.out.println("tag is not present in node");
-      return null;
-    }
+    else throw new TagNotFoundException (t + " not found in poi");
   }
 
   /**
@@ -157,16 +156,22 @@ public class Poi extends Node {
     Long start = timestamp - TimeUnit.MINUTES.toSeconds(TIME_PERIOD);
     Long end = timestamp + TimeUnit.MINUTES.toSeconds(TIME_PERIOD);
 
+    int traffic = 0; // calculate traffic between start and end
+
     for (var entrance : this.visitorsEntrance.keys(start, end)) {
-      int traffic = this.visitorsEntrance.get(entrance).size();
+      traffic += this.visitorsEntrance.get(entrance).size();
       if (traffic > MAX_TRAFFIC) {
         this.editTag(Tag.TRAFFICJAM, "yes");
         this.editTag(Tag.TRAFFIC, String.valueOf(traffic));
         break;
       }
       else {
-        this.removeTag(Tag.TRAFFICJAM);
-        this.editTag(Tag.TRAFFIC, String.valueOf(traffic));
+        try {
+          this.removeTag(Tag.TRAFFICJAM);
+          this.editTag(Tag.TRAFFIC, String.valueOf(traffic));
+        } catch (Exception e) {
+          System.out.println(e.getMessage()); 
+        }
       }
     }
 
