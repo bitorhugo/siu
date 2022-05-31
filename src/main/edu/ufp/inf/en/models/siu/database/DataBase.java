@@ -398,6 +398,7 @@ public class DataBase {
     if (p == null) throw new IllegalArgumentException("argument to addPoi() is null");
     if (this.containsPoi(p.getNodeId())) {
       this.poiST.delete(p.getNodeId());
+      this.nodesST.delete(p.getNodeId());
       Arquive.Poi(p);
       return p;
     }
