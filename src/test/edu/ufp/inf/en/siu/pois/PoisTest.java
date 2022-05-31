@@ -42,7 +42,6 @@ public class PoisTest {
         Node node = new Node();
         Poi p = new Poi(node);
         Tag o = Tag.ADDR_STREET;
-        Tag n = Tag.ADDR_CITY;
 
         p.addTag(o, "rua 9 de abril");
         p.editTag(o, "new");
