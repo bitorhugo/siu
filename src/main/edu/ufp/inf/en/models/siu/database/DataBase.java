@@ -740,23 +740,22 @@ public class DataBase {
     if (start == null) throw new IllegalArgumentException("argument 'start' to getUserPoisVisited() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to getUserPoisVisited() is null");
 
+    List<Poi> pois = new ArrayList<>();
     if (!this.poiST.isEmpty()) {
-      List<Poi> pois = new ArrayList<>();
-      for (Integer poiId : this.poiST.keys()) {
-        Poi p = this.poiST.get(poiId);
-        for (Long timestamp : p.getVisitorsEntrance().keys(start, end)) {
-          if (!p.getVisitorsEntrance().get(timestamp).isEmpty()) {
-            pois.add(p);
+      try {
+        for (Integer poiID : this.poiST.keys()) {
+          Poi p = searchPoi(poiID);
+          for (Long timestamp : p.getVisitorsEntrance().keys(start, end)) {
+            if (!p.getVisitorsEntrance().get(timestamp).isEmpty()) {
+              pois.add(p);
+            }
           }
         }
+      } catch (Exception e) {
+        System.out.println(e.getMessage());
       }
-      return pois;
     }
-    else {
-      System.out.println("no pois under specification found");
-      return null;
-    }
-    
+    return pois;
   }
 
   /**
@@ -769,12 +768,15 @@ public class DataBase {
     if (start == null) throw new IllegalArgumentException("argument 'start' to top5Users() is null");
     if (end == null) throw new IllegalArgumentException("argument 'end' to top5Users() is null");
     
+    // key -> number of pois visited
+    // value -> arraylist containing all user with the same amount of visited pois
     RedBlackBST<Long, ArrayList<User>> numVisits = new RedBlackBST<>();
     
     for (var userID : usersKeys()) {
       User u = this.userST.get(userID);
       // get size of iterator using streams!
       long count = StreamSupport.stream(u.visitedPoiKeys(start, end).spliterator(), false).count();
+      
       if (numVisits.contains(count)) {
         numVisits.get(count).add(u);
       }

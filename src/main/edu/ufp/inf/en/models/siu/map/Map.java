@@ -148,6 +148,11 @@ public class Map {
         return this.nodes.get(index);
     }
 
+    /**
+     * searched for a node in graph
+     * @param nodeID node id
+     * @return node with specified {@code nodeID}
+     */
     public Node searchNode (int nodeID) {
         for (var index : this.indeces()) {
             Node n = getNodeFromIndex(index);
@@ -199,10 +204,13 @@ public class Map {
         for (DirectedEdge edge : this.graph.edges()) {
             digraph.addEdge(edge.to(), edge.from());
         }
+
+        // in order for grapgh to be strogly connectd 
+        // each index must reach all other indeces from graph
         for (int i = 0; i < digraph.V(); i++) {
             DirectedDFS dfs = new DirectedDFS(digraph, i);
             // count returns the number of vertices reachable from the source vertex
-            // if count != from V(), graph is not strongly connected
+            // if count != from V(), graph is not connected
             if (dfs.count() != this.graph.V()) return false;
         }
         return true;

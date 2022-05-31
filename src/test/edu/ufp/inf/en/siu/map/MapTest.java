@@ -31,10 +31,13 @@ public class MapTest {
         Upload.Ways("/Users/VitorHugo/dev/java/projects/siu/data/in/txt/ways/waysTest.txt", db);
 
         Map main = new Map(db);
+
         Map sub = new Map(main, Tag.HIGHWAY);
+
         for (var v : sub.indeces()) {
             System.out.println("index: " + v + "node: " + sub.getNodeFromIndex(v));
         }
+
         assertTrue(sub.getGraph().V() == 3);
         assertTrue(sub.getGraph().E() == 4);
     }

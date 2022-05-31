@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import main.edu.ufp.inf.en.models.siu.IO.Arquive;
+//import main.edu.ufp.inf.en.models.siu.IO.Arquive;
 import main.edu.ufp.inf.en.models.siu.user.*;
 
 public class BasicController implements UserControllerI{

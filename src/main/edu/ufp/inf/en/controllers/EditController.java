@@ -142,6 +142,7 @@ public class EditController implements Initializable {
            Point p = new Point (Integer.valueOf(data[1]), Integer.valueOf(data[2]));
            user.editNode(Integer.valueOf(data[0]), p);
            editNode.setText(VALIDATED);
+           editNode.selectAll();
        } catch (Exception e) {
            editNode.setText(INVALID);
            editNode.selectAll();
@@ -174,7 +175,7 @@ public class EditController implements Initializable {
     }
 
     public void handleRemoveWayAction(ActionEvent event) {
-        String data[] = this.removeNode.getText().split(";");
+        String data[] = this.removeWay.getText().split(";");
         Integer id = Integer.parseInt(data[0]);
         try {
             this.user.removeWay(id);
@@ -187,13 +188,15 @@ public class EditController implements Initializable {
     }
 
     public void handleEditWayAction(ActionEvent event) {
-        String data[] = editNode.getText().split(";");
+        String data[] = editWay.getText().split(";");
         try {
             int wayID = Integer.valueOf(data[0]);
             Node origin = this.user.getDb().searchNode(Integer.valueOf(data[1]));
             Node destination = this.user.getDb().searchNode(Integer.valueOf(data[2]));
             double weight = Double.valueOf(data[3]);
             this.user.editWay(wayID, origin, destination, weight);
+            editWay.setText(VALIDATED);
+            editWay.selectAll();
         } catch (Exception e) {
             e.getMessage();
             editWay.setText(INVALID);
@@ -231,6 +234,8 @@ public class EditController implements Initializable {
         String data[] = removeUser.getText().split(";");
         try {
             this.user.removeUser(data[0]);
+            removeUser.setText(VALIDATED);
+            removeUser.selectAll();
         } catch (Exception e) {
             e.getMessage();
             removeUser.setText(INVALID);
@@ -248,10 +253,12 @@ public class EditController implements Initializable {
             String []birthData = birthday.split("-");
             LocalDate birth = LocalDate.of(Integer.valueOf(birthData[2]), Integer.valueOf(birthData[1]), Integer.valueOf(birthData[0]));
             this.user.editUser(userID, name, address, birth);
+            editUser.setText(VALIDATED);
+            editUser.selectAll();
         } catch (Exception e) {
             e.getMessage();
-            removeUser.setText(INVALID);
-            removeUser.selectAll();
+            editUser.setText(INVALID);
+            editUser.selectAll();
         }
     }
 
