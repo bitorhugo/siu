@@ -41,13 +41,12 @@ public class WaysTest {
         Way w = new Way(123, 1, 2, 45);
         
         Tag o = Tag.ACCESS;
-        Tag n = Tag.ADDR_CITY;
-
+    
         w.addTag(o, "private");
-        w.editTag(o, n, "rua 9 de abril");
+        w.editTag(o, "rua 9 de abril");
 
-        assertTrue(!w.containsTag(o));
-        assertTrue(w.containsTag(n));
+        assertTrue(w.containsTag(o));
+        assertTrue(w.getTagValue(o).equals("rua 9 de abril"));    
     }
 
     @Test

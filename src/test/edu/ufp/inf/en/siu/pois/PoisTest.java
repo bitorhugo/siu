@@ -45,12 +45,12 @@ public class PoisTest {
         Tag n = Tag.ADDR_CITY;
 
         p.addTag(o, "rua 9 de abril");
+        p.editTag(o, "new");
+
         assertTrue(!p.getTags().isEmpty());
         assertTrue(p.getTags().size() == 1);
 
-        
-        assertTrue(!p.containsTag(o));
-        assertTrue(p.containsTag(n));
+        assertTrue(p.getTags().get(o).equals("new"));
     }
 
     @Test

@@ -76,16 +76,20 @@ public class Way extends DirectedEdge implements Serializable{
     }
   }
 
-  /**
-   * edits a tag from way
-   * @param o old tag
-   * @param n new tag
-   * @param value value for new tag
-   */
-  public void editTag (Tag o, Tag n, String value) {
-    if (o == null) throw new IllegalArgumentException("argument 'o' to editTag() is null");
-    if (n == null) throw new IllegalArgumentException("argument 'n' to editTag() is null");
-    if (removeTag(o) != null) addTag(n, value);
+ /**
+  * edits a tag from way
+  * @param tag tag to be edited
+  * @param newTagValue new value
+  */
+  public void editTag (Tag tag, String newTagValue) {
+    if (tag == null) throw new IllegalArgumentException("argument 'o' to editTag() is null");
+    if (newTagValue == null) throw new IllegalArgumentException("argument 'n' to editTag() is null");
+    if (this.containsTag(tag)) {
+      this.tags.put(tag, newTagValue);
+    }
+    else {
+      this.addTag(tag, newTagValue);
+    }
   }
 
   /**

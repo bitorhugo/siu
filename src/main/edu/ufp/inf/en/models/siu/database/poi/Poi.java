@@ -84,7 +84,7 @@ public class Poi extends Node {
     if (tag == null) throw new IllegalArgumentException("argument 'o' to editTag() is null");
     if (newTagValue == null) throw new IllegalArgumentException("argument 'n' to editTag() is null");
     if (this.containsTag(tag)) {
-      tag.setValue(newTagValue);
+      this.tags.put(tag, newTagValue);
     }
     else {
       this.addTag(tag, newTagValue);
