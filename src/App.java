@@ -48,7 +48,7 @@ public class App extends Application {
     }
     
     public static void main(String[] args) throws Exception {
-        
+    
         //loading an image from a file
         final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
         final URL imageResource = App.class.getClassLoader().getResource("main/edu/ufp/inf/en/resources/icon.png");
